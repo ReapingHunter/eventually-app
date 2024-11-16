@@ -2,12 +2,12 @@
 export default function LoginPage() {
   return (
     <>
-      <div className="h-screen grid grid-cols-2">
+      <div className="flex h-screen">
         {/* Left half with background image */}
-        <div className="w-full h-full bg-cover bg-center" style={{ backgroundImage: "url('/images/login-bg.svg')" }} />
+        <div className="w-1/2 h-full bg-cover bg-center" style={{ backgroundImage: "url('/images/login-bg.svg')" }} />
 
         {/* Right half for content */}
-        <div className="w-full h-full bg-white flex flex-col justify-center items-start px-14">
+        <div className="w-1/2 h-full bg-white flex flex-col justify-center items-start px-14">
           <h1 className="text-6xl font-bold mb-3">Login</h1>
           <p className="text-[#737272] font-normal whitespace-nowrap">Don&apos;t have an account yet?
             <a className="text-[#7B00D4] hover:underline font-normal ml-1">Signup</a>.
@@ -34,7 +34,7 @@ export default function LoginPage() {
                 className="bg-transparent outline-none border-2 border-[#363636] rounded-md mb-5 px-3 py-2"
                 required>
               </input>
-              <div className="flex flex-col items-center">
+              <div className="flex flex-col items-end">
                 <button className="font-bold bg-[#7B00D4] text-white px-4 py-2 rounded-md mb-4 w-full">
                   LOGIN
                 </button>
