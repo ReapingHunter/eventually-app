@@ -8,7 +8,7 @@ export default function LoginPage() {
 
         {/* Right half for content */}
         <div className="w-1/2 bg-white flex flex-col justify-center items-start px-14">
-          <h1 className="text-6xl font-bold mb-4">Login</h1>
+          <h1 className="text-6xl font-bold mb-3">Login</h1>
           <p className="text-[#737272] font-normal whitespace-nowrap">Don&apos;t have an account yet?
             <a className="text-[#7B00D4] hover:underline font-normal ml-1">Signup</a>.
           </p>
