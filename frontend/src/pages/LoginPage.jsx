@@ -2,12 +2,12 @@
 export default function LoginPage() {
   return (
     <>
-      <div className="flex h-screen">
+      <div className="h-screen grid grid-cols-2">
         {/* Left half with background image */}
-        <div className="w-1/2 h-full bg-cover bg-center px-14" style={{ backgroundImage: "url('/images/login-bg.svg')" }} />
+        <div className="w-full h-full bg-cover bg-center" style={{ backgroundImage: "url('/images/login-bg.svg')" }} />
 
         {/* Right half for content */}
-        <div className="w-1/2 bg-white flex flex-col justify-center items-start px-14">
+        <div className="w-full h-full bg-white flex flex-col justify-center items-start px-14">
           <h1 className="text-6xl font-bold mb-3">Login</h1>
           <p className="text-[#737272] font-normal whitespace-nowrap">Don&apos;t have an account yet?
             <a className="text-[#7B00D4] hover:underline font-normal ml-1">Signup</a>.
