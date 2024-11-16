@@ -14,7 +14,7 @@ export default function LoginPage() {
           </p>
           <form action="#" method="post">
             <div className="mb-4 mt-4">
-              <label htmlFor="email" className="block font-bold text-[#363636] mb-2">
+              <label htmlFor="email" className="font-bold text-[#363636] mb-3">
                 Email Address
               </label>
               <input 
@@ -24,18 +24,18 @@ export default function LoginPage() {
                 className="bg-transparent outline-none border-2 border-[#363636] rounded-md mb-3 px-3 py-2 w-full"
                 required>
               </input>
-              <label htmlFor="password" className="block font-bold text-[#363636] mb-2">
+              <label htmlFor="password" className="font-bold text-[#363636] mb-3">
                 Password
               </label>
               <input 
                 type="password"
                 id="password"
                 name="password"
-                className="bg-transparent outline-none border-2 border-[#363636] rounded-md mb-5 px-3 py-2"
+                className="bg-transparent outline-none border-2 border-[#363636] rounded-md mb-5 px-3 py-2 w-full"
                 required>
               </input>
               <div className="flex flex-col items-end">
-                <button className="font-bold bg-[#7B00D4] text-white px-4 py-2 rounded-md mb-4 w-full">
+                <button className="font-bold bg-[#7B00D4] text-white px-4 py-2 rounded-md mb-4 w-1/3">
                   LOGIN
                 </button>
                 <a className="text-[#737272] hover:text-[#7B00D4] font-normal">
