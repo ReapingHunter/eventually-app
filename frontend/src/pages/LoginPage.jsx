@@ -1,3 +1,4 @@
+import TextInput from "../components/TextInput";
 
 export default function LoginPage() {
   return (
@@ -14,26 +15,16 @@ export default function LoginPage() {
           </p>
           <form action="#" method="post">
             <div className="mb-4 mt-4">
-              <label htmlFor="email" className="font-bold text-[#363636] mb-3">
-                Email Address
-              </label>
-              <input 
-                type="email"
+              <TextInput 
+                label="Email Address"
                 id="email"
-                name="email"
-                className="bg-transparent outline-none border-2 border-[#363636] rounded-md mb-3 px-3 py-2 w-full"
-                required>
-              </input>
-              <label htmlFor="password" className="font-bold text-[#363636] mb-3">
-                Password
-              </label>
-              <input 
-                type="password"
+                type="email"
+              />
+              <TextInput 
+                label="Password"
                 id="password"
-                name="password"
-                className="bg-transparent outline-none border-2 border-[#363636] rounded-md mb-5 px-3 py-2 w-full"
-                required>
-              </input>
+                type="password"
+              />
               <div className="flex flex-col items-end">
                 <button className="font-bold bg-[#7B00D4] text-white px-4 py-2 rounded-md mb-4 w-1/3">
                   LOGIN
