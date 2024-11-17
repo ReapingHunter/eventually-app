@@ -26,7 +26,7 @@ export default function LoginPage() {
                     <button className="font-bold bg-[#7B00D4] text-white px-4 py-2 rounded-md mb-4 w-full lg:w-1/2 md:w-1/2 ">
                       LOGIN
                     </button>
-                    <a className="text-[#737272] hover:text-[#7B00D4] font-normal">
+                    <a className="text-[#737272] hover:text-[#7B00D4] hover:underline font-normal">
                       Forgot Password?
                     </a>
                   </div>
