@@ -3,10 +3,11 @@
 // import viteLogo from '/vite.svg'
 import './App.css'
 import LoginPage from './pages/LoginPage.jsx'
+import Dashboard from './pages/Dashboard.jsx'
 function App() {
   return (
     <>
-      <LoginPage />
+      <Dashboard />
     </>
   )
 }
