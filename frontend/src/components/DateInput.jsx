@@ -16,7 +16,7 @@ DateInput.defaultProps = {
 
 export default function DateInput({ label="Date", fromDate, toDate, onChange }) {
   return (
-    <div className="flex space-y-4">
+    <div className="flex space-y-4 mb-8">
       {/* From Date Input */}
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-2">

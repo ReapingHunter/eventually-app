@@ -9,13 +9,14 @@ TextInput.propTypes = {
     PropTypes.number
   ]).isRequired,
   onChange: PropTypes.func.isRequired,
+  placeholder: PropTypes.string,
 }
 
 TextInput.defaultProps = {
   type: "text",
 }
 
-export default function TextInput({label, id, type="text", value, onChange}){
+export default function TextInput({label, id, type="text", value, onChange, placeholder=""}){
   return(
     <>
       <label htmlFor={id} className="font-bold text-[#363636] mb-3">
@@ -27,6 +28,7 @@ export default function TextInput({label, id, type="text", value, onChange}){
         value={value}
         onChange={onChange}
         className="bg-transparent outline-none border-2 border-[#363636] rounded-md mb-3 px-3 py-2 w-full"
+        placeholder={placeholder}
         required>
       </input>
     </>

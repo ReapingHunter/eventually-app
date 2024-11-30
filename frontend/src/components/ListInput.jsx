@@ -19,7 +19,7 @@ export default function ListInput({ type, label, id, options, placeholder }) {
         id={id}
         name={id}
         list={`${id}-list`}
-        className="mt-1 block w-full rounded border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 outline-none p-2 mb-3"
+        className="mt-1 block w-full rounded border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 outline-none p-2 mb-8"
         placeholder={placeholder}
       />
       <datalist id={`${id}-list`}>
