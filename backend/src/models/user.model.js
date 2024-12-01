@@ -1,4 +1,4 @@
-import dbConn from '../db.config.js';
+import dbConn from '../../config/db.config.js';
 
 const User = {
   create: (userData, result) => {
