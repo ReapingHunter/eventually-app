@@ -1,11 +1,13 @@
 import express from 'express';
-const app = express();
+import bodyParser from 'body-parser';
+import userRoutes from './src/routes/user.route.js'
 
+const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.get('/', (req, res) => {
-  res.send('Hello, World!');
-});
+// Middleware
+app.use(bodyParser.json());
+app.use('/api/users', userRoutes); // User routes
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
