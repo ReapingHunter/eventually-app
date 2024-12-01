@@ -2,8 +2,8 @@ import mysql from 'mysql';
 
 const dbConn = mysql.createConnection({
     host    : 'localhost',
-    user    : 's20100901_eventuallyDB@localhost',
-    password: '{password}', //ERASE BEFORE COMMIT
+    user    : 's20100901_eventuallyDB',
+    password: '', //ERASE BEFORE COMMIT
     database: 's20100901_eventuallyDB'
 });
 
