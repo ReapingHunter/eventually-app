@@ -6,6 +6,7 @@ import { useState } from "react";
 
 export default function Dashboard() {
   const locationOptions = ["Cebu City", "Bohol"];
+  const [activeTab, setActiveTab] = useState("upcoming")
   const [dateRange, setDateRange] = useState({
     from: "",
     to: "",
@@ -63,8 +64,32 @@ export default function Dashboard() {
           </div>
 
           {/* Event List Section */}
-          <div className="bg-[#f0f0f0] rounded-2xl ml-10 p-4 flex-1 shadow-inner">
-            
+          <div className="bg-[#f0f0f0] rounded-2xl ml-10 p-6 flex-1 shadow-inner">
+            <div className="w-full max-w-4xl mx-auto border-b border-gray-300">
+              <div className="flex space-x-16 text-sm font-medium">
+                <button className={`pb-2 ${
+                  activeTab === "upcoming" 
+                    ? "text-[#7b00d4] border-b-2 border-[#7b00d4] "
+                    : "text-gray-500 hover:text-gray-700"
+                    }`} onClick={()=> setActiveTab("upcoming")}>
+                    Upcoming Events
+                </button>
+                <button className={`pb-2 ${
+                  activeTab === "past" 
+                    ? "text-[#7b00d4] border-b-2 border-[#7b00d4] "
+                    : "text-gray-500 hover:text-gray-700"
+                    }`} onClick={()=> setActiveTab("past")}>
+                      Past Events
+                </button>
+                <button className={`pb-2 ${
+                  activeTab === "bookmarked" 
+                    ? "text-[#7b00d4] border-b-2 border-[#7b00d4]"
+                    : "text-gray-500 hover:text-gray-700"
+                    }`} onClick={()=> setActiveTab("bookmarked")}>
+                      Bookmarked
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
