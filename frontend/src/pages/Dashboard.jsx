@@ -27,7 +27,7 @@ export default function Dashboard() {
         <NavBar />
         <div className="flex flex-1 overflow-hidden">
           {/* Filters Section */}
-          <div className="py-4 pl-10 flex flex-col justify-between h-full w-1/4 bg-white">
+          <div className="py-4 pl-10 flex flex-col justify-between h-full w-1/5 bg-white">
             {/* Filter Inputs */}
             <p className="font-bold mb-16">Filter Events</p>
             <div className="flex-1">
@@ -102,7 +102,7 @@ export default function Dashboard() {
             </div>
 
             {/* Scrollable Event List */}
-            <div className="flex flex-wrap gap-4 overflow-y-auto max-h-[calc(100vh-200px)] mt-4 p-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 overflow-y-auto max-h-[calc(100vh-200px)] mt-4 p-2">
               <EventCard />
               <EventCard />
               <EventCard />

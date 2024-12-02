@@ -1,6 +1,9 @@
-
+import { BookmarkIcon as BookmarkIconSolid } from "@heroicons/react/24/solid"
+import { BookmarkIcon as BookmarkIconOutline } from "@heroicons/react/24/outline"
+import { useState } from "react";
 
 export default function EventCard(){
+  const [bookmarked, setBookmarked] = useState(false)
   return (
     <>
       <div className="max-w-sm mx-auto bg-white m-8 rounded-lg shadow-lg overflow-hidden border border-gray-200">
@@ -11,9 +14,10 @@ export default function EventCard(){
             alt="Event"
             className="w-full h-48 object-cover"
           />
-          <div className="absolute top-2 right-2 bg-yellow-300 text-black text-xs font-bold py-1 px-2 rounded">
-            <i className="fas fa-bookmark"></i> {/* FontAwesome icon */}
-          </div>
+          <a className="absolute top-2 right-2 cursor-pointer" onClick={() => setBookmarked(!bookmarked)}>
+            {bookmarked ? <BookmarkIconSolid className="w-6 h-6 text-yellow-400" />
+                        : <BookmarkIconOutline className="w-6 h-6 text-yellow-400" />}
+          </a>
           <div className="absolute bottom-2 left-2 bg-green-500 text-white text-xs font-bold py-1 px-2 rounded">
             Online Event or not
           </div>
