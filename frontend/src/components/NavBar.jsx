@@ -1,5 +1,5 @@
 import SearchBar from "../components/SearchBar";
-import { PlusIcon, CalendarIcon } from "@heroicons/react/24/solid";
+import { PlusIcon, CalendarDaysIcon } from "@heroicons/react/24/solid";
 
 export default function NavBar(){
   return(
@@ -21,7 +21,7 @@ export default function NavBar(){
         <div className="flex items-center gap-3">
           {/* Login Button */}
           <button className="text-white bg-[#7b00d4] font-medium py-2 px-4 rounded-lg hover:bg-[#5a00a8] transition">
-            <CalendarIcon className="w-5 h-6" />
+            <CalendarDaysIcon className="w-5 h-6" />
           </button>
           <button className="text-[#7b00d4] font-medium py-2 px-4 border border-[#7b00d4] rounded-lg hover:bg-[#7b00d4] hover:text-white transition">
             Login
