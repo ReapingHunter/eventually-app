@@ -23,14 +23,18 @@ export default function NavBar(){
           <button className="text-white bg-[#7b00d4] font-medium py-2 px-4 rounded-lg hover:bg-[#5a00a8] transition">
             <CalendarDaysIcon className="w-5 h-6" />
           </button>
-          <button className="text-[#7b00d4] font-medium py-2 px-4 border border-[#7b00d4] rounded-lg hover:bg-[#7b00d4] hover:text-white transition">
-            Login
-          </button>
+          <a href="/login">
+            <button className="text-[#7b00d4] font-medium py-2 px-4 border border-[#7b00d4] rounded-lg hover:bg-[#7b00d4] hover:text-white transition">
+              Login
+            </button>
+          </a>
 
           {/* Register Button */}
-          <button className="text-white bg-[#7b00d4] font-medium py-2 px-4 rounded-lg hover:bg-[#5a00a8] transition">
-            Register
-          </button>
+          <a href="/signup">
+            <button className="text-white bg-[#7b00d4] font-medium py-2 px-4 rounded-lg hover:bg-[#5a00a8] transition">
+              Register
+            </button>
+          </a>
 
           {/* Create Event Button */}
           <button className="bg-gradient-to-r from-[#7b00d4] via-[#A255DA] to-[#F03CF9] text-white font-semibold py-2 px-4 rounded-lg shadow-md flex items-center gap-2 transition">
