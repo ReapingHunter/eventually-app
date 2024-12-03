@@ -1,4 +1,6 @@
-import TextInput from "../components/TextInput";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
 
 export default function ResetPasswordPage() {
   return (
@@ -16,13 +18,18 @@ export default function ResetPasswordPage() {
               <h1 className="text-3xl md:text-5xl font-bold mb-6">Reset Password</h1>
               <form action="#" method="post">
                 <div className="mb-4 mt-4">
-                  <TextInput label="Email Address" id="email" type="email" />
-                  <TextInput label="New Password" id="password" type="password" />
-                  <TextInput label="Confirm New Password" id="password" type="password" />
+                  <Label htmlFor="email">Email Address</Label>
+                  <Input type="email" id="email" />
+
+                  <Label htmlFor="password">Password</Label>
+                  <Input type="password" id="password" />
+
+                  <Label htmlFor="password">Confirm Password</Label>
+                  <Input type="password" id="password" />
                   <div className="flex flex-col mt-4 items-center">
-                    <button className="font-bold bg-[#7B00D4] text-white px-4 py-2 rounded-md mb-4 w-full ">
+                    <Button className="font-bold bg-[#7B00D4] text-white px-4 py-2 rounded-md mb-4 w-full">
                       CHANGE PASSWORD
-                    </button>
+                    </Button>
                     <a className="text-sm md:text-base text-[#737272] font-normal whitespace-nowrap mb-4 hover:underline hover:text-[#7B00D4]" href="/login">
                       Back to Login
                     </a>

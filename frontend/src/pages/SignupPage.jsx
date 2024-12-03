@@ -1,4 +1,7 @@
-import TextInput from "../components/TextInput";
+
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
 
 export default function SignupPage() {
   return (
@@ -20,14 +23,22 @@ export default function SignupPage() {
               </p>
               <form action="#" method="post">
                 <div className="mb-4 mt-4">
-                  <TextInput label="Username" id="password" type="password" />
-                  <TextInput label="Email Address" id="email" type="email" />
-                  <TextInput label="Password" id="password" type="password" />
-                  <TextInput label="Confirm Password" id="password" type="password" />
+                  <Label htmlFor="email">Email Address</Label>
+                  <Input type="email" id="email" />
+
+                  <Label htmlFor="username">Username</Label>
+                  <Input type="text" id="text" />
+
+                  <Label htmlFor="password">Password</Label>
+                  <Input type="password" id="password" />
+
+                  <Label htmlFor="password">Confirm Password</Label>
+                  <Input type="password" id="password" />
+
                   <div className="flex flex-col mt-4 lg:items-end md:items-center sm:items-center">
-                    <button className="font-bold bg-[#7B00D4] text-white px-4 py-2 rounded-md mb-4 w-full lg:w-1/2 md:w-1/2 ">
+                    <Button className="font-bold w-full lg:w-1/2 md:w-1/2 bg-[#7B00D4] text-white hover:bg-[#5b00a6]">
                       SIGNUP
-                    </button>
+                    </Button>
                   </div>
                 </div>
               </form>
