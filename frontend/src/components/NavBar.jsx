@@ -1,49 +1,45 @@
 import SearchBar from "../components/SearchBar";
-import { WrenchIcon, BellIcon } from "@heroicons/react/24/solid";
+import { WrenchIcon, BellIcon, UserIcon } from "@heroicons/react/24/solid";
 
-export default function NavBar(){
-  return(
+export default function NavBar() {
+  return (
     <>
-      <nav className="pt-8 px-10 mb-4 flex justify-between items-center bg-[#ffffff]">
+      <nav className="px-6 sm:px-10 mb-4 flex justify-between items-center bg-[#3b006a] text-white shadow-lg">
         {/* Dashboard Logo */}
-        <a href="/">
+        <a href="/" className="flex items-center">
           <img
             src="/images/dashboard-logo.png"
-            className="w-40 h-auto"
+            className="w-32 h-auto"
             alt="Dashboard Logo"
           />
         </a>
 
-        {/* TextInput on the right */}
-        <div>
+        {/* Search Bar */}
+        <div className="flex-1 mx-8">
           <SearchBar placeholder="Search events..." />
         </div>
-        <div className="flex items-center gap-3">
-          {/* Login Button */}
-          <button className="text-white bg-[#7b00d4] font-medium py-2 px-4 rounded-lg hover:bg-[#5a00a8] transition">
-            <BellIcon className="w-5 h-6" />
-          </button>
-          <a href="/login">
-            <button className="text-[#7b00d4] font-medium py-2 px-4 border border-[#7b00d4] rounded-lg hover:bg-[#7b00d4] hover:text-white transition">
-              Login
-            </button>
-          </a>
 
-          {/* Register Button */}
-          <a href="/signup">
-            <button className="text-white bg-[#7b00d4] font-medium py-2 px-4 rounded-lg hover:bg-[#5a00a8] transition">
-              Register
-            </button>
-          </a>
-
-          {/* Create Event Button */}
-          <button className="bg-gradient-to-r from-[#7b00d4] via-[#A255DA] to-[#F03CF9] text-white font-semibold py-2 px-4 rounded-lg shadow-md flex items-center gap-2 transition">
+        {/* Action Buttons */}
+        <div className="flex items-center gap-4">
+          {/* Manage Events Button */}
+          <button className="bg-gradient-to-r from-[#7b00d4] via-[#A255DA] to-[#F03CF9] text-white font-semibold py-2 px-4 rounded-lg shadow-md flex items-center gap-2 hover:opacity-90 transition">
             <WrenchIcon className="w-5 h-5" />
             <span>Manage Events</span>
           </button>
+
+          {/* Notifications Button */}
+          <button className="bg-[#7b00d4] p-3 rounded-full hover:bg-[#5a00a8] transition shadow-md">
+            <BellIcon className="w-5 h-5 text-white" />
+          </button>
+
+          {/* User Button */}
+          <a href="/login">
+            <button className="text-[#7b00d4] rounded-full p-3 bg-[#7b00d4] hover:bg-[#5a00a8] transition shadow-sm">
+              <UserIcon className="w-5 h-5 text-white" />
+            </button>
+          </a>
         </div>
-      </nav> 
+      </nav>
     </>
-  )
-  
+  );
 }
