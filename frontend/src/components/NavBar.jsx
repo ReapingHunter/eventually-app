@@ -22,10 +22,12 @@ export default function NavBar() {
         {/* Action Buttons */}
         <div className="flex items-center gap-4">
           {/* Manage Events Button */}
-          <button className="bg-gradient-to-r from-[#7b00d4] via-[#A255DA] to-[#F03CF9] text-white font-semibold py-2 px-4 rounded-lg shadow-md flex items-center gap-2 hover:opacity-90 transition">
-            <WrenchIcon className="w-5 h-5" />
-            <span>Manage Events</span>
-          </button>
+          <a href="/manageevent">
+            <button className="bg-gradient-to-r from-[#7b00d4] via-[#A255DA] to-[#F03CF9] text-white font-semibold py-2 px-4 rounded-lg shadow-md flex items-center gap-2 hover:opacity-90 transition">
+              <WrenchIcon className="w-5 h-5" />
+              <span>Manage Events</span>
+            </button>
+          </a>
 
           {/* Notifications Button */}
           <button className="bg-[#7b00d4] p-3 rounded-full hover:bg-[#5a00a8] transition shadow-md">
