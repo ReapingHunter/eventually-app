@@ -26,7 +26,7 @@ export default function SearchBar({id, type="text", value, onChange, placeholder
           type={type}
           value={value}
           onChange={onChange}
-          className="outline-none border-2 border-[#9b9b9b] bg-[#2f0055] rounded-md pr-3 pl-10 py-2 w-full"
+          className="outline-none border-2 border-[#7a7a7a] bg-[#2f0055] rounded-md pr-3 pl-10 py-2 w-full"
           placeholder={placeholder}
           required>
         </input>

@@ -1,5 +1,5 @@
 import SearchBar from "../components/SearchBar";
-import { WrenchIcon, BellIcon, UserIcon } from "@heroicons/react/24/solid";
+import { WrenchIcon, BellIcon, UserIcon } from "@heroicons/react/24/outline";
 
 export default function NavBar() {
   return (
@@ -23,21 +23,21 @@ export default function NavBar() {
         <div className="flex items-center gap-4">
           {/* Manage Events Button */}
           <a href="/manageevent">
-            <button className="bg-gradient-to-r from-[#7b00d4] via-[#A255DA] to-[#F03CF9] text-white font-semibold py-2 px-4 rounded-lg shadow-md flex items-center gap-2 hover:opacity-90 transition">
+            <button className="bg-transparent border-2 border-[#9b9b9b] text-white font-sm py-2 px-4 rounded-lg shadow-md flex items-center gap-2 hover:opacity-90 hover:bg-[#300056] transition">
               <WrenchIcon className="w-5 h-5" />
               <span>Manage Events</span>
             </button>
           </a>
 
           {/* Notifications Button */}
-          <button className="bg-[#7b00d4] p-3 rounded-full hover:bg-[#5a00a8] transition shadow-md">
-            <BellIcon className="w-5 h-5 text-white" />
+          <button className="bg-transparent border-2 border-[#9b9b9b] text-white font-sm p-3 rounded-full hover:opacity-90 hover:bg-[#300056] transition shadow-md">
+            <BellIcon className="w-5 h-5" />
           </button>
 
           {/* User Button */}
           <a href="/login">
-            <button className="text-[#7b00d4] rounded-full p-3 bg-[#7b00d4] hover:bg-[#5a00a8] transition shadow-sm">
-              <UserIcon className="w-5 h-5 text-white" />
+            <button className="bg-transparent border-2 border-[#9b9b9b] text-white font-sm rounded-full  hover:opacity-90 hover:bg-[#300056] p-3 transition shadow-sm">
+              <UserIcon className="w-5 h-5" />
             </button>
           </a>
         </div>
