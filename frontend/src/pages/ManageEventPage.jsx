@@ -22,19 +22,21 @@ export default function Dashboard() {
             <h1 className="font-bold text-5xl">Your Events</h1>
           </div>
           <div className="items-center">
-          <button
-            className={`bg-gradient-to-r from-[#7b00d4] via-[#A255DA] to-[#F03CF9] rounded-full p-3 flex items-center gap-2 text-white font-semibold transition-all duration-300 ease-in-out
-                    ${isHovered ? "px-6" : "px-3 justify-center"}`}
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-          >
-            <PlusIcon className="w-6 h-6" />
-            {isHovered && (
-              <span className="transition-opacity duration-300 delay-100">
-                Create Event
-              </span>
-            )}
-          </button>
+          <a href="/createevent">
+            <button
+              className={`bg-gradient-to-r from-[#7b00d4] via-[#A255DA] to-[#F03CF9] rounded-full p-3 flex items-center gap-2 text-white font-semibold transition-all duration-300 ease-in-out
+                      ${isHovered ? "px-6" : "px-3 justify-center"}`}
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+            >
+              <PlusIcon className="w-6 h-6" />
+              {isHovered && (
+                <span className="transition-opacity duration-300 delay-100">
+                  Create Event
+                </span>
+              )}
+            </button>
+          </a>
           </div>
         </div>
         <div className="px-32 justify-center items-center">
