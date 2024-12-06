@@ -9,6 +9,7 @@ export default function CreateEventPage() {
   const [error, setError] = useState("");
   const [agendas, setAgendas] = useState([""]);
   const [eventPhoto, setEventPhoto] = useState(null);
+  const [eventCategory, setEventCategory] = useState("");
 
   const validateDateRange = (from, to) => {
     if (to && new Date(to) < new Date(from)) {
@@ -41,9 +42,9 @@ export default function CreateEventPage() {
 
   return (
     <>
-      <div className="h-screen flex flex-col bg-[#e8eefe]">
+      <div className="h-screen flex flex-col">
         <NavBar />
-        <div className="max-h-screen p-8 flex flex-col items-center">
+        <div className="h-screen bg-[#e8eefe] p-8 flex flex-col items-center">
           <div className="bg-white shadow-lg rounded-lg max-w-4xl w-full p-8">
             <h1 className="text-2xl font-bold text-gray-800 mb-6">Create New Event</h1>
 
@@ -57,8 +58,30 @@ export default function CreateEventPage() {
                   id="eventName"
                   type="text"
                   placeholder="Enter event name"
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#7b00d4] focus:ring-[#7b00d4]"
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
                 />
+              </div>
+
+              {/* Event Category */}
+              <div>
+                <label htmlFor="eventCategory" className="block text-sm font-medium text-gray-700">
+                  Event Category
+                </label>
+                <select
+                  id="eventCategory"
+                  value={eventCategory}
+                  onChange={(e) => setEventCategory(e.target.value)}
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm text-gray-700"
+                >
+                  <option value="" disabled>
+                    Select a category
+                  </option>
+                  <option value="conference">Conference</option>
+                  <option value="workshop">Workshop</option>
+                  <option value="meetup">Meetup</option>
+                  <option value="webinar">Webinar</option>
+                  <option value="social">Social Event</option>
+                </select>
               </div>
 
               {/* Event Photo */}
@@ -98,7 +121,7 @@ export default function CreateEventPage() {
                       type="date"
                       value={eventFrom}
                       onChange={(e) => handleEventFromChange(e.target.value)}
-                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#7b00d4] focus:ring-[#7b00d4]"
+                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
                     />
                   </div>
                   {/* Event To */}
@@ -111,7 +134,7 @@ export default function CreateEventPage() {
                       type="date"
                       value={eventTo}
                       onChange={(e) => handleEventToChange(e.target.value)}
-                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#7b00d4] focus:ring-[#7b00d4]"
+                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
                     />
                   </div>
                 </div>
@@ -127,7 +150,7 @@ export default function CreateEventPage() {
                   id="location"
                   type="text"
                   placeholder="Enter location"
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#7b00d4] focus:ring-[#7b00d4]"
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
                 />
               </div>
 
@@ -158,7 +181,7 @@ export default function CreateEventPage() {
                         newAgendas[index] = e.target.value;
                         setAgendas(newAgendas);
                       }}
-                      className="flex-1 rounded-md border-gray-300 shadow-sm focus:border-[#7b00d4] focus:ring-[#7b00d4]"
+                      className="flex-1 rounded-md border-gray-300 shadow-sm"
                     />
                     <button
                       type="button"
