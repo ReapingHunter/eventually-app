@@ -88,7 +88,7 @@ export default function RSVPPage(){
             {/* Organizers Section (Replace it with the actual organizers) */}
             <div className="bg-[#ffffff] rounded-xl shadow-md px-6 pb-6 flex flex-col gap-6 mt-4">
               <div className="mt-8">
-                <h3 className="text-xl font-semibold text-[#46007a]">Organizers</h3>
+                <h3 className="text-xl font-semibold text-[#46007a]">Organizer</h3>
                 <div className="mt-4 flex items-center gap-4">
                   {/* Organizer 1 */}
                   <div className="flex items-center gap-3">
@@ -99,19 +99,6 @@ export default function RSVPPage(){
                     />
                     <div>
                       <p className="font-medium">Organizer Name 1</p>
-                      <p className="text-sm text-gray-600">Position/Role</p>
-                    </div>
-                  </div>
-
-                  {/* Organizer 2 */}
-                  <div className="flex items-center gap-3">
-                    <img
-                      src="https://via.placeholder.com/50" // Replace with organizer image
-                      alt="Organizer 2"
-                      className="w-12 h-12 object-cover rounded-full"
-                    />
-                    <div>
-                      <p className="font-medium">Organizer Name 2</p>
                       <p className="text-sm text-gray-600">Position/Role</p>
                     </div>
                   </div>

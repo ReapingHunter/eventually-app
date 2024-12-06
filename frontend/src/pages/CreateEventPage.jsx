@@ -43,7 +43,7 @@ export default function CreateEventPage() {
     <>
       <div className="h-screen flex flex-col bg-[#e8eefe]">
         <NavBar />
-        <div className="h-screen p-8 flex flex-col items-center">
+        <div className="max-h-screen p-8 flex flex-col items-center">
           <div className="bg-white shadow-lg rounded-lg max-w-4xl w-full p-8">
             <h1 className="text-2xl font-bold text-gray-800 mb-6">Create New Event</h1>
 
