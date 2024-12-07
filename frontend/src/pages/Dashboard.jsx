@@ -39,7 +39,7 @@ export default function Dashboard() {
 
             {/* Register Button */}
             <a href="/signup">
-              <button className="flex bg-gradient-to-r from-[#7b00d4] via-[#A255DA] to-[#F03CF9] text-white font-semibold py-2 px-6 rounded-lg shadow-md gap-2">
+              <button className="flex bg-gradient-to-r from-[#7b00d4] via-[#A255DA] to-[#F03CF9] hover:from-[#5a00a8] hover:to-[#c42cf0] text-white font-semibold py-2 px-6 rounded-lg shadow-md gap-2">
                 <SparklesIcon className="w-5 h-5" />
                 Register now
               </button>
