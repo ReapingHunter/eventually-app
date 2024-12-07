@@ -26,14 +26,14 @@ export default function Dashboard() {
             <div className="font-normal text-4xl sm:text-5xl flex items-center justify-center mb-4">
               <div>Welcome to</div>
               <img
-                src="/images/dashboard-logo.png" // Replace with actual image
+                src="/images/dashboard-logo.svg" // Replace with actual image
                 alt="Event"
                 className="ml-4 w-48 sm:w-72 object-cover"
               />
             </div>
 
             {/* Subtitle */}
-            <div className="text-xl sm:text-2xl font-normal px-4 mb-4">
+            <div className="text-xl sm:text-2xl font-normal px-4 mb-8">
               Create and join events today, celebrate tomorrow.
             </div>
 
