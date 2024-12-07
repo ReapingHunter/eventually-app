@@ -2,7 +2,7 @@ import Footer from "@/components/Footer";
 import NavBar from "../components/NavBar";
 import EventCard from "../components/EventCard";
 import { Input } from "@/components/ui/input";
-import { QueueListIcon as QueueListIconSolid, Squares2X2Icon as Squares2x2IconSolid, ViewColumnsIcon as ViewColumnsIconSolid, SparklesIcon } from "@heroicons/react/24/solid";
+import { QueueListIcon as QueueListIconSolid, Squares2X2Icon as Squares2x2IconSolid, ViewColumnsIcon as ViewColumnsIconSolid, SparklesIcon, FireIcon } from "@heroicons/react/24/solid";
 import { QueueListIcon as QueueListIconOutline, Squares2X2Icon as Squares2x2IconOutline, ViewColumnsIcon as ViewColumnsIconOutline } from "@heroicons/react/24/outline";
 import { useState } from "react";
 
@@ -39,7 +39,7 @@ export default function Dashboard() {
 
             {/* Register Button */}
             <a href="/signup">
-              <button className="flex bg-gradient-to-r from-[#7b00d4] via-[#A255DA] to-[#F03CF9] hover:from-[#5a00a8] hover:to-[#c42cf0] text-white font-semibold py-2 px-6 rounded-lg shadow-md gap-2">
+              <button className="flex bg-gradient-to-r from-[#7b00d4] via-[#A255DA] to-[#F03CF9] hover:from-[#5a00a8] hover:to-[#c42cf0] transition text-white font-semibold py-2 px-6 rounded-lg shadow-md gap-2">
                 <SparklesIcon className="w-5 h-5" />
                 Register now
               </button>
@@ -50,8 +50,9 @@ export default function Dashboard() {
         <div className="flex-grow">
           
           <div className="px-24 py-8 flex justify-between items-center">
-            <div className="flex items-center gap-8">
-              <h1 className="font-bold text-5xl">Events</h1>
+            <div className="flex items-center gap-2">
+              <FireIcon className="w-14 h-auto text-[#7b00d4]"/>
+              <h1 className="font-bold text-5xl"><span className="text-[#7b00d4]">Top </span>Events</h1>
             </div>
           </div>
           <div className="px-32 justify-center items-center">
