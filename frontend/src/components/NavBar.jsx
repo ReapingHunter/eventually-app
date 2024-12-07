@@ -8,7 +8,7 @@ export default function NavBar() {
         {/* Dashboard Logo */}
         <a href="/" className="flex items-center">
           <img
-            src="/images/dashboard-logo.png"
+            src="/images/dashboard-logo-2.png"
             className="w-32 h-auto"
             alt="Dashboard Logo"
           />

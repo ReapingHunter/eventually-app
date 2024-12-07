@@ -15,16 +15,25 @@ export default function Dashboard() {
       <div className="min-h-screen flex flex-col bg-[#efefef]">
         {/* Navbar */}
         <NavBar />
-        <div className="relative">
-          <img
-              src="/images/dashboard-img.png" // Replace with actual image
-              alt="Event"
-              className="w-full max-h-96 brightness-50 object-cover"
-          />
-          <div className="absolute top-2 left-2 ml-16 mt-16 cursor-pointer text-5xl text-[#ffffff]">Welcome to 
-            <span className="text-[#7b00d4] font-bold"> Eventually</span>
+        <div style={{ backgroundImage: "url('/images/dashboard-img.png')",}} 
+             className="relative h-96 sm:h-[500px] lg:h-[600px] bg-cover bg-center">
+          {/* Welcome Text, Logo, and Subtitle */}
+          <div className="absolute top-2 left-2 ml-16 mt-12 transform text-[#ffffff] flex flex-col items-center text-center">
+            {/* Welcome Text and Logo */}
+            <div className="font-normal text-4xl sm:text-5xl flex items-center justify-center mb-4">
+              <div>Welcome to</div>
+              <img
+                src="/images/dashboard-logo.png" // Replace with actual image
+                alt="Event"
+                className="ml-4 w-48 sm:w-72 object-cover"
+              />
+            </div>
+
+            {/* Subtitle */}
+            <div className="text-xl sm:text-2xl font-normal px-4">
+              Create and join events today, celebrate tomorrow.
+            </div>
           </div>
-          
         </div>
         {/* Main content with flex-grow */}
         <div className="flex-grow">
