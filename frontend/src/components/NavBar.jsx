@@ -4,7 +4,7 @@ import { WrenchIcon, BellIcon, UserIcon } from "@heroicons/react/24/solid";
 export default function NavBar() {
   return (
     <>
-      <nav className="px-6 sm:px-10 flex justify-between items-center bg-[#ffffff] text-white shadow-lg">
+      <nav className="px-6 sm:px-10 flex justify-between items-center bg-[#ffffff] text-white shadow-lg z-10">
         {/* Dashboard Logo */}
         <a href="/" className="flex items-center">
           <img
@@ -33,7 +33,6 @@ export default function NavBar() {
           </a>
 
           <div className="border-l-2 border-[#9b9b9b] h-14"></div>
-
           <a href="/manageevent">
             <button className="bg-[#7b00d4] text-white font-bold py-2 px-4 rounded-lg shadow-md flex items-center gap-2 hover:brightness-110 transition">
               <WrenchIcon className="w-5 h-5" />

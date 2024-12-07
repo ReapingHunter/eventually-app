@@ -1,7 +1,8 @@
 import Footer from "@/components/Footer";
 import NavBar from "../components/NavBar";
 import EventCard from "../components/EventCard";
-import { QueueListIcon as QueueListIconSolid, Squares2X2Icon as Squares2x2IconSolid, ViewColumnsIcon as ViewColumnsIconSolid } from "@heroicons/react/24/solid";
+import { Input } from "@/components/ui/input";
+import { QueueListIcon as QueueListIconSolid, Squares2X2Icon as Squares2x2IconSolid, ViewColumnsIcon as ViewColumnsIconSolid, SparklesIcon } from "@heroicons/react/24/solid";
 import { QueueListIcon as QueueListIconOutline, Squares2X2Icon as Squares2x2IconOutline, ViewColumnsIcon as ViewColumnsIconOutline } from "@heroicons/react/24/outline";
 import { useState } from "react";
 
@@ -15,10 +16,12 @@ export default function Dashboard() {
       <div className="min-h-screen flex flex-col bg-[#efefef]">
         {/* Navbar */}
         <NavBar />
-        <div style={{ backgroundImage: "url('/images/dashboard-img.png')",}} 
-             className="relative h-96 sm:h-[500px] lg:h-[600px] bg-cover bg-center">
+        <div
+          style={{ backgroundImage: "url('/images/dashboard-img.png')" }}
+          className="relative h-96 sm:h-[400px] lg:h-[500px] bg-cover bg-center z-0"
+        >
           {/* Welcome Text, Logo, and Subtitle */}
-          <div className="absolute top-2 left-2 ml-16 mt-12 transform text-[#ffffff] flex flex-col items-center text-center">
+          <div className="absolute bottom-12 left-0 w-full h-full flex flex-col items-center justify-center text-[#ffffff] text-center">
             {/* Welcome Text and Logo */}
             <div className="font-normal text-4xl sm:text-5xl flex items-center justify-center mb-4">
               <div>Welcome to</div>
@@ -30,9 +33,15 @@ export default function Dashboard() {
             </div>
 
             {/* Subtitle */}
-            <div className="text-xl sm:text-2xl font-normal px-4">
+            <div className="text-xl sm:text-2xl font-normal px-4 mb-4">
               Create and join events today, celebrate tomorrow.
             </div>
+
+            {/* Register Button */}
+            <button className="flex bg-gradient-to-r from-[#7b00d4] via-[#A255DA] to-[#F03CF9] text-white font-semibold py-2 px-6 rounded-lg shadow-md gap-2">
+              <SparklesIcon className="w-5 h-5" />
+              Register now
+            </button>
           </div>
         </div>
         {/* Main content with flex-grow */}
