@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { PlusIcon, TrashIcon } from "@heroicons/react/24/solid";
 import NavBar from "@/components/NavBar";
+import Footer from "@/components/Footer";
 import { Input } from "@/components/ui/input";
 
 export default function CreateEventPage() {
@@ -42,9 +43,9 @@ export default function CreateEventPage() {
 
   return (
     <>
-      <div className="h-screen flex flex-col">
+      <div className="min-h-screen flex flex-col bg-[#e8eefe]">
         <NavBar />
-        <div className="h-screen bg-[#e8eefe] p-8 flex flex-col items-center">
+        <div className="flex-grow p-8 flex flex-col items-center">
           <div className="bg-white shadow-lg rounded-lg max-w-4xl w-full p-8">
             <h1 className="text-2xl font-bold text-gray-800 mb-6">Create New Event</h1>
 
@@ -214,6 +215,7 @@ export default function CreateEventPage() {
             </form>
           </div>
         </div>
+        <Footer />
       </div>
     </>
   );

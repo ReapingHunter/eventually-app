@@ -14,7 +14,7 @@ export default function Dashboard() {
 
   return (
     <>
-      <div className="h-screen flex flex-col">
+      <div className="h-screen flex flex-col bg-[#efefef]">
         {/* Navbar */}
         <NavBar />
         <div className="px-24 py-8 flex justify-between items-center">
