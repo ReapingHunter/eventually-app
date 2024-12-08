@@ -1,6 +1,7 @@
 
 import NavBar from "@/components/NavBar";
 import EventCard from "@/components/EventCard";
+import FilterEvents from "@/components/FilterEvents"
 import { useState } from "react";
 
 const events = new Array(150).fill(null).map((_, index) => ({ id: index, name: `Event ${index + 1}` })); // Sample events data (50 events)
@@ -30,7 +31,8 @@ export default function AllEventsPage() {
       <NavBar />
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold mb-8">All Events</h1>
-        
+        <FilterEvents />
+
         {/* Event Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {currentEvents.map((event) => (
