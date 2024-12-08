@@ -21,7 +21,7 @@ export default function NavBar() {
               HOME
             </button>
           </a>
-          <a href="/">
+          <a href="/events">
             <button className="bg-white hover:bg-[#7b00d4] hover:text-white text-black font-medium transition px-6 py-6 text-center">
               EVENTS
             </button>

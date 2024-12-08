@@ -6,20 +6,9 @@ import { Navigation } from 'swiper/modules'
 import 'swiper/css';
 import 'swiper/css/navigation';
 import { Button } from "@/components/ui/button";
-import { QueueListIcon as QueueListIconSolid, 
-         Squares2X2Icon as Squares2x2IconSolid, 
-         ViewColumnsIcon as ViewColumnsIconSolid, 
-         SparklesIcon, 
-         FireIcon } from "@heroicons/react/24/solid";
-import { QueueListIcon as QueueListIconOutline, 
-         Squares2X2Icon as Squares2x2IconOutline, 
-         ViewColumnsIcon as ViewColumnsIconOutline } from "@heroicons/react/24/outline";
-import { useState } from "react";
+import { SparklesIcon, FireIcon } from "@heroicons/react/24/solid";
 
 export default function Dashboard() {
-  // const locationOptions = ["Cebu City", "Bohol"];
-  const [activeTab, setActiveTab] = useState("upcoming");
-  const [viewMode, setViewMode] = useState("carousel")
 
   return (
     <>
@@ -59,84 +48,15 @@ export default function Dashboard() {
         {/* Main content with flex-grow */}
         <div className="flex-grow">
           
-          <div className="px-24 py-8 flex justify-between items-center">
+          <div className="px-24 pt-8 flex justify-between items-center">
             <div className="flex items-center gap-2">
               <FireIcon className="w-14 h-auto text-[#7b00d4]"/>
               <h1 className="font-bold text-5xl"><span className="text-[#7b00d4]">Top </span>Events</h1>
             </div>
           </div>
-          <div className="px-32 justify-center items-center">
-            <div className="w-full border-b justify-between border-gray-300 flex">
-              {/* Tabs */}
-              <div className="flex space-x-16 text-sm font-medium">
-                <button
-                  className={`pb-2 ${
-                    activeTab === "upcoming"
-                      ? "text-[#7b00d4] border-b-2 border-[#7b00d4]"
-                      : "text-gray-500 hover:text-gray-700"
-                  }`}
-                  onClick={() => setActiveTab("upcoming")}
-                >
-                  Upcoming Events
-                </button>
-                <button
-                  className={`pb-2 ${
-                    activeTab === "past"
-                      ? "text-[#7b00d4] border-b-2 border-[#7b00d4]"
-                      : "text-gray-500 hover:text-gray-700"
-                  }`}
-                  onClick={() => setActiveTab("past")}
-                >
-                  Past Events
-                </button>
-                <button
-                  className={`pb-2 ${
-                    activeTab === "bookmarked"
-                      ? "text-[#7b00d4] border-b-2 border-[#7b00d4]"
-                      : "text-gray-500 hover:text-gray-700"
-                  }`}
-                  onClick={() => setActiveTab("bookmarked")}
-                >
-                  Bookmarked
-                </button>
-              </div>
-              {/* View mode buttons */}
-              <div className="space-x-2">
-                <button
-                  className="p-2 rounded-lg bg-transparent transition"
-                  onClick={() => setViewMode("carousel")}
-                >
-                  {viewMode === "carousel" ? (
-                    <ViewColumnsIconSolid className="w-6 h-6 text-[#000000]" />
-                  ) : (
-                    <ViewColumnsIconOutline className="w-6 h-6 text-[#000000]" />
-                  )}
-                </button>
-                <button
-                  className="p-2 rounded-lg bg-transparent transition"
-                  onClick={() => setViewMode("grid")}
-                >
-                  {viewMode === "grid" ? (
-                    <Squares2x2IconSolid className="w-6 h-6 text-[#000000]" />
-                  ) : (
-                    <Squares2x2IconOutline className="w-6 h-6 text-[#000000]" />
-                  )}
-                </button>
-                <button
-                  className="p-2 rounded-lg bg-transparent transition"
-                  onClick={() => setViewMode("list")}
-                >
-                  {viewMode === "list" ? (
-                    <QueueListIconSolid className="w-6 h-6 text-[#000000]" />
-                  ) : (
-                    <QueueListIconOutline className="w-6 h-6 text-[#000000]" />
-                  )}
-                </button>
-              </div>
-            </div>
-            
+          <div className="px-32 justify-center items-center">            
             {/* Event cards */}
-            <div className="px-8 py-8">
+            <div className="p-8">
               <Swiper
                 modules={[Navigation]}
                 spaceBetween={20}

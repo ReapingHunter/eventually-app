@@ -11,6 +11,7 @@ import RSVPPage from './pages/RSVPPage.jsx'
 import ManageEventPage from './pages/ManageEventPage'
 import CreateEventPage from './pages/CreateEventPage'
 import ModifyEventPage from './pages/ModifyEventPage'
+import AllEventsPage from './pages/AllEventsPage'
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Router>
@@ -23,6 +24,7 @@ createRoot(document.getElementById('root')).render(
         <Route path='/createevent' element={<CreateEventPage />} />
         <Route path='/manageevent' element={<ManageEventPage />} />
         <Route path='/modifyevent' element={<ModifyEventPage />} />
+        <Route path='/events' element={<AllEventsPage />} />
       </Routes>
     </Router>
   </StrictMode>,
