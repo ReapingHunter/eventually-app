@@ -1,9 +1,19 @@
 import Footer from "@/components/Footer";
 import NavBar from "../components/NavBar";
 import EventCard from "../components/EventCard";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css"; // Core Swiper styles
+import "swiper/css/navigation"; // Navigation styles
+import { Navigation } from "swiper/modules";
 import { Button } from "@/components/ui/button";
-import { QueueListIcon as QueueListIconSolid, Squares2X2Icon as Squares2x2IconSolid, ViewColumnsIcon as ViewColumnsIconSolid, SparklesIcon, FireIcon } from "@heroicons/react/24/solid";
-import { QueueListIcon as QueueListIconOutline, Squares2X2Icon as Squares2x2IconOutline, ViewColumnsIcon as ViewColumnsIconOutline } from "@heroicons/react/24/outline";
+import { QueueListIcon as QueueListIconSolid, 
+         Squares2X2Icon as Squares2x2IconSolid, 
+         ViewColumnsIcon as ViewColumnsIconSolid, 
+         SparklesIcon, 
+         FireIcon } from "@heroicons/react/24/solid";
+import { QueueListIcon as QueueListIconOutline, 
+         Squares2X2Icon as Squares2x2IconOutline, 
+         ViewColumnsIcon as ViewColumnsIconOutline } from "@heroicons/react/24/outline";
 import { useState } from "react";
 
 export default function Dashboard() {
@@ -124,18 +134,36 @@ export default function Dashboard() {
                 </button>
               </div>
             </div>
+            
             {/* Event cards */}
-            <div className="flex flex-1 overflow-hidden">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 px-40 overflow-y-auto max-h-[calc(100vh-200px)] mt-4 p-2">
-                <EventCard />
-                <EventCard />
-                <EventCard />
-                <EventCard />
-                <EventCard />
-                <EventCard />
-                <EventCard />
-                <EventCard />
-              </div>
+            <div className="px-8 py-4">
+              <Swiper
+                modules={[Navigation]}
+                spaceBetween={20}
+                slidesPerView={1}
+                navigation
+                breakpoints={{
+                  // Responsive breakpoints
+                  640: { slidesPerView: 1 }, // 1 slide for small screens
+                  768: { slidesPerView: 2 }, // 2 slides for medium screens
+                  1024: { slidesPerView: 3 }, // 3 slides for large screens
+                }}
+              >
+                {/* Each event as a slide */}
+                <SwiperSlide>
+                  <EventCard />
+                </SwiperSlide>
+                <SwiperSlide>
+                  <EventCard />
+                </SwiperSlide>
+                <SwiperSlide>
+                  <EventCard />
+                </SwiperSlide>
+                <SwiperSlide>
+                  <EventCard />
+                </SwiperSlide>
+                {/* Add more slides as needed */}
+              </Swiper>
             </div>
           </div>
         </div>
