@@ -48,7 +48,7 @@ export default function FilterEvents(){
   return(
     <>
       <div className="flex bg-[#fdfdfd] border-2 px-4 py-4 items-center justify-center drop-shadow-xl w-full mb-4 gap-4">
-        <Input className="bg-[#f7f7f7] border-0 rounded-none shadow-inner" placeholder="Search Event name" />
+        <Input className="bg-[#f7f7f7] border-0 rounded-none shadow-inner w-1/2" placeholder="Search Event name" />
 
         {/* Event Location */}
         <Popover open={isLocationOpen} onOpenChange={setLocationOpen}>

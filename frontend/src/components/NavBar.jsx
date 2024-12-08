@@ -1,4 +1,3 @@
-import SearchBar from "../components/SearchBar";
 import { WrenchIcon, BellIcon, UserIcon } from "@heroicons/react/24/solid";
 
 export default function NavBar() {
