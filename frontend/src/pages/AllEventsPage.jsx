@@ -3,12 +3,12 @@ import NavBar from "@/components/NavBar";
 import EventCard from "@/components/EventCard";
 import { useState } from "react";
 
-const events = new Array(50).fill(null).map((_, index) => ({ id: index, name: `Event ${index + 1}` })); // Sample events data (50 events)
+const events = new Array(150).fill(null).map((_, index) => ({ id: index, name: `Event ${index + 1}` })); // Sample events data (50 events)
 
 export default function AllEventsPage() {
   // State to manage the current page
   const [currentPage, setCurrentPage] = useState(1);
-  const eventsPerPage = 30;
+  const eventsPerPage = 28;
 
   // Calculate the index of the first and last event on the current page
   const indexOfLastEvent = currentPage * eventsPerPage;
@@ -32,7 +32,7 @@ export default function AllEventsPage() {
         <h1 className="text-3xl font-bold mb-8">All Events</h1>
         
         {/* Event Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {currentEvents.map((event) => (
             <EventCard key={event.id} event={event} />
           ))}
