@@ -7,7 +7,7 @@ export default function EventCard(){
   return (
     <>
       <a href="/rsvp">
-        <div className="max-w-sm mx-auto bg-white rounded-lg shadow-lg hover:shadow-2xl hover:scale-110 overflow-hidden border border-gray-200 transition">
+        <div className="max-w-sm mx-auto bg-white rounded-lg shadow-lg hover:shadow-2xl hover:scale-105 overflow-hidden border border-gray-200 transition">
           {/* Event Image Section */}
           <div className="relative">
             <img
