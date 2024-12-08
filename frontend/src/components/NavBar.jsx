@@ -26,17 +26,6 @@ export default function NavBar() {
               EVENTS
             </button>
           </a>
-          <a href="/">
-            <button className="bg-white hover:bg-[#7b00d4] hover:text-white text-black font-medium transition px-6 py-6 text-center">
-              ABOUT
-            </button>
-          </a>
-          <a href="/">
-            <button className="bg-white hover:bg-[#7b00d4] hover:text-white text-black font-medium transition px-6 py-6 text-center">
-              CONTACT
-            </button>
-          </a>
-
           <div className="border-l-2 border-[#9b9b9b] h-14"></div>
           <a href="/manageevent">
             <button className="bg-[#7b00d4] text-white font-bold py-2 px-4 rounded-lg shadow-md flex items-center gap-2 hover:brightness-110 transition">
