@@ -27,7 +27,7 @@ export default function ResetPasswordPage() {
                   <Label htmlFor="password">Confirm Password</Label>
                   <Input type="password" id="password" />
                   <div className="flex flex-col mt-4 items-center">
-                    <Button className="font-bold bg-[#7B00D4] text-white px-4 py-2 rounded-md mb-4 w-full">
+                    <Button className="font-bold bg-[#7B00D4] hover:bg-[#5b00a6] text-white px-4 py-2 rounded-md mb-4 w-full">
                       CHANGE PASSWORD
                     </Button>
                     <a className="text-sm md:text-base text-[#737272] font-normal whitespace-nowrap mb-4 hover:underline hover:text-[#7B00D4]" href="/login">
