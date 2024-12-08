@@ -1,7 +1,7 @@
 import Footer from "@/components/Footer";
 import NavBar from "../components/NavBar";
 import EventCard from "../components/EventCard";
-import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { QueueListIcon as QueueListIconSolid, Squares2X2Icon as Squares2x2IconSolid, ViewColumnsIcon as ViewColumnsIconSolid, SparklesIcon, FireIcon } from "@heroicons/react/24/solid";
 import { QueueListIcon as QueueListIconOutline, Squares2X2Icon as Squares2x2IconOutline, ViewColumnsIcon as ViewColumnsIconOutline } from "@heroicons/react/24/outline";
 import { useState } from "react";
@@ -39,10 +39,10 @@ export default function Dashboard() {
 
             {/* Register Button */}
             <a href="/signup">
-              <button className="flex bg-gradient-to-r from-[#7b00d4] via-[#A255DA] to-[#F03CF9] hover:from-[#5a00a8] hover:to-[#c42cf0] transition text-white font-semibold py-2 px-6 rounded-lg shadow-md gap-2">
+              <Button className="flex bg-gradient-to-r from-[#7b00d4] via-[#A255DA] to-[#F03CF9] hover:from-[#5a00a8] hover:to-[#c42cf0] transition text-white font-semibold py-2 px-6 rounded-lg shadow-md gap-2">
                 <SparklesIcon className="w-5 h-5" />
                 Register now
-              </button>
+              </Button>
             </a>
           </div>
         </div>
