@@ -58,9 +58,8 @@ export default function Dashboard() {
               <h1 className="font-bold text-5xl"><span className="text-[#7b00d4]">Top </span>Events</h1>
             </div>
           </div>
-          <div className="px-32 justify-center items-center">            
+          <div className="px-32 py-8 justify-center items-center">            
             {/* Event cards */}
-            <div className="p-8">
               <Carousel
                 opts={{
                   align: "start",
@@ -76,10 +75,9 @@ export default function Dashboard() {
                   </CarouselItem>
                 ))}
                 </CarouselContent>
-                <CarouselPrevious className="bg-[#7b00d4] hover:bg-[#7b00d4] hover:brightness-110 text-white hover:text-white w-16 h-16" />
-                <CarouselNext className="bg-[#7b00d4] hover:bg-[#7b00d4] hover:brightness-110 text-white hover:text-white w-16 h-16" />
+                <CarouselPrevious className="bg-[#7b00d4] hover:bg-[#7b00d4] hover:brightness-90 transition text-white hover:text-white" />
+                <CarouselNext className="bg-[#7b00d4] hover:bg-[#7b00d4] hover:brightness-90 transition text-white hover:text-white" />
               </Carousel>
-            </div>
           </div>
         </div>
         <Footer />

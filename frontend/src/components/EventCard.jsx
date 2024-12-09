@@ -2,12 +2,13 @@
 import { CalendarIcon, MapPinIcon } from "@heroicons/react/24/solid"
 import { ClockIcon } from "@heroicons/react/24/outline"
 import { Button } from "./ui/button";
+import { Card } from "./ui/card";
 
 export default function EventCard(){
   return (
     <>
       <a href="/rsvp">
-        <div className="max-w-sm mx-auto bg-white rounded-lg shadow-lg hover:shadow-2xl hover:scale-105 overflow-hidden border border-gray-200 transition">
+        <Card className="max-w-sm mx-auto bg-white rounded-lg shadow-lg hover:shadow-2xl hover:scale-105 overflow-hidden border border-gray-200 transition">
           {/* Event Image Section */}
           <div className="relative">
             <img
@@ -43,7 +44,7 @@ export default function EventCard(){
             </div>
           </div>
 
-        </div>
+        </Card>
       </a>
     </>
   );
