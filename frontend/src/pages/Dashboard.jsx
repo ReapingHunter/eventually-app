@@ -1,7 +1,6 @@
 import Footer from "@/components/Footer";
 import NavBar from "../components/NavBar";
 import EventCard from "../components/EventCard";
-import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules'
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -57,42 +56,7 @@ export default function Dashboard() {
           <div className="px-32 justify-center items-center">            
             {/* Event cards */}
             <div className="p-8">
-              <Swiper
-                modules={[Navigation]}
-                spaceBetween={20}
-                slidesPerView={1}
-                navigation
-                breakpoints={{
-                  640: { slidesPerView: 1 },
-                  768: { slidesPerView: 2 },
-                  1024: { slidesPerView: 3 },
-                }}
-              >
-                <SwiperSlide>
-                  <EventCard />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <EventCard />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <EventCard />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <EventCard />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <EventCard />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <EventCard />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <EventCard />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <EventCard />
-                </SwiperSlide>
-              </Swiper>
+              
             </div>
           </div>
         </div>
