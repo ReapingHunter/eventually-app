@@ -1,6 +1,14 @@
 import Footer from "@/components/Footer";
 import NavBar from "../components/NavBar";
 import EventCard from "../components/EventCard";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
+import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button";
 import { SparklesIcon, FireIcon } from "@heroicons/react/24/solid";
 
@@ -53,7 +61,24 @@ export default function Dashboard() {
           <div className="px-32 justify-center items-center">            
             {/* Event cards */}
             <div className="p-8">
-              
+              <Carousel
+                opts={{
+                  align: "start",
+                }}
+                className="w-full"
+              >
+                <CarouselContent>
+                {Array.from({ length: 8 }).map((_, index) => (
+                  <CarouselItem key={index} className="sm:basis-1 md:basis-1/2 lg:basis-1/3">
+                    <div className="p-1">
+                      <EventCard />
+                    </div>
+                  </CarouselItem>
+                ))}
+                </CarouselContent>
+                <CarouselPrevious className="bg-[#7b00d4] hover:bg-[#7b00d4] hover:brightness-110 text-white hover:text-white w-16 h-16" />
+                <CarouselNext className="bg-[#7b00d4] hover:bg-[#7b00d4] hover:brightness-110 text-white hover:text-white w-16 h-16" />
+              </Carousel>
             </div>
           </div>
         </div>
