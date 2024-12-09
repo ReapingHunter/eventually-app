@@ -1,9 +1,6 @@
 import Footer from "@/components/Footer";
 import NavBar from "../components/NavBar";
 import EventCard from "../components/EventCard";
-import { Navigation } from 'swiper/modules'
-import 'swiper/css';
-import 'swiper/css/navigation';
 import { Button } from "@/components/ui/button";
 import { SparklesIcon, FireIcon } from "@heroicons/react/24/solid";
 
