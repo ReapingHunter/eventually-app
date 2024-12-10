@@ -9,6 +9,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { PlusIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 
@@ -20,6 +21,7 @@ const events = new Array(150).fill(null).map((_, index) => ({
 })); 
 
 export default function MyEventsPage() {
+  const [isHovered, setIsHovered] = useState(false)
   const currentUserId = "user1"; // Simulating the logged-in user's ID
   const userEvents = events.filter((event) => event.createdBy === currentUserId);
 
@@ -95,8 +97,25 @@ export default function MyEventsPage() {
     <>
       <NavBar />
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-5xl font-bold mb-8">Your Events</h1>
-
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-5xl font-bold">Your Events</h1>
+          <a href="/createevent">
+            <button
+                className={`bg-gradient-to-r from-[#7b00d4] via-[#A255DA] to-[#F03CF9] rounded-full p-3 flex items-center gap-2 text-white font-semibold transition-all duration-300 ease-in-out
+                        ${isHovered ? "px-6" : "px-3 justify-center"}`}
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+              >
+                <PlusIcon className="w-6 h-6" />
+                {isHovered && (
+                  <span className="transition-opacity duration-300 delay-100">
+                    Create Event
+                  </span>
+                )}
+            </button>
+          </a>
+        </div>
+        
         {/* Display message if no events */}
         {userEvents.length === 0 ? (
           <p className="text-gray-500 text-center">
