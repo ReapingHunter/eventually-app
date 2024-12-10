@@ -25,6 +25,7 @@ DROP TABLE IF EXISTS `event`;
 CREATE TABLE `event` (
   `event_id` int NOT NULL AUTO_INCREMENT,
   `title` varchar(100) NOT NULL,
+  `photo` varchar(255) NOT NULL, /* Can be stored as a LONGBLOB as well */
   `description` text,
   `date` datetime NOT NULL,
   `address` varchar(255) DEFAULT NULL,
