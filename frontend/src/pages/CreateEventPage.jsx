@@ -83,10 +83,10 @@ export default function CreateEventPage() {
 
             <form className="space-y-6">
               
-              <div className="flex justify-stretch w-full">
+              <div className="flex justify-between w-full gap-4">
 
                 {/* Event Name */}
-                <div>
+                <div className="flex-1">
                   <Label htmlFor="eventName" className="text-sm font-medium text-gray-700">
                     Event Name
                   </Label>
@@ -94,12 +94,12 @@ export default function CreateEventPage() {
                     id="eventName"
                     type="text"
                     placeholder="Enter event name"
-                    className="mt-1 block w-1/2 rounded-md border-gray-300 shadow-inner"
+                    className="mt-1 block rounded-md border-gray-300 shadow-inner w-full"
                   />
                 </div>
 
                 {/* Event Category */}
-                <div>
+                <div className="flex-1">
                   <Label htmlFor="eventCategory" className="text-sm font-medium text-gray-700">
                     Event Category
                   </Label>
@@ -109,7 +109,7 @@ export default function CreateEventPage() {
                         variant="outline"
                         role="combobox"
                         aria-expanded={isCategoryOpen}
-                        className="bg-[#f7f7f7] mb-4 rounded-md border flex flex-none"
+                        className="bg-[#f7f7f7] mb-4 mt-1 py-5 w-full rounded-md border flex items-center justify-between"
                       >
                         {categoryValue
                           ? categories.find((category) => category.value === categoryValue)?.label
@@ -117,7 +117,7 @@ export default function CreateEventPage() {
                         <ChevronDown className="text-[#7b00d4]" />
                       </Button>
                     </PopoverTrigger>
-                    <PopoverContent className="w-[200px] p-0">
+                    <PopoverContent className="w-[400px] p-0">
                       <Command>
                         <CommandInput placeholder="Search Category..." />
                         <CommandList>
