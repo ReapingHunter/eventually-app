@@ -17,6 +17,8 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command"
+import { Calendar } from "@/components/ui/calendar";
+import { Calendar as CalendarIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
 import { Check } from "lucide-react";
@@ -150,7 +152,7 @@ export default function CreateEventPage() {
               </div>
 
               {/* Event Photo */}
-              <div>
+              <div className="flex-1">
                 <label htmlFor="eventPhoto" className="block text-sm font-medium text-gray-700">
                   Event Photo
                 </label>
@@ -179,28 +181,9 @@ export default function CreateEventPage() {
                   {/* Event From */}
                   <div className="flex-1">
                     <label htmlFor="eventFrom" className="block text-sm font-medium text-gray-700">
-                      Event Start
+                      Event Date and Time
                     </label>
-                    <Input
-                      id="eventFrom"
-                      type="date"
-                      value={eventFrom}
-                      onChange={(e) => handleEventFromChange(e.target.value)}
-                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
-                    />
-                  </div>
-                  {/* Event To */}
-                  <div className="flex-1">
-                    <label htmlFor="eventTo" className="block text-sm font-medium text-gray-700">
-                      Event End
-                    </label>
-                    <Input
-                      id="eventTo"
-                      type="date"
-                      value={eventTo}
-                      onChange={(e) => handleEventToChange(e.target.value)}
-                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
-                    />
+                    
                   </div>
                 </div>
                 {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
