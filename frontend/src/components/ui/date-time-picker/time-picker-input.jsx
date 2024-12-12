@@ -8,22 +8,6 @@ import {
   setDateByType,
 } from "./time-picker-utils";
 
-TimePickerInput.propTypes = {
-  className: PropTypes.string,
-  type: PropTypes.string,
-  value: PropTypes.string,
-  id: PropTypes.string,
-  name: PropTypes.string,
-  date: PropTypes.instanceOf(Date),
-  setDate: PropTypes.func.isRequired,
-  onChange: PropTypes.func,
-  onKeyDown: PropTypes.func,
-  picker: PropTypes.oneOf(["minutes", "seconds", "hours", "12hours"]).isRequired,
-  period: PropTypes.oneOf(["AM", "PM"]),
-  onLeftFocus: PropTypes.func,
-  onRightFocus: PropTypes.func,
-};
-
 const TimePickerInput = forwardRef(
   (
     {
@@ -120,5 +104,21 @@ const TimePickerInput = forwardRef(
 );
 
 TimePickerInput.displayName = "TimePickerInput";
+
+TimePickerInput.propTypes = {
+  className: PropTypes.string,
+  type: PropTypes.string,
+  value: PropTypes.string,
+  id: PropTypes.string,
+  name: PropTypes.string,
+  date: PropTypes.instanceOf(Date),
+  setDate: PropTypes.func.isRequired,
+  onChange: PropTypes.func,
+  onKeyDown: PropTypes.func,
+  picker: PropTypes.oneOf(["minutes", "seconds", "hours", "12hours"]).isRequired,
+  period: PropTypes.oneOf(["AM", "PM"]),
+  onLeftFocus: PropTypes.func,
+  onRightFocus: PropTypes.func,
+};
 
 export { TimePickerInput };

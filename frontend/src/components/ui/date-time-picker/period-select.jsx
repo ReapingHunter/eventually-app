@@ -5,15 +5,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { display12HourValue, setDateByType } from "./time-picker-utils";
 import PropTypes from "prop-types"
 
-TimePeriodSelect.propTypes = {
-  period: PropTypes.oneOf(['AM', 'PM']).isRequired,
-  setPeriod: PropTypes.func.isRequired,
-  date: PropTypes.instanceOf(Date),
-  setDate: PropTypes.func.isRequired,
-  onLeftFocus: PropTypes.func,
-  onRightFocus: PropTypes.func,
-}
-
 export const TimePeriodSelect = React.forwardRef(({
     period,
     setPeriod,
@@ -55,5 +46,15 @@ export const TimePeriodSelect = React.forwardRef(({
         </div>
     );
 });
+
+TimePeriodSelect.propTypes = {
+  period: PropTypes.oneOf(['AM', 'PM']).isRequired,
+  setPeriod: PropTypes.func.isRequired,
+  date: PropTypes.instanceOf(Date),
+  setDate: PropTypes.func.isRequired,
+  onLeftFocus: PropTypes.func,
+  onRightFocus: PropTypes.func,
+}
+
 
 TimePeriodSelect.displayName = "TimePeriodSelect";

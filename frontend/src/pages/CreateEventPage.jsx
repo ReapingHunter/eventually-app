@@ -17,13 +17,12 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command"
-import { Calendar } from "@/components/ui/calendar";
-import { Calendar as CalendarIcon } from "lucide-react";
+import { DateTimePicker } from "@/components/ui/date-time-picker/date-time-picker";
 import { Button } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
 import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { format } from "date-fns"
+
 
 const categories = [
   {
@@ -44,15 +43,11 @@ export default function CreateEventPage() {
   const [eventCategory, setEventCategory] = useState("");
   const [isCategoryOpen, setCategoryOpen] = useState(false)
 
-  const [date, setDate] = useState("")
+  const [dateTime, setDateTime] = useState("")
 
   const handleAddAgenda = () => setAgendas([...agendas, ""]);
   const handleRemoveAgenda = (index) =>
     setAgendas(agendas.filter((_, i) => i !== index));
-
-  const handleChange = (e) => {
-    setDate(e.target.value);
-  }
 
   const handlePhotoUpload = (e) => {
     const file = e.target.files[0];
@@ -169,28 +164,7 @@ export default function CreateEventPage() {
                     <Label htmlFor="eventFrom" className="block text-sm font-medium text-gray-700">
                       Event Date and Time
                     </Label>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <Button
-                          variant={"outline"}
-                          className={cn(
-                            "w-[280px] justify-start text-left font-normal",
-                            !date && "text-muted-foreground"
-                          )}
-                        >
-                          <CalendarIcon />
-                          {date ? format(date, "PPP HH:mm:ss") : <span>Pick a date</span>}
-                        </Button>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0">
-                        <Calendar
-                          mode="single"
-                          selected={date}
-                          onSelect={setDate}
-                          initialFocus
-                        />
-                      </PopoverContent>
-                    </Popover>
+                    <DateTimePicker hourCycle={12} value={dateTime} onChange={setDateTime} />
                   </div>
                 </div>
                 {error && <p className="mt-2 text-sm text-red-600">{error}</p>}

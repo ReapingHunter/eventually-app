@@ -6,12 +6,12 @@ import { Label } from "@/components/ui/label";
 import { TimePickerInput } from "./time-picker-input";
 import { TimePeriodSelect } from "./period-select";
 
-TimePicker12Demo.propTypes = {
+TimePickerDemo.propTypes = {
   date: PropTypes.instanceOf(Date), // Validates that `date` is an instance of Date or undefined
   setDate: PropTypes.func.isRequired, // Validates that `setDate` is a required function
 };
 
-function TimePicker12Demo({ date, setDate }) {
+function TimePickerDemo({ date, setDate }) {
   const [period, setPeriod] = useState("PM");
 
   const minuteRef = useRef(null);
@@ -79,4 +79,4 @@ function TimePicker12Demo({ date, setDate }) {
   );
 }
 
-export { TimePicker12Demo };
+export { TimePickerDemo };
