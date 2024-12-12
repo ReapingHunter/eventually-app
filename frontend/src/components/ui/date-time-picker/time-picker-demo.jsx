@@ -32,6 +32,7 @@ function TimePickerDemo({ date, setDate }) {
           setDate={setDate}
           ref={hourRef}
           onRightFocus={() => minuteRef.current?.focus()}
+          className="mb-0"
         />
       </div>
       <div className="grid gap-1 text-center">
@@ -46,6 +47,7 @@ function TimePickerDemo({ date, setDate }) {
           ref={minuteRef}
           onLeftFocus={() => hourRef.current?.focus()}
           onRightFocus={() => secondRef.current?.focus()}
+          className="mb-0"
         />
       </div>
       <div className="grid gap-1 text-center">
@@ -60,6 +62,7 @@ function TimePickerDemo({ date, setDate }) {
           ref={secondRef}
           onLeftFocus={() => minuteRef.current?.focus()}
           onRightFocus={() => periodRef.current?.focus()}
+          className="mb-0"
         />
       </div>
       <div className="grid gap-1 text-center">
