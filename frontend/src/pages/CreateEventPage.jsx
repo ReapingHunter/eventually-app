@@ -3,6 +3,35 @@ import { PlusIcon, TrashIcon } from "@heroicons/react/24/solid";
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command"
+import { Button } from "@/components/ui/button";
+import { ChevronDown } from "lucide-react";
+import { Check } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+const categories = [
+  {
+    value: "networking",
+    label: "Networking",
+  },
+  {
+    value: "wedding",
+    label: "Wedding",
+  },
+]
 
 export default function CreateEventPage() {
   const [eventFrom, setEventFrom] = useState("");
@@ -11,6 +40,9 @@ export default function CreateEventPage() {
   const [agendas, setAgendas] = useState([""]);
   const [eventPhoto, setEventPhoto] = useState(null);
   const [eventCategory, setEventCategory] = useState("");
+
+  const [isCategoryOpen, setCategoryOpen] = useState(false)
+  const [categoryValue, setCategoryValue] = useState("")
 
   const validateDateRange = (from, to) => {
     if (to && new Date(to) < new Date(from)) {
@@ -43,46 +75,78 @@ export default function CreateEventPage() {
 
   return (
     <>
-      <div className="min-h-screen flex flex-col bg-[#e8eefe]">
+      <div className="min-h-screen flex flex-col bg-[#fbf3ff]">
         <NavBar />
         <div className="flex-grow p-8 flex flex-col items-center">
           <div className="bg-white shadow-lg rounded-lg max-w-4xl w-full p-8">
             <h1 className="text-2xl font-bold text-gray-800 mb-6">Create New Event</h1>
 
             <form className="space-y-6">
-              {/* Event Name */}
-              <div>
-                <label htmlFor="eventName" className="block text-sm font-medium text-gray-700">
-                  Event Name
-                </label>
-                <Input
-                  id="eventName"
-                  type="text"
-                  placeholder="Enter event name"
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
-                />
-              </div>
+              
+              <div className="flex justify-stretch w-full">
 
-              {/* Event Category */}
-              <div>
-                <label htmlFor="eventCategory" className="block text-sm font-medium text-gray-700">
-                  Event Category
-                </label>
-                <select
-                  id="eventCategory"
-                  value={eventCategory}
-                  onChange={(e) => setEventCategory(e.target.value)}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm text-gray-700"
-                >
-                  <option value="" disabled>
-                    Select a category
-                  </option>
-                  <option value="conference">Conference</option>
-                  <option value="workshop">Workshop</option>
-                  <option value="meetup">Meetup</option>
-                  <option value="webinar">Webinar</option>
-                  <option value="social">Social Event</option>
-                </select>
+                {/* Event Name */}
+                <div>
+                  <Label htmlFor="eventName" className="text-sm font-medium text-gray-700">
+                    Event Name
+                  </Label>
+                  <Input
+                    id="eventName"
+                    type="text"
+                    placeholder="Enter event name"
+                    className="mt-1 block w-1/2 rounded-md border-gray-300 shadow-inner"
+                  />
+                </div>
+
+                {/* Event Category */}
+                <div>
+                  <Label htmlFor="eventCategory" className="text-sm font-medium text-gray-700">
+                    Event Category
+                  </Label>
+                  <Popover open={isCategoryOpen} onOpenChange={setCategoryOpen}>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        role="combobox"
+                        aria-expanded={isCategoryOpen}
+                        className="bg-[#f7f7f7] mb-4 rounded-md border flex flex-none"
+                      >
+                        {categoryValue
+                          ? categories.find((category) => category.value === categoryValue)?.label
+                          : "Select Category..."}
+                        <ChevronDown className="text-[#7b00d4]" />
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-[200px] p-0">
+                      <Command>
+                        <CommandInput placeholder="Search Category..." />
+                        <CommandList>
+                          <CommandEmpty>No categories found...</CommandEmpty>
+                          <CommandGroup>
+                            {categories.map((category) => (
+                              <CommandItem
+                                key={category.value}
+                                value={category.value}
+                                onSelect={(currentVal) => {
+                                  setCategoryValue(currentVal === categoryValue ? "" : currentVal);
+                                  setCategoryOpen(false);
+                                }}
+                              >
+                                {category.label}
+                                <Check
+                                  className={cn(
+                                    "ml-auto",
+                                    categoryValue === category.value ? "opacity-100" : "opacity-0"
+                                  )}
+                                />
+                              </CommandItem>
+                            ))}
+                          </CommandGroup>
+                        </CommandList>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
+                </div>
               </div>
 
               {/* Event Photo */}
