@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Period, display12HourValue, setDateByType } from "./time-picker-utils";
+import { display12HourValue, setDateByType } from "./time-picker-utils";
 import PropTypes from "prop-types"
 
 TimePeriodSelect.propTypes = {

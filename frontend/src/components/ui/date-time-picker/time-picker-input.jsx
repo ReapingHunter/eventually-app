@@ -1,7 +1,7 @@
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import PropTypes from "prop-types";
-import React, { useState, useEffect, useMemo, forwardRef } from "react";
+import { useState, useEffect, useMemo, forwardRef } from "react";
 import {
   getArrowByType,
   getDateByType,

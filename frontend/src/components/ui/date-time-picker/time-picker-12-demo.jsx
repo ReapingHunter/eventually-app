@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { Label } from "@/components/ui/label";
 import { TimePickerInput } from "./time-picker-input";
