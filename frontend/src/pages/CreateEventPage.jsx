@@ -23,6 +23,7 @@ import { Button } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
 import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { format } from "date-fns"
 
 const categories = [
   {
@@ -36,37 +37,22 @@ const categories = [
 ]
 
 export default function CreateEventPage() {
-  const [eventFrom, setEventFrom] = useState("");
-  const [eventTo, setEventTo] = useState("");
   const [error, setError] = useState("");
   const [agendas, setAgendas] = useState([""]);
   const [eventPhoto, setEventPhoto] = useState(null);
+
   const [eventCategory, setEventCategory] = useState("");
-
   const [isCategoryOpen, setCategoryOpen] = useState(false)
-  const [categoryValue, setCategoryValue] = useState("")
 
-  const validateDateRange = (from, to) => {
-    if (to && new Date(to) < new Date(from)) {
-      setError("End date cannot be before start date.");
-    } else {
-      setError("");
-    }
-  };
-
-  const handleEventFromChange = (value) => {
-    setEventFrom(value);
-    validateDateRange(value, eventTo);
-  };
-
-  const handleEventToChange = (value) => {
-    setEventTo(value);
-    validateDateRange(eventFrom, value);
-  };
+  const [date, setDate] = useState("")
 
   const handleAddAgenda = () => setAgendas([...agendas, ""]);
   const handleRemoveAgenda = (index) =>
     setAgendas(agendas.filter((_, i) => i !== index));
+
+  const handleChange = (e) => {
+    setDate(e.target.value);
+  }
 
   const handlePhotoUpload = (e) => {
     const file = e.target.files[0];
@@ -113,8 +99,8 @@ export default function CreateEventPage() {
                         aria-expanded={isCategoryOpen}
                         className="bg-[#f7f7f7] mb-4 mt-1 py-5 w-full rounded-md border flex items-center justify-between"
                       >
-                        {categoryValue
-                          ? categories.find((category) => category.value === categoryValue)?.label
+                        {eventCategory
+                          ? categories.find((category) => category.value === eventCategory)?.label
                           : "Select Category..."}
                         <ChevronDown className="text-[#7b00d4]" />
                       </Button>
@@ -130,7 +116,7 @@ export default function CreateEventPage() {
                                 key={category.value}
                                 value={category.value}
                                 onSelect={(currentVal) => {
-                                  setCategoryValue(currentVal === categoryValue ? "" : currentVal);
+                                  setEventCategory(currentVal === eventCategory ? "" : currentVal);
                                   setCategoryOpen(false);
                                 }}
                               >
@@ -138,7 +124,7 @@ export default function CreateEventPage() {
                                 <Check
                                   className={cn(
                                     "ml-auto",
-                                    categoryValue === category.value ? "opacity-100" : "opacity-0"
+                                    eventCategory === category.value ? "opacity-100" : "opacity-0"
                                   )}
                                 />
                               </CommandItem>
@@ -153,9 +139,9 @@ export default function CreateEventPage() {
 
               {/* Event Photo */}
               <div className="flex-1">
-                <label htmlFor="eventPhoto" className="block text-sm font-medium text-gray-700">
+                <Label htmlFor="eventPhoto" className="block text-sm font-medium text-gray-700">
                   Event Photo
-                </label>
+                </Label>
                 <input
                   id="eventPhoto"
                   type="file"
@@ -180,10 +166,31 @@ export default function CreateEventPage() {
                 <div className="flex gap-4 mt-2">
                   {/* Event From */}
                   <div className="flex-1">
-                    <label htmlFor="eventFrom" className="block text-sm font-medium text-gray-700">
+                    <Label htmlFor="eventFrom" className="block text-sm font-medium text-gray-700">
                       Event Date and Time
-                    </label>
-                    
+                    </Label>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant={"outline"}
+                          className={cn(
+                            "w-[280px] justify-start text-left font-normal",
+                            !date && "text-muted-foreground"
+                          )}
+                        >
+                          <CalendarIcon />
+                          {date ? format(date, "PPP HH:mm:ss") : <span>Pick a date</span>}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0">
+                        <Calendar
+                          mode="single"
+                          selected={date}
+                          onSelect={setDate}
+                          initialFocus
+                        />
+                      </PopoverContent>
+                    </Popover>
                   </div>
                 </div>
                 {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
