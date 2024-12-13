@@ -86,7 +86,6 @@ export default function AllEventsPage() {
 
     return pageNumbers;
   };
-
   return (
     <>
       <NavBar />
@@ -107,33 +106,26 @@ export default function AllEventsPage() {
         <Pagination>
           <PaginationContent className="flex flex-wrap justify-center items-center mt-8 gap-2">
             {/* Previous Button */}
-            <PaginationPrevious asChild>
-              <Button
-                onClick={() => paginate(currentPage - 1)}
-                disabled={currentPage === 1}
-                className={`px-3 py-2 sm:px-4 sm:py-2 rounded border ${
-                  currentPage === 1 ? "text-gray-400 cursor-not-allowed" : ""
-                }`}
-              >
-                Previous
-              </Button>
-            </PaginationPrevious>
+            <PaginationPrevious asChild
+              onClick={() => paginate(currentPage - 1)}
+              disabled={currentPage <= 1}
+              className={`px-3 py-2 sm:px-4 sm:py-2 bg-transparent rounded ${
+                currentPage <= 1 ? "text-gray-400 cursor-not-allowed" : "hover:bg-[#7b00d4] text-[#000000] hover:text-white"
+              }`}
+            />
 
             {/* Dynamic Page Numbers */}
             {renderPageNumbers()}
 
             {/* Next Button */}
-            <PaginationNext asChild>
-              <Button
-                onClick={() => paginate(currentPage + 1)}
-                disabled={currentPage === totalPages}
-                className={`px-3 py-2 sm:px-4 sm:py-2 rounded border ${
-                  currentPage === totalPages ? "text-gray-400 cursor-not-allowed" : ""
-                }`}
-              >
-                Next
-              </Button>
-            </PaginationNext>
+            <PaginationNext asChild 
+              onClick={() => paginate(currentPage + 1)}
+              disabled={currentPage >= totalPages}
+              className={`px-3 py-2 sm:px-4 sm:py-2 bg-transparent rounded ${
+                currentPage >= totalPages ? "text-gray-400 cursor-not-allowed" : "hover:bg-[#7b00d4] text-[#000000] hover:text-white"
+              }`}
+            />
+
           </PaginationContent>
         </Pagination>
       </div>
