@@ -55,10 +55,10 @@ export default function FilterEvents() {
 
   return (
     <>
-      <div className="flex bg-[#fdfdfd] border-2 px-5 py-5 items-center justify-center drop-shadow-xl w-full rounded-lg mb-4 gap-4">
+      <div className="flex flex-col lg:flex-row bg-[#fdfdfd] border-2 px-4 sm:px-5 py-5 items-center justify-center drop-shadow-xl w-full rounded-lg mb-4 gap-4">
         {/* Event Name Filter */}
         <Input
-          className="bg-[#f7f7f7] border-0 rounded-md shadow-inner w-1/2 mb-0"
+          className="bg-[#f7f7f7] border-0 rounded-md shadow-inner w-full mb-0"
           placeholder="Search Event name"
         />
 
@@ -68,11 +68,11 @@ export default function FilterEvents() {
             <Button
               variant="outline"
               className={cn(
-                "bg-[#f7f7f7] rounded-md border w-[300px] justify-start text-left font-normal",
+                "bg-[#f7f7f7] rounded-md border w-full lg:w-1/2 lg:justify-start justify-center text-left font-normal",
                 !dateRange && "text-muted-foreground"
               )}
             >
-              <CalendarIcon />
+              <CalendarIcon className="text-[#7b00d4]"/>
               {dateRange?.from ? (
                 dateRange.to ? (
                   <>
@@ -95,10 +95,15 @@ export default function FilterEvents() {
               selected={dateRange}
               onSelect={setDateRange}
               numberOfMonths={2}
+              classNames={{
+                day_selected: "bg-[#7b00d4] text-white hover:bg-[#8800f0] hover:text-white focus:bg-[#7b00d4] focus:text-white",
+                day_today: "bg-accent text-[#000000]",
+                day_range_middle: "bg-[#f3e2ff] text-[#000000]"
+              }}
             />
           </PopoverContent>
         </Popover>
-        
+
         {/* Event Location Filter */}
         <Popover open={isLocationOpen} onOpenChange={setLocationOpen}>
           <PopoverTrigger asChild>
@@ -106,7 +111,7 @@ export default function FilterEvents() {
               variant="outline"
               role="combobox"
               aria-expanded={isLocationOpen}
-              className="bg-[#f7f7f7] rounded-md border"
+              className="bg-[#f7f7f7] rounded-md border w-full lg:w-1/2 lg:justify-start"
             >
               {locationValue
                 ? locations.find((location) => location.value === locationValue)?.label
@@ -151,7 +156,7 @@ export default function FilterEvents() {
               variant="outline"
               role="combobox"
               aria-expanded={isCategoryOpen}
-              className="bg-[#f7f7f7] rounded-md border"
+              className="bg-[#f7f7f7] rounded-md border w-full lg:w-1/2 lg:justify-start"
             >
               {categoryValue
                 ? categories.find((category) => category.value === categoryValue)?.label
@@ -192,3 +197,4 @@ export default function FilterEvents() {
     </>
   );
 }
+

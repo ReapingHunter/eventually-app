@@ -10,7 +10,6 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { Button } from "@/components/ui/button";
 import { useState } from "react";
 
 const events = new Array(150).fill(null).map((_, index) => ({
@@ -86,16 +85,17 @@ export default function AllEventsPage() {
 
     return pageNumbers;
   };
-
   return (
     <>
       <NavBar />
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-5xl font-bold mb-8">All Events</h1>
+        <h1 className="text-4xl sm:text-5xl font-bold mb-6 sm:mb-8 text-center sm:text-left">
+          All Events
+        </h1>
         <FilterEvents />
 
         {/* Event Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-6">
           {currentEvents.map((event) => (
             <EventCard key={event.id} event={event} />
           ))}
@@ -103,38 +103,32 @@ export default function AllEventsPage() {
 
         {/* Pagination Controls */}
         <Pagination>
-          <PaginationContent className="flex justify-center mt-4 gap-2">
+          <PaginationContent className="flex flex-wrap justify-center items-center mt-8 gap-2">
             {/* Previous Button */}
-            <PaginationPrevious asChild>
-              <Button
-                onClick={() => paginate(currentPage - 1)}
-                disabled={currentPage === 1}
-                className={`px-3 py-1 rounded border ${
-                  currentPage === 1 ? "text-gray-400 cursor-not-allowed" : ""
-                }`}
-              >
-                Previous
-              </Button>
-            </PaginationPrevious>
+            <PaginationPrevious asChild
+              onClick={() => paginate(currentPage - 1)}
+              disabled={currentPage <= 1}
+              className={`px-3 py-2 sm:px-4 sm:py-2 bg-transparent rounded ${
+                currentPage <= 1 ? "text-gray-400 cursor-not-allowed" : "hover:bg-[#7b00d4] text-[#000000] hover:text-white"
+              }`}
+            />
 
             {/* Dynamic Page Numbers */}
             {renderPageNumbers()}
 
             {/* Next Button */}
-            <PaginationNext asChild>
-              <Button
-                onClick={() => paginate(currentPage + 1)}
-                disabled={currentPage === totalPages}
-                className={`px-3 py-1 rounded border ${
-                  currentPage === totalPages ? "text-gray-400 cursor-not-allowed" : ""
-                }`}
-              >
-                Next
-              </Button>
-            </PaginationNext>
+            <PaginationNext asChild 
+              onClick={() => paginate(currentPage + 1)}
+              disabled={currentPage >= totalPages}
+              className={`px-3 py-2 sm:px-4 sm:py-2 bg-transparent rounded ${
+                currentPage >= totalPages ? "text-gray-400 cursor-not-allowed" : "hover:bg-[#7b00d4] text-[#000000] hover:text-white"
+              }`}
+            />
+
           </PaginationContent>
         </Pagination>
       </div>
     </>
   );
 }
+

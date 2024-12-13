@@ -34,7 +34,7 @@ const categories = [
   },
 ];
 
-export default function CreateEventPage() {
+export default function UpdateEventPage() {{/* Should have existing data from an existing event */}
   const [error, setError] = useState("");
   const [agendas, setAgendas] = useState([""]);
   const [eventPhoto, setEventPhoto] = useState(null);
@@ -62,7 +62,7 @@ export default function CreateEventPage() {
         <div className="flex-grow p-4 sm:p-8 flex flex-col items-center">
           <div className="bg-white shadow-lg rounded-lg w-full max-w-4xl p-4 sm:p-8">
             <h1 className="text-xl sm:text-2xl font-bold text-gray-800 mb-4 sm:mb-6">
-              Create New Event
+              Update Event
             </h1>
 
             <form className="space-y-6">
@@ -236,7 +236,7 @@ export default function CreateEventPage() {
                   className="bg-gradient-to-r from-[#7b00d4] via-[#A255DA] to-[#F03CF9] px-6 py-3 text-white font-semibold rounded-lg shadow-md hover:from-[#5a00a8] hover:to-[#c42cf0] transition"
                   disabled={!!error}
                 >
-                  Create Event
+                  Update Event
                 </button>
               </div>
             </form>
