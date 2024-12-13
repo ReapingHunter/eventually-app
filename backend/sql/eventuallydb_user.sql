@@ -15,9 +15,15 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 
+/*
+  EMAIL & PASSWORDS:
+    marlex@gmail.com - hello123
+    sean@gmail.com - 123hello
+    venz@gmail.com - 12345678
+*/
 INSERT INTO `user` (`user_id`, `first_name`, `last_name`, `email`, `password_hash`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'John', 'Doe', 'john.doe@gmail.com', '$2b$10$K.qDbFjMOnfj8fy1YOEfZO0US67AZ1a64n.vwBmO1eIY5fgjZ9.NK', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NULL),
-(2, 'Jane', 'Smith', 'jane.smith@gmail.com', '$2b$10$WiAczOQzRaLqoeH//rBmtOXh0jkRHGccBh/tsoQIDtD1JfL1.76zK', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NULL),
-(3, 'Admin', 'User', 'admin@gmail.com', '$2b$10$EeE1x9pkvi5AYizvTfPueuwP1TBGgFt0aN.rfxi6X5Bv41eP.o4z.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NULL);
+(1, 'Marlex', 'Manalili', 'marlex@gmail.com', '$2b$10$uPxtw/cVOKac9oDr9LI34OufHo4acDmXO2.LTObsgOGi5g9l3GAvm', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NULL),
+(2, 'Sean', 'Duran', 'sean@gmail.com', '$2b$10$6V0DGCCYPCb3NxZVHzODL.pRsSkdw0IKO2rEg8mZj/uKwJo7GDuWu', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NULL),
+(3, 'Venz', 'Manlangit', 'venz@gmail.com', '$2b$10$AjEwYhzW3CAGaVXe7GCjVegguiCHYBFdJkZoJYer8P2T/mHyVovyS', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NULL);
 
 UNLOCK TABLES;
