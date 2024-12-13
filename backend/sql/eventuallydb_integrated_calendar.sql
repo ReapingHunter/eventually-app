@@ -30,7 +30,7 @@ CREATE TABLE `integrated_calendar` (
   PRIMARY KEY (`integration_id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `integrated_calendar_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
