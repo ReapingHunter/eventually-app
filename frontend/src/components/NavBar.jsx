@@ -20,7 +20,7 @@ export default function NavBar() {
   return (
       <>
         {!isMobile && 
-          <nav className="px-6 flex justify-between items-center bg-[#ffffff] text-white shadow-lg z-10">
+          <nav className="px-6 flex justify-between items-center bg-[#ffffff] shadow-lg z-10">
             {/* Dashboard Logo */}
             <a href="/" className="flex items-center">
               <img
@@ -65,7 +65,7 @@ export default function NavBar() {
           </nav>
         }
         {isMobile &&
-          <nav className="flex justify-between items-center z-10 px-4 bg-[#ffffff]">
+          <nav className="flex justify-between items-center z-10 px-6 bg-[#ffffff] shadow-lg">
             <Button
               onClick={() => setIsSidebarOpen(!isSidebarOpen)}
               className={`${isSidebarOpen ? "bg-[#7b00d4] text-[#ffffff]" : "text-[#7b00d4] bg-white"} p-3 border rounded-sm hover:opacity-90 transition`}
