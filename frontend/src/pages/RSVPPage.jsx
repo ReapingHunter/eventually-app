@@ -12,7 +12,7 @@ export default function RSVPPage() {
     <>
       <div className="justify-center items-center">
         <NavBar />
-        <div className="bg-[#f8eeff] min-h-screen">
+        <div className="bg-[#fbf3ff] min-h-screen">
           <div className="px-4 sm:px-8 md:px-16 lg:px-32 xl:px-64 py-8">
             {/* Event Banner */}
             <img
