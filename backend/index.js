@@ -1,6 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import userRoutes from './src/routes/user.route.js'
+import cors from 'cors';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -12,6 +13,9 @@ app.use(bodyParser.json());
 app.get('/', (req, res) => {
   res.send('Welcome to the backend API!');
 });
+
+// Used for running different ports
+app.use(cors());
 
 // User routes
 app.use('/api/users', userRoutes);
