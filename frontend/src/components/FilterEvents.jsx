@@ -55,13 +55,50 @@ export default function FilterEvents() {
 
   return (
     <>
-      <div className="flex bg-[#fdfdfd] border-2 px-4 py-4 items-center justify-center drop-shadow-xl w-full mb-4 gap-4">
+      <div className="flex bg-[#fdfdfd] border-2 px-5 py-5 items-center justify-center drop-shadow-xl w-full rounded-lg mb-4 gap-4">
         {/* Event Name Filter */}
         <Input
-          className="bg-[#f7f7f7] border-0 rounded-none shadow-inner w-1/2"
+          className="bg-[#f7f7f7] border-0 rounded-md shadow-inner w-1/2 mb-0"
           placeholder="Search Event name"
         />
 
+        {/* Date Range Picker */}
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button
+              variant="outline"
+              className={cn(
+                "bg-[#f7f7f7] rounded-md border w-[300px] justify-start text-left font-normal",
+                !dateRange && "text-muted-foreground"
+              )}
+            >
+              <CalendarIcon />
+              {dateRange?.from ? (
+                dateRange.to ? (
+                  <>
+                    {format(dateRange.from, "LLL dd, y")} -{" "}
+                    {format(dateRange.to, "LLL dd, y")}
+                  </>
+                ) : (
+                  format(dateRange.from, "LLL dd, y")
+                )
+              ) : (
+                <span>Select a date range...</span>
+              )}
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-auto p-0" align="start">
+            <Calendar
+              initialFocus
+              mode="range"
+              defaultMonth={dateRange?.from}
+              selected={dateRange}
+              onSelect={setDateRange}
+              numberOfMonths={2}
+            />
+          </PopoverContent>
+        </Popover>
+        
         {/* Event Location Filter */}
         <Popover open={isLocationOpen} onOpenChange={setLocationOpen}>
           <PopoverTrigger asChild>
@@ -69,7 +106,7 @@ export default function FilterEvents() {
               variant="outline"
               role="combobox"
               aria-expanded={isLocationOpen}
-              className="bg-[#f7f7f7] mb-4 rounded-none border"
+              className="bg-[#f7f7f7] rounded-md border"
             >
               {locationValue
                 ? locations.find((location) => location.value === locationValue)?.label
@@ -114,7 +151,7 @@ export default function FilterEvents() {
               variant="outline"
               role="combobox"
               aria-expanded={isCategoryOpen}
-              className="bg-[#f7f7f7] mb-4 rounded-none border"
+              className="bg-[#f7f7f7] rounded-md border"
             >
               {categoryValue
                 ? categories.find((category) => category.value === categoryValue)?.label
@@ -149,43 +186,6 @@ export default function FilterEvents() {
                 </CommandGroup>
               </CommandList>
             </Command>
-          </PopoverContent>
-        </Popover>
-
-        {/* Date Range Picker */}
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button
-              variant="outline"
-              className={cn(
-                "bg-[#f7f7f7] mb-4 rounded-none border w-[300px] justify-start text-left font-normal",
-                !dateRange && "text-muted-foreground"
-              )}
-            >
-              <CalendarIcon />
-              {dateRange?.from ? (
-                dateRange.to ? (
-                  <>
-                    {format(dateRange.from, "LLL dd, y")} -{" "}
-                    {format(dateRange.to, "LLL dd, y")}
-                  </>
-                ) : (
-                  format(dateRange.from, "LLL dd, y")
-                )
-              ) : (
-                <span>Select a date range...</span>
-              )}
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-auto p-0" align="start">
-            <Calendar
-              initialFocus
-              mode="range"
-              defaultMonth={dateRange?.from}
-              selected={dateRange}
-              onSelect={setDateRange}
-              numberOfMonths={2}
-            />
           </PopoverContent>
         </Popover>
       </div>
