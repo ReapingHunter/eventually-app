@@ -30,7 +30,13 @@ export default function RSVPPage() {
               {/* Event Date */}
               <div className="flex items-center text-sm text-gray-700">
                 <CalendarDateRangeIcon className="w-5 h-5 text-[#7b00d4] mr-2" />
-                <p>Fri, Mar 21 2025 at 10:00 AM - Sun, Mar 23 2025 at 5:00 PM IST</p>
+                <p>Mar 21 2025</p>
+              </div>
+
+              {/* Event Time */}
+              <div className="flex items-center text-sm text-gray-700">
+                <ClockIcon className="w-5 h-5 text-[#7b00d4] mr-2" />
+                <p>10:00 AM - 5:00 PM IST</p>
               </div>
 
               {/* Event Location */}
@@ -109,7 +115,6 @@ export default function RSVPPage() {
                     <p className="text-sm text-gray-600">Position/Role</p>
                   </div>
                 </div>
-                {/* Add more organizers as needed */}
               </div>
             </div>
           </div>
