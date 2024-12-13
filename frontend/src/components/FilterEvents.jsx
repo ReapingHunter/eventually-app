@@ -72,7 +72,7 @@ export default function FilterEvents() {
                 !dateRange && "text-muted-foreground"
               )}
             >
-              <CalendarIcon />
+              <CalendarIcon className="text-[#7b00d4]"/>
               {dateRange?.from ? (
                 dateRange.to ? (
                   <>
@@ -95,6 +95,11 @@ export default function FilterEvents() {
               selected={dateRange}
               onSelect={setDateRange}
               numberOfMonths={2}
+              classNames={{
+                day_selected: "bg-[#7b00d4] text-white hover:bg-[#8800f0] hover:text-white focus:bg-[#7b00d4] focus:text-white",
+                day_today: "bg-accent text-[#000000]",
+                day_range_middle: "bg-[#f3e2ff] text-[#000000]"
+              }}
             />
           </PopoverContent>
         </Popover>
