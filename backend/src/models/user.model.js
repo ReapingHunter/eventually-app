@@ -2,7 +2,7 @@ import dbConn from '../../config/db.config.js';
 
 const User = {
   create: (userData, result) => {
-    const query = "INSERT INTO User (first_name, last_name, email, password_hash) VALUES (?, ?, ?, ?)";
+    const query = "INSERT INTO user (first_name, last_name, email, password_hash) VALUES (?, ?, ?, ?)";
     dbConn.query(query, [userData.first_name, userData.last_name, userData.email, userData.password_hash], (err, res) => {
       if (err) {
         console.error("Error:", err);
@@ -14,7 +14,7 @@ const User = {
   },
 
   findByEmail: (email, result) => {
-    const query = "SELECT * FROM User WHERE email = ?";
+    const query = "SELECT * FROM user WHERE email = ?";
     dbConn.query(query, [email], (err, res) => {
       if (err) {
         console.error("Error:", err);
@@ -26,7 +26,7 @@ const User = {
   },
 
   updatePassword: (email, newPasswordHash, result) => {
-    const query = "UPDATE User SET password_hash = ? WHERE email = ?";
+    const query = "UPDATE user SET password_hash = ? WHERE email = ?";
     dbConn.query(query, [newPasswordHash, email], (err, res) => {
       if (err) {
         console.error("Error:", err);
