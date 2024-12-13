@@ -83,7 +83,7 @@ export default function NavBar() {
             </button>
           </nav>
         }
-        {isSidebarOpen && (
+        {isSidebarOpen && isMobile && (
         <aside
           className={`fixed top-0 left-0 h-full w-[75%] bg-white shadow-lg z-50 transform ${
             isSidebarOpen ? "translate-x-0" : "-translate-x-full"
