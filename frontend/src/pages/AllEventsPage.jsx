@@ -10,7 +10,6 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { Button } from "@/components/ui/button";
 import { useState } from "react";
 
 const events = new Array(150).fill(null).map((_, index) => ({
