@@ -26,7 +26,7 @@ CREATE TABLE `category` (
   `category_id` int NOT NULL AUTO_INCREMENT,
   `category_name` varchar(50) NOT NULL,
   PRIMARY KEY (`category_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
