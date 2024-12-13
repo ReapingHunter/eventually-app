@@ -53,6 +53,10 @@ export function DateTimePicker() {
           selected={date}
           onSelect={(d) => handleSelect(d)}
           initialFocus
+          classNames={{
+            day_selected: "bg-[#7b00d4] text-white hover:bg-[#8800f0] hover:text-white focus:bg-[#7b00d4] focus:text-white",
+            day_today: "bg-accent text-[#000000]",
+          }}
         />
         <div className="p-3 border-t border-border">
           <TimePickerDemo setDate={setDate} date={date} />
