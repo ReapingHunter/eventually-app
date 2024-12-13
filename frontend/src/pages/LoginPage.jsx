@@ -34,7 +34,7 @@ export default function LoginPage() {
           ></div>
 
           {/* Right half for content */}
-          <div className="w-full md:w-1/2 p-6 sm:p-8 lg:p-12 flex flex-col justify-center items-center lg:items-start">
+          <div className="w-full md:w-1/2 p-6 sm:p-8 lg:p-12 flex flex-col justify-center items-center lg:items-start md:items-start">
             {/* Logo for Mobile */}
             {isMobile && (
               <div className="flex justify-center">
