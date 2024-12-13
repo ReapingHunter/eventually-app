@@ -1,6 +1,7 @@
 import { WrenchIcon, BellIcon, UserIcon } from "@heroicons/react/24/solid";
 import { MenuIcon } from "lucide-react";
 import { Button } from "@/components/ui/button"; 
+import { X } from "lucide-react";
 import { useState, useEffect } from "react"
 
 export default function NavBar() {
@@ -97,7 +98,7 @@ export default function NavBar() {
                 onClick={() => setIsSidebarOpen(false)}
                 className="text-white hover:opacity-80 transition"
               >
-                ✕
+                <X />
               </button>
             </div>
 
