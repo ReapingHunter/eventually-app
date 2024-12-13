@@ -26,9 +26,7 @@ export default function EventCard(){
             <div className="text-md my-2">
               <div className="flex gap-2 my-3">
                 <CalendarIcon className="w-6 h-6 text-[#7b00d4]" />
-                from_date
-                <span className="text-[#7b00d4]">To</span> {/* Display if event has to_date data */}
-                to_date
+                start_date
               </div>
               <div className="flex gap-2 my-3">
                 <ClockIcon className="w-6 h-6 text-[#7b00d4]" />
