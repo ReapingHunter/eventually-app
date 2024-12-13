@@ -9,6 +9,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import FilterEvents from "@/components/FilterEvents";
 import { PlusIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
@@ -115,7 +116,7 @@ export default function MyEventsPage() {
             </button>
           </a>
         </div>
-        
+        <FilterEvents />
         {/* Display message if no events */}
         {userEvents.length === 0 ? (
           <p className="text-gray-500 text-center">
@@ -124,42 +125,38 @@ export default function MyEventsPage() {
         ) : (
           <>
             {/* Event Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-6">
               {currentEvents.map((event) => (
                 <EventCard key={event.id} event={event} />
               ))}
             </div>
-
+    
             {/* Pagination Controls */}
             <Pagination>
-              <PaginationContent className="flex justify-center mt-4 gap-2">
+              <PaginationContent className="flex flex-wrap justify-center items-center mt-8 gap-2">
                 {/* Previous Button */}
                 <PaginationPrevious asChild>
                   <Button
                     onClick={() => paginate(currentPage - 1)}
                     disabled={currentPage === 1}
-                    className={`px-3 py-1 rounded border ${
-                      currentPage === 1
-                        ? "text-gray-400 cursor-not-allowed"
-                        : ""
+                    className={`px-3 py-2 sm:px-4 sm:py-2 rounded border ${
+                      currentPage === 1 ? "text-gray-400 cursor-not-allowed" : ""
                     }`}
                   >
                     Previous
                   </Button>
                 </PaginationPrevious>
-
+    
                 {/* Dynamic Page Numbers */}
                 {renderPageNumbers()}
-
+    
                 {/* Next Button */}
                 <PaginationNext asChild>
                   <Button
                     onClick={() => paginate(currentPage + 1)}
                     disabled={currentPage === totalPages}
-                    className={`px-3 py-1 rounded border ${
-                      currentPage === totalPages
-                        ? "text-gray-400 cursor-not-allowed"
-                        : ""
+                    className={`px-3 py-2 sm:px-4 sm:py-2 rounded border ${
+                      currentPage === totalPages ? "text-gray-400 cursor-not-allowed" : ""
                     }`}
                   >
                     Next
