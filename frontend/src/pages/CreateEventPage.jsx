@@ -3,12 +3,12 @@ import { PlusIcon, TrashIcon } from "@heroicons/react/24/solid";
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label"
+import { Label } from "@/components/ui/label";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
+} from "@/components/ui/popover";
 import {
   Command,
   CommandEmpty,
@@ -16,13 +16,12 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "@/components/ui/command"
+} from "@/components/ui/command";
 import { DateTimePicker } from "@/components/ui/date-time-picker/date-time-picker";
 import { Button } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
 import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
-
 
 const categories = [
   {
@@ -33,7 +32,7 @@ const categories = [
     value: "wedding",
     label: "Wedding",
   },
-]
+];
 
 export default function CreateEventPage() {
   const [error, setError] = useState("");
@@ -41,9 +40,9 @@ export default function CreateEventPage() {
   const [eventPhoto, setEventPhoto] = useState(null);
 
   const [eventCategory, setEventCategory] = useState("");
-  const [isCategoryOpen, setCategoryOpen] = useState(false)
+  const [isCategoryOpen, setCategoryOpen] = useState(false);
 
-  const [dateTime, setDateTime] = useState("")
+  const [dateTime, setDateTime] = useState("");
 
   const handleAddAgenda = () => setAgendas([...agendas, ""]);
   const handleRemoveAgenda = (index) =>
@@ -60,14 +59,15 @@ export default function CreateEventPage() {
     <>
       <div className="min-h-screen flex flex-col bg-[#fbf3ff]">
         <NavBar />
-        <div className="flex-grow p-8 flex flex-col items-center">
-          <div className="bg-white shadow-lg rounded-lg max-w-4xl w-full p-8">
-            <h1 className="text-2xl font-bold text-gray-800 mb-6">Create New Event</h1>
+        <div className="flex-grow p-4 sm:p-8 flex flex-col items-center">
+          <div className="bg-white shadow-lg rounded-lg w-full max-w-4xl p-4 sm:p-8">
+            <h1 className="text-xl sm:text-2xl font-bold text-gray-800 mb-4 sm:mb-6">
+              Create New Event
+            </h1>
 
             <form className="space-y-6">
-              
-              <div className="flex justify-between w-full gap-4">
-
+              {/* Event Name and Category */}
+              <div className="flex flex-col sm:flex-row gap-4 w-full">
                 {/* Event Name */}
                 <div className="flex-1">
                   <Label htmlFor="eventName" className="text-sm font-medium text-gray-700">
@@ -100,7 +100,7 @@ export default function CreateEventPage() {
                         <ChevronDown className="text-[#7b00d4]" />
                       </Button>
                     </PopoverTrigger>
-                    <PopoverContent className="w-[400px] p-0">
+                    <PopoverContent className="w-full sm:w-[400px] p-0">
                       <Command>
                         <CommandInput placeholder="Search Category..." />
                         <CommandList>
@@ -158,8 +158,7 @@ export default function CreateEventPage() {
 
               {/* Event Date Range */}
               <div>
-                <div className="flex gap-4 mt-2">
-                  {/* Event From */}
+                <div className="flex flex-col sm:flex-row gap-4 mt-2">
                   <div className="flex-1">
                     <Label htmlFor="eventFrom" className="block text-sm font-medium text-gray-700">
                       Event Date and Time
@@ -231,7 +230,7 @@ export default function CreateEventPage() {
               </div>
 
               {/* Submit Button */}
-              <div className="flex justify-end">
+              <div className="flex justify-end pt-12">
                 <button
                   type="submit"
                   className="bg-gradient-to-r from-[#7b00d4] via-[#A255DA] to-[#F03CF9] px-6 py-3 text-white font-semibold rounded-lg shadow-md hover:from-[#5a00a8] hover:to-[#c42cf0] transition"
