@@ -1,7 +1,8 @@
-import { WrenchIcon, BellIcon, UserIcon } from "@heroicons/react/24/solid";
+import { WrenchIcon, UserIcon } from "@heroicons/react/24/solid";
 import { MenuIcon } from "lucide-react";
 import { Button } from "@/components/ui/button"; 
 import { X } from "lucide-react";
+import Notifications from "./Notifications";
 import { useState, useEffect } from "react"
 
 export default function NavBar() {
@@ -51,9 +52,7 @@ export default function NavBar() {
               </a>
 
               {/* Notifications Button */}
-              <button className="bg-[#7b00d4] text-white font-sm p-3 rounded-full hover:opacity-90 hover:brightness-110 transition shadow-md">
-                <BellIcon className="w-5 h-5" />
-              </button>
+              <Notifications />
 
               {/* User Button */}
               <a href="/login">
@@ -79,9 +78,7 @@ export default function NavBar() {
                 alt="Dashboard Logo"
               />
             </a>
-            <button className="bg-[#7b00d4] text-white font-sm p-3 rounded-full hover:opacity-90 hover:brightness-110 transition shadow-md">
-                <BellIcon className="w-5 h-5" />
-            </button>
+            <Notifications />
           </nav>
         }
         {isSidebarOpen && isMobile && (
