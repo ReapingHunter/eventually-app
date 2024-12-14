@@ -3,6 +3,7 @@ import { MenuIcon } from "lucide-react";
 import { Button } from "@/components/ui/button"; 
 import { X } from "lucide-react";
 import Notifications from "./Notifications";
+import { Separator } from "./ui/separator";
 import { useState, useEffect } from "react"
 
 export default function NavBar() {
@@ -86,7 +87,7 @@ export default function NavBar() {
         }
         {isSidebarOpen && isMobile && (
         <aside
-          className={`fixed top-0 left-0 h-full w-[75%] bg-white shadow-lg z-50 transform ${
+          className={`fixed top-0 left-0 h-full w-80 bg-white shadow-lg z-50 transform ${
             isSidebarOpen ? "translate-x-0" : "-translate-x-full"
           } transition-transform duration-300`}
         >
@@ -103,24 +104,22 @@ export default function NavBar() {
             </div>
 
             {/* Sidebar Content */}
-            <div className="flex-grow px-4 py-6">
-              <ul className="space-y-4">
-                <li>
-                  <a href="/" className="text-black hover:text-[#7b00d4] transition">
-                    Home
+            <div className="flex-grow">
+              <ul className="space-y-8">
+                <li className="hover:bg-[#adadad] p-4 font-medium transition">
+                  <a href="/">
+                    HOME
                   </a>
                 </li>
-                <li>
-                  <a href="/events" className="text-black hover:text-[#7b00d4] transition">
-                    Events
+                <li className="hover:bg-[#adadad] p-4 font-medium transition">
+                  <a href="/events">
+                    EVENTS
                   </a>
                 </li>
-                <li>
-                  <a
-                    href="/manageevent"
-                    className="text-black hover:text-[#7b00d4] transition"
-                  >
-                    Manage Events
+                <Separator />
+                <li className="hover:bg-[#adadad] p-4 font-medium transition">
+                  <a href="/manageevent">
+                    MANAGE EVENTS
                   </a>
                 </li>
               </ul>
