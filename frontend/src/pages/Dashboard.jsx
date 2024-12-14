@@ -75,8 +75,8 @@ export default function Dashboard() {
                   </CarouselItem>
                 ))}
               </CarouselContent>
-              <CarouselPrevious className="bg-[#7b00d4] hover:bg-[#7b00d4] text-xl hover:brightness-90 transition text-white hover:text-white" />
-              <CarouselNext className="bg-[#7b00d4] hover:bg-[#7b00d4] hover:brightness-90 transition text-white hover:text-white" />
+              <CarouselPrevious className="hidden sm:flex bg-[#7b00d4] hover:bg-[#7b00d4] text-xl hover:brightness-90 transition text-white hover:text-white" />
+              <CarouselNext className="hidden sm:flex bg-[#7b00d4] hover:bg-[#7b00d4] hover:brightness-90 transition text-white hover:text-white" />
             </Carousel>
           </div>
         </div>
