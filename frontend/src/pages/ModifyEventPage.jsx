@@ -1,5 +1,6 @@
 import NavBar from "../components/NavBar"
 import { CalendarDateRangeIcon, MapPinIcon, ClockIcon, WrenchIcon, TrashIcon, UserIcon } from "@heroicons/react/24/solid"
+import { Button } from "@/components/ui/button"
 export default function RSVPPage(){
   return(
     <>
@@ -86,14 +87,14 @@ export default function RSVPPage(){
               </div>
 
               <div className="flex justify-between items-center space-x-2 max-md:pt-8">
-                <button className=" flex bg-yellow-600 text-white font-semibold py-2 px-6 rounded-lg shadow-md gap-2">
+                <Button className=" flex bg-yellow-600 hover:brightness-110 transition text-white font-semibold py-2 px-6 rounded-lg shadow-md gap-2">
                   <WrenchIcon className="w-5 h-5"/>
                   Update
-                </button>
-                <button className=" flex bg-red-500 text-white font-semibold py-2 px-6 rounded-lg shadow-md gap-2">
+                </Button>
+                <Button className=" flex bg-red-500 hover:brightness-110 transition text-white font-semibold py-2 px-6 rounded-lg shadow-md gap-2">
                   <TrashIcon className="w-5 h-5"/>
                   Delete
-                </button>
+                </Button>
               </div>
             </div>
           </div>

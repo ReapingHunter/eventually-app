@@ -142,7 +142,7 @@ export default function CreateEventPage() {
                   type="file"
                   accept="image/*"
                   onChange={handlePhotoUpload}
-                  className="mt-1 block w-full text-sm text-gray-500"
+                  className="mt-1 block w-auto text-sm text-gray-500"
                 />
                 {eventPhoto && (
                   <div className="mt-4">
@@ -150,7 +150,7 @@ export default function CreateEventPage() {
                     <img
                       src={eventPhoto}
                       alt="Event Preview"
-                      className="rounded-md w-full max-h-64 object-cover"
+                      className="rounded-md w-auto max-h-64 object-cover"
                     />
                   </div>
                 )}
@@ -223,7 +223,7 @@ export default function CreateEventPage() {
                 <button
                   type="button"
                   onClick={handleAddAgenda}
-                  className="mt-2 inline-flex items-center px-4 py-2 bg-[#7b00d4] text-white rounded-md hover:bg-[#5a00a8]"
+                  className="mt-2 inline-flex items-center px-4 py-2 bg-[#7b00d4] text-white rounded-md hover:brightness-110 transition"
                 >
                   <PlusIcon className="w-5 h-5 mr-1" /> Add Agenda
                 </button>
@@ -233,7 +233,7 @@ export default function CreateEventPage() {
               <div className="flex justify-end pt-12">
                 <button
                   type="submit"
-                  className="bg-gradient-to-r from-[#7b00d4] via-[#A255DA] to-[#F03CF9] px-6 py-3 text-white font-semibold rounded-lg shadow-md hover:from-[#5a00a8] hover:to-[#c42cf0] transition"
+                  className="bg-gradient-to-r from-[#7b00d4] via-[#A255DA] to-[#F03CF9] px-6 py-3 text-white font-semibold rounded-lg shadow-md hover:brightness-110 transition"
                   disabled={!!error}
                 >
                   Create Event
