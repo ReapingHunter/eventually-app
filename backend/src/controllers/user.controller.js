@@ -90,3 +90,18 @@ export const resetPassword = async (req, res) => {
     res.status(500).send({ message: "Error resetting password", error: err });
   }
 };
+
+export const getUser = async (req, res) => {
+  try {
+    const userID = req.user.id
+    const user = await findById(userID)
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.status(200).json(user)
+  } catch(error){
+    console.error("Error fetching user profile:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+}
