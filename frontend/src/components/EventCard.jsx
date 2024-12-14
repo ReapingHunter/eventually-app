@@ -7,7 +7,7 @@ import { Card } from "./ui/card";
 export default function EventCard(){
   return (
     <>
-      <a href="/rsvp">
+      <a href="/rsvp"> {/* Change to link to rsvp if event is not owned or modifyevent if owned */}
         <Card className="max-w-sm mx-auto bg-white rounded-lg shadow-lg hover:shadow-2xl hover:scale-105 overflow-hidden border border-gray-200 transition">
           {/* Event Image Section */}
           <div className="relative">
@@ -38,7 +38,7 @@ export default function EventCard(){
               </div>
             </div>
             <div className="flex justify-center mt-4">
-              <Button className="bg-[#7b00d4] font-bold hover:bg-[#7b00d4] w-full">RSVP Now</Button>
+              <Button className="bg-[#7b00d4] font-bold hover:bg-[#7b00d4] w-full">View Event</Button>
             </div>
           </div>
 
