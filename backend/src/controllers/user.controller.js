@@ -91,17 +91,15 @@ export const resetPassword = async (req, res) => {
   }
 };
 
-export const getUser = async (req, res) => {
+export const checkLoggedIn = async (req, res) => {
   try {
-    const userID = req.user.id;
-    const user = await User.findById(userID);
-
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
+    const userId = req.userId; // Extracted from the token by the middleware
+    if (!userId) {
+      return res.status(401).send({ message: "Unauthorized" });
     }
-    res.status(200).json(user);
-  } catch(error){
-    console.error("Error fetching user profile:", error);
-    res.status(500).json({ message: "Internal server error" });
+    res.send({ message: "User is logged in", userId });
+  } catch (err) {
+    console.error("Error checking login status:", err);
+    res.status(500).send({ message: "Error checking login status", error: err });
   }
 };
