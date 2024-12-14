@@ -49,7 +49,7 @@ INSERT INTO `category` (`category_id`, `category_name`) VALUES
 (11, 'Technology and Innovation'),
 (12, 'Environmental'),
 (13, 'Food and Drink'),
-(14, 'Holiday').
+(14, 'Holiday'),
 (15, 'Art and Crafts'),
 (16, 'Luxury and Lifestyle'),
 (17, 'Adventure and Outdoor');
