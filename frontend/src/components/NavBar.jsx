@@ -7,54 +7,53 @@ import { X } from "lucide-react";
 import Notifications from "./Notifications";
 import { Separator } from "./ui/separator";
 import { useState, useEffect } from "react"
-import { isAuthenticated } from "../utils/auth"
-import axios from "axios"
-
+import { isAuthenticated, logout } from "@/utils/auth";
+import axios from "axios";
 
 export default function NavBar() {
   const [isMobile, setIsMobile] = useState(false)
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [username, setUsername] = useState(null)
+
+  const fetchUserProfile = async() => {
+    try {
+      const authData = await isAuthenticated()
+      if(!authData || !authData.userId){
+        return;
+      }
+      const response = await axios.get("http://localhost:3000/api/users/getuser", {
+        params: { user_id: authData.userId },
+      })
+      console.log(response.data); // User details from backend
+      return response.data; // Return user data for use in NavBar
+    } catch (err) {
+      console.error("Error fetching user profile:", err.message);
+    }
+  }
+
   useEffect(() => {
+    const initializeUser = async () => {
+      const authData = await isAuthenticated();
+      if (authData) {
+        setIsLoggedIn(true);
+        const userData = await fetchUserProfile();
+        if (userData) {
+          setUsername(userData.username); // Update username in the state
+        }
+      }
+    };
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768); // Adjust the breakpoint (e.g., 768px for mobile)
     };
 
     handleResize(); // Initial check
     window.addEventListener("resize", handleResize);
-    
-    if(isAuthenticated()){
-      setIsLoggedIn(true)
-      fetchUserProfile().then((profile) => {
-        if (profile) setUsername(profile.username)
-      })
-    }
+    initializeUser()
+
     return () => window.removeEventListener("resize", handleResize);
   }, [])
 
-  const fetchUserProfile = async() => {
-    try {
-      const token = localStorage.getItem("token")
-      if(!token) return null
-  
-      const response = await axios.get("http://localhost:3000/api/users/check-login", {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
-  
-      if (response.status === 200) {
-        return response.data; // Axios already parses JSON
-      }
-      return null
-    } catch (error) {
-      console.error("Failed to fetch user profile:", error);
-      return null;
-    }
-  }
   return (
       <>
         {!isMobile && 

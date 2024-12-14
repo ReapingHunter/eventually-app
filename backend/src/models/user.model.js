@@ -37,7 +37,7 @@ const User = {
 
   findById: (userId) => {
     return new Promise((resolve, reject) => {
-      const query = "SELECT id, username, email FROM user WHERE id = ?";
+      const query = "SELECT * FROM user WHERE user_id = ?";
       dbConn.query(query, [userId], (err, res) => {
         if (err) {
           console.error("Error fetching user by ID:", err);
