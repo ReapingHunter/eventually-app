@@ -1,7 +1,8 @@
-import { WrenchIcon, BellIcon, UserIcon } from "@heroicons/react/24/solid";
+import { WrenchIcon, UserIcon } from "@heroicons/react/24/solid";
 import { MenuIcon } from "lucide-react";
 import { Button } from "@/components/ui/button"; 
 import { X } from "lucide-react";
+import Notifications from "./Notifications";
 import { useState, useEffect } from "react"
 
 export default function NavBar() {
@@ -51,13 +52,11 @@ export default function NavBar() {
               </a>
 
               {/* Notifications Button */}
-              <button className="bg-[#7b00d4] text-white font-sm p-3 rounded-full hover:opacity-90 hover:brightness-110 transition shadow-md">
-                <BellIcon className="w-5 h-5" />
-              </button>
+              <Notifications />
 
               {/* User Button */}
               <a href="/login">
-                <button className="bg-[#7b00d4] text-white font-sm rounded-full hover:opacity-90 hover:brightness-110 p-3 transition shadow-sm">
+                <button className="bg-[#7b00d4] text-white font-sm rounded-full hover:brightness-110 p-3 transition shadow-sm">
                   <UserIcon className="w-5 h-5" />
                 </button>
               </a>
@@ -66,22 +65,23 @@ export default function NavBar() {
         }
         {isMobile &&
           <nav className="flex justify-between items-center z-10 px-6 bg-[#ffffff] shadow-lg">
-            <Button
-              onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-              className={`${isSidebarOpen ? "bg-[#7b00d4] text-[#ffffff]" : "text-[#7b00d4] bg-white"} p-3 border rounded-sm hover:opacity-90 transition`}
-            >
-              <MenuIcon className="w-6 h-6" />
-            </Button>
-            <a href="/" className="flex items-center">
-              <img
-                src="/images/dashboard-logo-2.png"
-                className="w-32 h-auto"
-                alt="Dashboard Logo"
-              />
-            </a>
-            <button className="bg-[#7b00d4] text-white font-sm p-3 rounded-full hover:opacity-90 hover:brightness-110 transition shadow-md">
-                <BellIcon className="w-5 h-5" />
-            </button>
+            <div className="flex justify-between items-center space-x-6">
+              <Button
+                onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+                className={`${isSidebarOpen ? "bg-[#7b00d4] text-[#ffffff]" : "text-[#7b00d4] bg-white"} p-3 border rounded-sm hover:opacity-90 transition`}
+              >
+                <MenuIcon className="w-6 h-6" />
+              </Button>
+                <a href="/" className="flex items-center">
+                  <img
+                    src="/images/dashboard-logo-2.png"
+                    className="w-32 h-auto"
+                    alt="Dashboard Logo"
+                  />
+              </a>
+            </div>
+            
+            <Notifications />
           </nav>
         }
         {isSidebarOpen && isMobile && (

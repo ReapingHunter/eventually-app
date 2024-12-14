@@ -39,7 +39,7 @@ export default function Dashboard() {
             </div>
             {/* Register Button */}
             <a href="/signup">
-              <Button className="flex bg-gradient-to-r from-[#7b00d4] via-[#A255DA] to-[#F03CF9] hover:from-[#5a00a8] hover:to-[#c42cf0] transition text-white font-semibold py-2 px-4 sm:px-6 rounded-lg shadow-md gap-2">
+              <Button className="flex bg-gradient-to-r from-[#7b00d4] via-[#A255DA] to-[#F03CF9] hover:brightness-110 transition text-white font-semibold py-2 px-4 sm:px-6 rounded-lg shadow-md gap-2">
                 <SparklesIcon className="w-5 h-5" />
                 Register now
               </Button>
@@ -75,8 +75,8 @@ export default function Dashboard() {
                   </CarouselItem>
                 ))}
               </CarouselContent>
-              <CarouselPrevious className="bg-[#7b00d4] hover:bg-[#7b00d4] text-xl hover:brightness-90 transition text-white hover:text-white" />
-              <CarouselNext className="bg-[#7b00d4] hover:bg-[#7b00d4] hover:brightness-90 transition text-white hover:text-white" />
+              <CarouselPrevious className="hidden sm:flex bg-[#7b00d4] hover:bg-[#7b00d4] text-xl hover:brightness-90 transition text-white hover:text-white" />
+              <CarouselNext className="hidden sm:flex bg-[#7b00d4] hover:bg-[#7b00d4] hover:brightness-90 transition text-white hover:text-white" />
             </Carousel>
           </div>
         </div>
