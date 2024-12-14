@@ -5,10 +5,11 @@ import { X } from "lucide-react";
 import Notifications from "./Notifications";
 import { Separator } from "./ui/separator";
 import { useState, useEffect } from "react"
-
+import { isAuthenticated } from "../utils/auth"
 export default function NavBar() {
   const [isMobile, setIsMobile] = useState(false)
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768); // Adjust the breakpoint (e.g., 768px for mobile)
@@ -16,7 +17,7 @@ export default function NavBar() {
 
     handleResize(); // Initial check
     window.addEventListener("resize", handleResize);
-
+    setIsLoggedIn(isAuthenticated())
     return () => window.removeEventListener("resize", handleResize);
   }, [])
   return (
@@ -45,21 +46,21 @@ export default function NavBar() {
                 </button>
               </a>
               <div className="border-l-2 border-[#9b9b9b] h-14"></div>
-              <a href="/manageevent">
+              {isLoggedIn && <a href="/manageevent">
                 <button className="bg-[#7b00d4] text-white font-bold py-2 px-4 rounded-lg shadow-md flex items-center gap-2 hover:brightness-110 transition">
                   <WrenchIcon className="w-5 h-5" />
                   <span>Manage Events</span>
                 </button>
-              </a>
+              </a>}
 
               {/* Notifications Button */}
               <Notifications />
 
               {/* User Button */}
               <a href="/login">
-                <button className="bg-[#7b00d4] text-white font-sm rounded-full hover:brightness-110 p-3 transition shadow-sm">
+                <Button className="bg-[#7b00d4] text-white font-sm rounded-full hover:brightness-110 p-3 w-11 h-11 transition shadow-sm">
                   <UserIcon className="w-5 h-5" />
-                </button>
+                </Button>
               </a>
             </div>
           </nav>
