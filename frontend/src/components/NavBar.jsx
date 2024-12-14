@@ -131,7 +131,7 @@ export default function NavBar() {
                 onClick={() => console.log("Sign Out")}
                 className="w-full bg-[#7b00d4] text-white py-2 rounded-md hover:brightness-110 transition"
               >
-                Sign Out
+                Login / Log out
               </button>
             </div>
           </div>
