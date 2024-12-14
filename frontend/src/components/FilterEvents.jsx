@@ -68,7 +68,7 @@ export default function FilterEvents() {
             <Button
               variant="outline"
               className={cn(
-                "bg-[#f7f7f7] rounded-md border w-full lg:w-1/2 lg:justify-start justify-center text-left font-normal",
+                "bg-[#f7f7f7] rounded-md border w-full lg:w-1/2 justify-start text-left font-medium",
                 !dateRange && "text-muted-foreground"
               )}
             >
@@ -111,7 +111,7 @@ export default function FilterEvents() {
               variant="outline"
               role="combobox"
               aria-expanded={isLocationOpen}
-              className="bg-[#f7f7f7] rounded-md border w-full lg:w-1/2 lg:justify-start"
+              className="bg-[#f7f7f7] rounded-md border w-full lg:w-1/2 justify-between"
             >
               {locationValue
                 ? locations.find((location) => location.value === locationValue)?.label
@@ -156,7 +156,7 @@ export default function FilterEvents() {
               variant="outline"
               role="combobox"
               aria-expanded={isCategoryOpen}
-              className="bg-[#f7f7f7] rounded-md border w-full lg:w-1/2 lg:justify-start"
+              className="bg-[#f7f7f7] rounded-md border w-full lg:w-1/2 justify-between"
             >
               {categoryValue
                 ? categories.find((category) => category.value === categoryValue)?.label
