@@ -25,7 +25,6 @@ export default function NavBar() {
       const response = await axios.get("http://localhost:3000/api/users/getuser", {
         params: { user_id: authData.userId },
       })
-      console.log(response.data); // User details from backend
       return response.data; // Return user data for use in NavBar
     } catch (err) {
       console.error("Error fetching user profile:", err.message);
@@ -80,14 +79,12 @@ export default function NavBar() {
                 </button>
               </a>
               <div className="border-l-2 border-[#9b9b9b] h-14"></div>
-              {isLoggedIn && 
-                <a href="/manageevent">
-                  <button className="bg-[#7b00d4] text-white font-bold py-2 px-4 rounded-lg shadow-md flex items-center gap-2 hover:brightness-110 transition">
-                    <WrenchIcon className="w-5 h-5" />
-                    <span>Manage Events</span>
-                  </button>
-                </a>
-              }
+              <a href={isLoggedIn ? "/manageevent" : "/login"}>
+                <button className="bg-[#7b00d4] text-white font-bold py-2 px-4 rounded-lg shadow-md flex items-center gap-2 hover:brightness-110 transition">
+                  <WrenchIcon className="w-5 h-5" />
+                  <span>Manage Events</span>
+                </button>
+              </a>
 
               {/* Notifications Button */}
               <Notifications />
@@ -102,8 +99,14 @@ export default function NavBar() {
                   </PopoverTrigger>
                   <PopoverContent className="w-full max-w-xs sm:max-w-md p-0">
                     <Card className="rounded-lg overflow-hidden">
-                      <div>
-                        Welcome, {username}
+                      <div className="p-4">
+                        <p className="text-sm mb-4">Welcome, {username}</p>
+                        <Button 
+                          className="bg-[#7b00d4] text-white w-full py-2 rounded-md hover:brightness-110 transition" 
+                          onClick={logout}
+                        >
+                          Logout
+                        </Button>
                       </div>
                     </Card>
                   </PopoverContent>
