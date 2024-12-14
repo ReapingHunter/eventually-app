@@ -57,7 +57,7 @@ export default function SignupPage() {
       }
 
       // Redirect to the dashboard after successful signup
-      navigate("/dashboard");
+      navigate("/");
     } catch (err) {
       console.error("Signup error:", err);
       setError("An error occurred. Please try again later.");

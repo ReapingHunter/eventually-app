@@ -35,7 +35,7 @@ export default function LoginPage() {
       localStorage.setItem("token", response.data.token);
 
       // Redirect user to the dashboard or home page
-      navigate("/dashboard"); // Adjust the redirect path as needed
+      navigate("/"); // Adjust the redirect path as needed
 
     } catch (error) {
       setError("Invalid credentials. Please try again.");

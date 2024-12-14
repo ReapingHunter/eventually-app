@@ -35,15 +35,16 @@ const User = {
     });
   },
 
-  updatePassword: (email, newPasswordHash, result) => {
-    const query = "UPDATE user SET password_hash = ? WHERE email = ?";
-    dbConn.query(query, [newPasswordHash, email], (err, res) => {
-      if (err) {
-        console.error("Error:", err);
-        result(err, null);
-      } else {
-        result(null, res);
-      }
+  updatePassword: (email, newPasswordHash) => {
+    return new Promise((resolve, reject) => {
+      const query = "UPDATE user SET password_hash = ? WHERE email = ?";
+      dbConn.query(query, [newPasswordHash, email], (err, res) => {
+        if (err) {
+          console.error("Error updating password:", err);
+          return reject(err);
+        }
+        resolve(res);
+      });
     });
   }
 };

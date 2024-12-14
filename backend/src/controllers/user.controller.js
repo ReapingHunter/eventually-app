@@ -63,16 +63,30 @@ export const logIn = async (req, res) => {
   }
 };
 
-export const resetPassword = (req, res) => {
-  const { email, newPassword } = req.body;
+export const resetPassword = async (req, res) => {
+  const { email, newPassword, confirmPassword } = req.body;
+
+  // Check if passwords match
+  if (newPassword !== confirmPassword) {
+    return res.status(400).send({ message: "Passwords do not match" });
+  }
 
   // Hash the new password
   const newPasswordHash = bcrypt.hashSync(newPassword, 10);
 
-  User.updatePassword(email, newPasswordHash, (err, data) => {
-    if (err) {
-      return res.status(500).send({ message: "Error resetting password", error: err });
+  try {
+    const user = await User.findByUsernameOrEmail(null, email);
+
+    if (!user) {
+      return res.status(404).send({ message: "User not found" });
     }
-    res.send({ message: "Password reset successfully" });
-  });
+
+    // Update the password in the database
+    await User.updatePassword(email, newPasswordHash);
+
+    res.send({ message: "Password reset successfully!" });
+  } catch (err) {
+    console.error("Error resetting password:", err);
+    res.status(500).send({ message: "Error resetting password", error: err });
+  }
 };
