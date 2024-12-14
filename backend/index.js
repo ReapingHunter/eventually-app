@@ -15,7 +15,9 @@ app.get('/', (req, res) => {
 });
 
 // Used for running different ports
-app.use(cors());
+app.use(cors({
+  allowedHeaders: ['Authorization', 'Content-Type'],
+}));
 
 // User routes
 app.use('/api/users', userRoutes);

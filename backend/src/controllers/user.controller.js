@@ -90,3 +90,16 @@ export const resetPassword = async (req, res) => {
     res.status(500).send({ message: "Error resetting password", error: err });
   }
 };
+
+export const checkLoggedIn = async (req, res) => {
+  try {
+    const userId = req.userId; // Extracted from the token by the middleware
+    if (!userId) {
+      return res.status(401).send({ message: "Unauthorized" });
+    }
+    res.send({ message: "User is logged in", userId });
+  } catch (err) {
+    console.error("Error checking login status:", err);
+    res.status(500).send({ message: "Error checking login status", error: err });
+  }
+};
