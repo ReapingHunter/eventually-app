@@ -56,7 +56,7 @@ export default function NavBar() {
 
               {/* User Button */}
               <a href="/login">
-                <button className="bg-[#7b00d4] text-white font-sm rounded-full hover:opacity-90 hover:brightness-110 p-3 transition shadow-sm">
+                <button className="bg-[#7b00d4] text-white font-sm rounded-full hover:brightness-110 p-3 transition shadow-sm">
                   <UserIcon className="w-5 h-5" />
                 </button>
               </a>

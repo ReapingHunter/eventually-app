@@ -21,7 +21,7 @@ export default function Notifications() {
     <>
       <Popover>
         <PopoverTrigger asChild>
-          <Button className="relative bg-[#7b00d4] text-white font-sm p-3 w-11 h-11 rounded-full hover:opacity-90 hover:brightness-110 transition shadow-md">
+          <Button className="relative bg-[#7b00d4] text-white font-sm p-3 w-11 h-11 rounded-full hover:brightness-110 transition shadow-md">
             <BellIcon className="w-5 h-5" />
             {notifications.length > 0 && (
               <div className="absolute -top-1 -right-1 bg-red-600 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
