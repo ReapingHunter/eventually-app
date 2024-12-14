@@ -2,9 +2,15 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom"; // For redirecting after login
 
 export default function LoginPage() {
   const [isMobile, setIsMobile] = useState(false);
+  const [email, setEmail] = useState(""); // Track email input
+  const [password, setPassword] = useState(""); // Track password input
+  const [error, setError] = useState(""); // For displaying error messages
+  const navigate = useNavigate(); // For redirecting user after login
 
   useEffect(() => {
     const handleResize = () => {
@@ -16,6 +22,25 @@ export default function LoginPage() {
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post("http://localhost:3000/api/users/login", {
+        email,
+        password,
+      });
+
+      // If login is successful, store the JWT token in localStorage (or handle as needed)
+      localStorage.setItem("token", response.data.token);
+
+      // Redirect user to the dashboard or home page
+      navigate("/"); // Adjust the redirect path as needed
+
+    } catch (error) {
+      setError("Invalid credentials. Please try again.");
+    }
+  };
 
   return (
     <>
@@ -56,12 +81,18 @@ export default function LoginPage() {
                 Signup
               </a>
             </p>
-            <form action="#" method="post" className="space-y-2">
+
+            {/* Error Message Display */}
+            {error && <p className="text-red-500">{error}</p>}
+
+            <form onSubmit={handleLogin} className="space-y-2">
               <div>
                 <Label htmlFor="email">Email Address</Label>
                 <Input
                   type="email"
                   id="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email"
                   className="mt-1"
                 />
@@ -71,6 +102,8 @@ export default function LoginPage() {
                 <Input
                   type="password"
                   id="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   placeholder="Enter your password"
                   className="mt-1"
                 />
