@@ -1,11 +1,14 @@
 import { WrenchIcon, UserIcon } from "@heroicons/react/24/solid";
 import { MenuIcon } from "lucide-react";
 import { Button } from "@/components/ui/button"; 
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { Card } from "./ui/card";
 import { X } from "lucide-react";
 import Notifications from "./Notifications";
 import { Separator } from "./ui/separator";
 import { useState, useEffect } from "react"
 import { isAuthenticated } from "../utils/auth"
+
 export default function NavBar() {
   const [isMobile, setIsMobile] = useState(false)
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
@@ -46,22 +49,41 @@ export default function NavBar() {
                 </button>
               </a>
               <div className="border-l-2 border-[#9b9b9b] h-14"></div>
-              {isLoggedIn && <a href="/manageevent">
-                <button className="bg-[#7b00d4] text-white font-bold py-2 px-4 rounded-lg shadow-md flex items-center gap-2 hover:brightness-110 transition">
-                  <WrenchIcon className="w-5 h-5" />
-                  <span>Manage Events</span>
-                </button>
-              </a>}
+              {isLoggedIn && 
+                <a href="/manageevent">
+                  <button className="bg-[#7b00d4] text-white font-bold py-2 px-4 rounded-lg shadow-md flex items-center gap-2 hover:brightness-110 transition">
+                    <WrenchIcon className="w-5 h-5" />
+                    <span>Manage Events</span>
+                  </button>
+                </a>
+              }
 
               {/* Notifications Button */}
               <Notifications />
 
               {/* User Button */}
-              <a href="/login">
-                <Button className="bg-[#7b00d4] text-white font-sm rounded-full hover:brightness-110 p-3 w-11 h-11 transition shadow-sm">
-                  <UserIcon className="w-5 h-5" />
-                </Button>
-              </a>
+              {isLoggedIn ? 
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button className="bg-[#7b00d4] text-white font-sm rounded-full hover:brightness-110 p-3 w-11 h-11 transition shadow-sm">
+                      <UserIcon className="w-5 h-5" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-full max-w-xs sm:max-w-md p-0">
+                    <Card className="rounded-lg overflow-hidden">
+                      <div>
+                        Welcome, 
+                      </div>
+                    </Card>
+                  </PopoverContent>
+                </Popover>
+                : 
+                <a href="/login">
+                  <Button className="bg-[#7b00d4] text-white font-sm rounded-full hover:brightness-110 p-3 w-11 h-11 transition shadow-sm">
+                    <UserIcon className="w-5 h-5" />
+                  </Button>
+                </a>
+              }
             </div>
           </nav>
         }
