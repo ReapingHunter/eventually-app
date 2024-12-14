@@ -163,32 +163,36 @@ export default function NavBar() {
             {/* Sidebar Content */}
             <div className="flex-grow">
               <ul className="space-y-8">
-                <li className="hover:bg-[#adadad] p-4 font-medium transition">
-                  <a href="/">
+                <a href="/">
+                  <li className="hover:bg-[#adadad] p-4 font-medium transition">
                     HOME
-                  </a>
-                </li>
-                <li className="hover:bg-[#adadad] p-4 font-medium transition">
-                  <a href="/events">
+                  </li>
+                </a>
+                <a href="/events">
+                  <li className="hover:bg-[#adadad] p-4 font-medium transition">
                     EVENTS
-                  </a>
-                </li>
+                  </li>
+                </a>
                 <Separator />
-                <li className="hover:bg-[#adadad] p-4 font-medium transition">
-                  <a href="/manageevent">
+                <a href={isLoggedIn ? "/manageevent" : "/login"}>
+                  <li className="hover:bg-[#adadad] p-4 font-medium transition">
                     MANAGE EVENTS
-                  </a>
-                </li>
+                  </li>
+                </a>
               </ul>
             </div>
 
             {/* Sidebar Footer */}
             <div className="p-4 border-t border-gray-200">
-              <button
-                className="w-full bg-[#7b00d4] text-white py-2 rounded-md hover:brightness-110 transition"
-              >
-                Login / Log out
-              </button>
+              {isLoggedIn && <h1>Welcome, {username}</h1>}
+              <a href={!isLoggedIn && "/login"}>
+                <button
+                  className="w-full bg-[#7b00d4] text-white py-2 rounded-md hover:brightness-110 transition"
+                  onClick={isLoggedIn && logout}
+                >
+                  {isLoggedIn ? "Logout" : "Login"}
+                </button>
+              </a>
             </div>
           </div>
         </aside>
