@@ -8,11 +8,14 @@ import Notifications from "./Notifications";
 import { Separator } from "./ui/separator";
 import { useState, useEffect } from "react"
 import { isAuthenticated } from "../utils/auth"
+import axios from "axios"
+
 
 export default function NavBar() {
   const [isMobile, setIsMobile] = useState(false)
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [username, setUsername] = useState(null)
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768); // Adjust the breakpoint (e.g., 768px for mobile)
@@ -20,9 +23,38 @@ export default function NavBar() {
 
     handleResize(); // Initial check
     window.addEventListener("resize", handleResize);
-    setIsLoggedIn(isAuthenticated())
+    
+    if(isAuthenticated()){
+      setIsLoggedIn(true)
+      fetchUserProfile().then((profile) => {
+        if (profile) setUsername(profile.username)
+      })
+    }
     return () => window.removeEventListener("resize", handleResize);
   }, [])
+
+  const fetchUserProfile = async() => {
+    try {
+      const token = localStorage.getItem("token")
+      if(!token) return null
+  
+      const response = await axios.get("http://localhost:3000/api/users/profile", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+  
+      if (response.status === 200) {
+        return response.data; // Axios already parses JSON
+      }
+      return null
+    } catch (error) {
+      console.error("Failed to fetch user profile:", error);
+      return null;
+    }
+  }
   return (
       <>
         {!isMobile && 
@@ -72,7 +104,7 @@ export default function NavBar() {
                   <PopoverContent className="w-full max-w-xs sm:max-w-md p-0">
                     <Card className="rounded-lg overflow-hidden">
                       <div>
-                        Welcome, 
+                        Welcome, {username}
                       </div>
                     </Card>
                   </PopoverContent>
