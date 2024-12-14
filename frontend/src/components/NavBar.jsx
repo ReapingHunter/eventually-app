@@ -128,7 +128,6 @@ export default function NavBar() {
             {/* Sidebar Footer */}
             <div className="p-4 border-t border-gray-200">
               <button
-                onClick={() => console.log("Sign Out")}
                 className="w-full bg-[#7b00d4] text-white py-2 rounded-md hover:brightness-110 transition"
               >
                 Login / Log out
