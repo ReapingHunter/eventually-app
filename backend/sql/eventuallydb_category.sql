@@ -35,6 +35,24 @@ CREATE TABLE `category` (
 
 LOCK TABLES `category` WRITE;
 /*!40000 ALTER TABLE `category` DISABLE KEYS */;
+INSERT INTO `category` (`category_id`, `category_name`) VALUES
+(1, 'Corporate'),
+(2, 'Social'),
+(3, 'Cultural and Community'),
+(4, 'Entertainment'),
+(5, 'Sports and Recreational'),
+(6, 'Charity'),
+(7, 'Educational'),
+(8, 'Networking'),
+(9, 'Professional Development'),
+(10, 'Health and Wellness'),
+(11, 'Technology and Innovation'),
+(12, 'Environmental'),
+(13, 'Food and Drink'),
+(14, 'Holiday').
+(15, 'Art and Crafts'),
+(16, 'Luxury and Lifestyle'),
+(17, 'Adventure and Outdoor');
 /*!40000 ALTER TABLE `category` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
