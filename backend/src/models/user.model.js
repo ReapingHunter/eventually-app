@@ -1,27 +1,37 @@
 import dbConn from '../../config/db.config.js';
 
 const User = {
-  create: (userData, result) => {
-    const query = "INSERT INTO user (first_name, last_name, email, password_hash) VALUES (?, ?, ?, ?)";
-    dbConn.query(query, [userData.first_name, userData.last_name, userData.email, userData.password_hash], (err, res) => {
-      if (err) {
-        console.error("Error:", err);
-        result(err, null);
-      } else {
-        result(null, { id: res.insertId, ...userData });
-      }
+  create: (userData) => {
+    return new Promise((resolve, reject) => {
+      const query = "INSERT INTO user (username, email, password_hash) VALUES (?, ?, ?)";
+      dbConn.query(
+        query,
+        [
+          userData.username,
+          userData.email,
+          userData.password_hash,
+        ],
+        (err, res) => {
+          if (err) {
+            console.error("Error:", err);
+            return reject(err);
+          }
+          resolve({ id: res.insertId, ...userData });
+        }
+      );
     });
   },
 
-  findByEmail: (email, result) => {
-    const query = "SELECT * FROM user WHERE email = ?";
-    dbConn.query(query, [email], (err, res) => {
-      if (err) {
-        console.error("Error:", err);
-        result(err, null);
-      } else {
-        result(null, res[0]);
-      }
+  findByUsernameOrEmail: (username, email) => {
+    return new Promise((resolve, reject) => {
+      const query = "SELECT * FROM user WHERE username = ? OR email = ?";
+      dbConn.query(query, [username, email], (err, res) => {
+        if (err) {
+          console.error("Error:", err);
+          return reject(err);
+        }
+        resolve(res[0]);
+      });
     });
   },
 
