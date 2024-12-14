@@ -38,7 +38,7 @@ export default function NavBar() {
       const token = localStorage.getItem("token")
       if(!token) return null
   
-      const response = await axios.get("http://localhost:3000/api/users/profile", {
+      const response = await axios.get("http://localhost:3000/api/users/check-login", {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
