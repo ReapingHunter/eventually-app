@@ -65,19 +65,22 @@ export default function NavBar() {
         }
         {isMobile &&
           <nav className="flex justify-between items-center z-10 px-6 bg-[#ffffff] shadow-lg">
-            <Button
-              onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-              className={`${isSidebarOpen ? "bg-[#7b00d4] text-[#ffffff]" : "text-[#7b00d4] bg-white"} p-3 border rounded-sm hover:opacity-90 transition`}
-            >
-              <MenuIcon className="w-6 h-6" />
-            </Button>
-            <a href="/" className="flex items-center">
-              <img
-                src="/images/dashboard-logo-2.png"
-                className="w-32 h-auto"
-                alt="Dashboard Logo"
-              />
-            </a>
+            <div className="flex justify-between items-center space-x-6">
+              <Button
+                onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+                className={`${isSidebarOpen ? "bg-[#7b00d4] text-[#ffffff]" : "text-[#7b00d4] bg-white"} p-3 border rounded-sm hover:opacity-90 transition`}
+              >
+                <MenuIcon className="w-6 h-6" />
+              </Button>
+                <a href="/" className="flex items-center">
+                  <img
+                    src="/images/dashboard-logo-2.png"
+                    className="w-32 h-auto"
+                    alt="Dashboard Logo"
+                  />
+              </a>
+            </div>
+            
             <Notifications />
           </nav>
         }
