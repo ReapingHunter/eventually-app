@@ -27,7 +27,7 @@ export default function AllEventsPage() {
     // Fetch events from backend
     const fetchAllEvents = async() => {
       try {
-        const response = await axios.get("http://localhost:3000/api/events/all-events")
+        const response = await axios.get("http://localhost:3000/api/events/all-event")
         setEvents(response.data);
       } catch (error) {
         console.error("Error fetching events:", error.message)
@@ -37,11 +37,6 @@ export default function AllEventsPage() {
   }, [])
   // Total pages calculation
   const totalPages = Math.ceil(events.length / eventsPerPage);
-
-  // Calculate current events for display
-  const indexOfLastEvent = currentPage * eventsPerPage;
-  const indexOfFirstEvent = indexOfLastEvent - eventsPerPage;
-  const currentEvents = events.slice(indexOfFirstEvent, indexOfLastEvent);
 
   // Function to handle pagination
   const paginate = (pageNumber) => {
@@ -110,7 +105,7 @@ export default function AllEventsPage() {
 
         {/* Event Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-6">
-          {currentEvents.map((event) => (
+          {events.map((event) => (
             <EventCard key={event.id} event={event} />
           ))}
         </div>
