@@ -4,9 +4,14 @@ import userRoutes from './src/routes/user.route.js';
 import cors from 'cors';
 import eventRoutes from './src/routes/event.route.js';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// Get the current directory from import.meta.url
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Middleware
 app.use(bodyParser.json());
