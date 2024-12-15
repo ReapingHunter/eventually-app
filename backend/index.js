@@ -1,8 +1,8 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import userRoutes from './src/routes/user.route.js';
-import cors from 'cors';
 import eventRoutes from './src/routes/event.route.js';
+import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -15,26 +15,24 @@ const __dirname = path.dirname(__filename);
 
 // Middleware
 app.use(bodyParser.json());
-
-// Serve static files (images) from the 'public' directory
-app.use('/public', express.static(path.join(__dirname, 'public')));
-
-// Route for the root API
-app.get('/', (req, res) => {
-  res.send('Welcome to the backend API!');
-});
-
-// CORS middleware
 app.use(cors({
   allowedHeaders: ['Authorization', 'Content-Type'],
 }));
 
-// User routes
-app.use('/api/users', userRoutes);
+// Serve static files (images)
+const imageDirectory = path.join(__dirname, 'images');
+app.use('/images', express.static(imageDirectory));
 
-// Event routes
+// Root route
+app.get('/', (req, res) => {
+  res.send('Welcome to the backend API!');
+});
+
+// API routes
+app.use('/api/users', userRoutes);
 app.use('/api/events', eventRoutes);
 
+// Start server
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });

@@ -3,7 +3,8 @@ import {
     createEvent, 
     getAllEvents, 
     getEventById, 
-    getEventByFilter, 
+    getEventByFilter,
+    getEventByUser, 
     updateEvent, 
     deleteEvent 
 } from '../controllers/event.controller.js';
