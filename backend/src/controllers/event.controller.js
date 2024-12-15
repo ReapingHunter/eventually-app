@@ -62,6 +62,25 @@ export const getEventByFilter = async (req, res) => {
   }
 };
 
+export const getEventByUser = async (req,res) => {
+  try {
+    const userId = req.query
+    const events = await Event.findByUser(userId)
+    if(events.length === 0){
+      return res.status(404).send({ message: "User has not created any events." })
+    }
+
+    const eventsWithFullImagePaths = events.map(event => ({
+      ...event,
+      photo: `http://localhost:3000/public/images/${event.photo}`,
+    }))
+    res.status(200).send(eventsWithFullImagePaths)
+  } catch (error) {
+    console.error("Error fetching event by user:", err);
+    res.status(500).send({ message: "Error fetching event", error: err })
+  }
+};
+
 export const updateEvent = async (req, res) => {
   try {
     const { id } = req.params; // Get the event ID from the URL params
