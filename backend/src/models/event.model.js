@@ -69,19 +69,29 @@ const Event = {
 
   updateById: (id, eventData) => {
     return new Promise((resolve, reject) => {
-      const query = `UPDATE event 
-                     SET title = ?, description = ?, date = ?, location = ?, photo = ?
-                     WHERE event_id = ?`;
+      const query = `
+        UPDATE event 
+        SET title = ?, description = ?, event_date = ?, event_time = ?, address = ?, photo = ?, updated_at = NOW() 
+        WHERE event_id = ? AND deleted_at IS NULL
+      `;
       dbConn.query(
         query,
-        [eventData.title, eventData.description, eventData.date, eventData.location, eventData.photo, id],
+        [
+          eventData.title,
+          eventData.description,
+          eventData.date,
+          eventData.time,
+          eventData.location,
+          eventData.photo,
+          id
+        ],
         (err, res) => {
           if (err) {
             console.error("Error updating event:", err);
             return reject(err);
           }
           if (res.affectedRows === 0) {
-            return reject(new Error("Event not found or no changes made"));
+            return reject(new Error("Event not found or has been deleted"));
           }
           resolve({ id, ...eventData });
         }
