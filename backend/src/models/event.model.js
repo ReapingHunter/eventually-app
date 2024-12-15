@@ -44,7 +44,7 @@ const Event = {
     });
   },
 
-  findByFilter: async (eventName, dateFrom, dateTo, category, location) => {
+  findByFilter: async (eventName="", dateFrom="", dateTo="", category="", location="") => {
     try {
       const query = `SELECT event_id, photo, title, event_date, event_time, address FROM event 
                       WHERE title = ? 

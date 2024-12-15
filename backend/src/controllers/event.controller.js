@@ -41,3 +41,23 @@ export const getEventById = async (req, res) => {
     res.status(500).send({ message: "Error fetching event", error: err });
   }
 };
+
+export const getEventByFilter = async (req, res) => {
+  try {
+    const { eventName, dateFrom, dateTo, category, location } = req.query
+    const filteredEvents =  await Event.getEventByFilter(eventName, dateFrom, dateTo, category, location)
+    if (filteredEvents.length === 0) {
+      return res.status(404).send({ message: "No events found matching the criteria." });
+    }
+
+    const eventsWithFullImagePaths = filteredEvents.map(event => ({
+      ...event,
+      photo: `http://localhost:3000/public/images/${event.photo}`,
+    }));
+
+    res.status(200).send(eventsWithFullImagePaths);
+  } catch (error) {
+    console.error("Error fetching event by filter:", err);
+    res.status(500).send({ message: "Error fetching event", error: err })
+  }
+}
