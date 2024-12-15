@@ -70,7 +70,7 @@ export default function Dashboard() {
                 {Array.from({ length: 8 }).map((_, index) => (
                   <CarouselItem key={index} className="basis-full sm:basis-1/2 lg:basis-1/3">
                     <div className="p-2">
-                      <EventCard />
+                      {/* <EventCard /> */}
                     </div>
                   </CarouselItem>
                 ))}

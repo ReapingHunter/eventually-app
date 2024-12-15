@@ -3,8 +3,9 @@ import { CalendarIcon, MapPinIcon } from "@heroicons/react/24/solid"
 import { ClockIcon } from "@heroicons/react/24/outline"
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
+import PropTypes from 'prop-types'
 
-export default function EventCard(){
+export default function EventCard({event}){
   return (
     <>
       <a href="/rsvp"> {/* Change to link to rsvp if event is not owned or modifyevent if owned */}
@@ -12,7 +13,7 @@ export default function EventCard(){
           {/* Event Image Section */}
           <div className="relative">
             <img
-              src="https://via.placeholder.com/400x200" // Replace with actual image
+              src={event.photo || "https://via.placeholder.com/400x200"}
               alt="Event"
               className="w-full h-48 object-cover"
             />
@@ -21,20 +22,20 @@ export default function EventCard(){
           {/* Event Content Section */}
           <div className="p-4">
             <h3 className="text-lg font-semibold text-gray-800">
-              Event_name
+              {event.title}
             </h3>
             <div className="text-md my-2">
               <div className="flex gap-2 my-3">
                 <CalendarIcon className="w-6 h-6 text-[#7b00d4]" />
-                start_date
+                {event.event_date.split('T')[0]}
               </div>
               <div className="flex gap-2 my-3">
                 <ClockIcon className="w-6 h-6 text-[#7b00d4]" />
-                event_time
+                {event.event_time}
               </div>
               <div className="flex gap-2 my-3">
                 <MapPinIcon className="w-6 h-6 text-[#7b00d4]" />
-                Location_data
+                {event.address}
               </div>
             </div>
             <div className="flex justify-center mt-4">
@@ -46,4 +47,14 @@ export default function EventCard(){
       </a>
     </>
   );
+}
+
+EventCard.propTypes = {
+  event: PropTypes.shape({
+    photo: PropTypes.string,
+    title: PropTypes.string.isRequired,
+    event_date: PropTypes.string.isRequired,
+    event_time: PropTypes.string.isRequired,
+    address: PropTypes.string.isRequired,
+  }).isRequired,
 }
