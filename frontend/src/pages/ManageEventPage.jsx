@@ -10,32 +10,43 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import FilterEvents from "@/components/FilterEvents";
+import { isAuthenticated } from "@/utils/auth";
 import { PlusIcon } from "lucide-react";
-import { useState } from "react";
-
-// Sample events data (simulate user-created events)
-const events = new Array(150).fill(null).map((_, index) => ({
-  id: index,
-  name: `Event ${index + 1}`,
-  createdBy: index % 2 === 0 ? "user1" : "user2", // Alternate users
-})); 
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 export default function MyEventsPage() {
   const [isHovered, setIsHovered] = useState(false)
-  const currentUserId = "user1"; // Simulating the logged-in user's ID
-  const userEvents = events.filter((event) => event.createdBy === currentUserId);
-
   const [currentPage, setCurrentPage] = useState(1);
+  const [events, setEvents] = useState([])
   const eventsPerPage = 12;
 
   // Total pages calculation
-  const totalPages = Math.ceil(userEvents.length / eventsPerPage);
+  const totalPages = Math.ceil(events.length / eventsPerPage);
 
   // Calculate current events for display
   const indexOfLastEvent = currentPage * eventsPerPage;
   const indexOfFirstEvent = indexOfLastEvent - eventsPerPage;
-  const currentEvents = userEvents.slice(indexOfFirstEvent, indexOfLastEvent);
+  const currentEvents = events.slice(indexOfFirstEvent, indexOfLastEvent);
 
+  useEffect(() => {
+    // Fetch events according to user
+    const fetchEventsByUser = async () => {
+      try {
+        const userSession = await isAuthenticated()
+        if(!userSession || !userSession.userId){
+          return;
+        }
+        const response = await axios.get("http://localhost:3000/api/events/user-event", {
+          params: { user_id: userSession.userId },
+        })
+        setEvents(response.data)
+      } catch (error) {
+        console.error("Error fetching events:", error.message)
+      }
+    }
+    fetchEventsByUser()
+  }, [])
   // Pagination function
   const paginate = (pageNumber) => {
     if (pageNumber >= 1 && pageNumber <= totalPages) {
@@ -117,7 +128,7 @@ export default function MyEventsPage() {
         </div>
         <FilterEvents />
         {/* Display message if no events */}
-        {userEvents.length === 0 ? (
+        {events.length === 0 ? (
           <p className="text-gray-500 text-center">
             You haven&apos;t created any events yet.
           </p>

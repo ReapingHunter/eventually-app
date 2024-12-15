@@ -12,16 +12,17 @@ import {
 } from "@/components/ui/pagination";
 import { useEffect, useState } from "react";
 import axios from "axios";
-// const events = new Array(150).fill(null).map((_, index) => ({
-//   id: index,
-//   name: `Event ${index + 1}`,
-// })); // Sample events data (150 events)
 
 export default function AllEventsPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [events, setEvents] = useState([]);
   const eventsPerPage = 28;
 
+  // Calculate current events for display
+  const indexOfLastEvent = currentPage * eventsPerPage;
+  const indexOfFirstEvent = indexOfLastEvent - eventsPerPage;
+  const currentEvents = events.slice(indexOfFirstEvent, indexOfLastEvent)
+  
   useEffect(() => {
 
     // Fetch events from backend
@@ -105,7 +106,7 @@ export default function AllEventsPage() {
 
         {/* Event Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-6">
-          {events.map((event) => (
+          {currentEvents.map((event) => (
             <EventCard key={event.id} event={event} />
           ))}
         </div>

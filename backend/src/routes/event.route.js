@@ -4,6 +4,7 @@ import {
     getAllEvents, 
     getEventById, 
     getEventByFilter, 
+    getEventByUser,
     updateEvent, 
     deleteEvent 
 } from '../controllers/event.controller.js';
@@ -14,6 +15,7 @@ router.post('/create-event', createEvent); // Create an event
 router.get('/all-event', getAllEvents); // Get all events
 router.get('/:id', getEventById); // Get a specific event by ID
 router.get('/filter-event', getEventByFilter);
+router.get('/user-event', getEventByUser);
 router.put('/update-event', updateEvent);
 router.delete('/delete-event', deleteEvent);
 

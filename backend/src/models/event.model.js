@@ -67,6 +67,24 @@ const Event = {
     }
   },
 
+  findByUser: async (userId) => {
+    try {
+      const query = `SELECT event_id, photo, title, event_date, event_time, address FROM event 
+                     WHERE user_id = ?`
+      const result = await new Promise((resolve, reject) => {
+        dbConn.query(query, [userId], (err, res) => {
+          if(err){
+            console.error("Error fetching event:", err)
+            return reject(err)
+          }
+          resolve(res)
+        })
+      })
+      return result
+    } catch (error) {
+      console.error(error.message)
+    }
+  },
   updateById: (id, eventData) => {
     return new Promise((resolve, reject) => {
       const query = `
