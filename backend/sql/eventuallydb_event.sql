@@ -1,36 +1,17 @@
--- MySQL dump 10.13  Distrib 8.0.40, for Win64 (x86_64)
---
--- Host: localhost    Database: eventuallydb
--- ------------------------------------------------------
--- Server version	8.0.40
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!50503 SET NAMES utf8 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
---
--- Table structure for table `event`
---
-
+-- Drop the table if it exists
 DROP TABLE IF EXISTS `event`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+
 CREATE TABLE `event` (
   `event_id` int NOT NULL AUTO_INCREMENT,
   `title` varchar(100) NOT NULL,
   `photo` varchar(255) NOT NULL, /* Can be stored as a LONGBLOB as well */
   `description` text,
-  `date` datetime NOT NULL,
+  `event_date` date NOT NULL, -- Separate date column
+  `event_time` time NOT NULL, -- Separate time column
   `address` varchar(255) DEFAULT NULL,
   `category_id` int DEFAULT NULL,
   `user_id` int DEFAULT NULL,
+  `max_occupants` int DEFAULT NULL, -- Added column for max occupants
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` timestamp NULL DEFAULT NULL,
@@ -40,24 +21,19 @@ CREATE TABLE `event` (
   CONSTRAINT `event_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `category` (`category_id`),
   CONSTRAINT `event_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `event`
---
+-- Insert table with data
+INSERT INTO `event` (`event_id`, `title`, `photo`, `description`, `event_date`, `event_time`, `address`, `category_id`, `user_id`, `created_at`, `updated_at`, `deleted_at`, `max_occupants`) 
+VALUES
+(1, 'Notion Tech Conference', 'public/images/img11.jpg', 'A conference about emerging technologies.', '2025-01-09', '10:00:00', 'Ayala Central Bloc', 11, 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NULL, 300),
+(2, 'Art Expo 2025', 'public/images/img15.jpg', 'Showcasing art from around the world.', '2025-03-15', '18:00:00', 'Cebu Art Hall, Colon', 15, 2, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NULL, 200),
+(3, 'Talamban Cleanup Drive', 'public/images/img12.jpg', 'Join us to clean up our community.', '2025-06-18', '08:00:00', 'Rosedale, Cebu', 12, 3, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NULL, 150),
+(4, 'New Year Eve Party', 'public/images/img14.jpg', 'Celebrate the new year with music and fun.', '2024-12-31', '21:00:00', 'SM Seaside, Cebu', 14, 4, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NULL, 500),
+(5, 'USC Edu Talk', 'public/images/img7.jpg', 'Year-End USC Edu Talk', '2024-12-20', '17:30:00', 'Rigney Hall, USC TC', 7, 5, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NULL, 100),
+(6, 'CESAFI 2025', 'public/images/img16.jpg', 'The annual CESAFI event.', '2025-02-14', '12:00:00', 'Cebu City Sports Complex', 5, 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NULL, 800),
+(7, 'Cebu Book Fair 2025', 'public/images/img17.jpg', 'Explore a wide variety of books and meet authors.', '2025-04-20', '09:00:00', 'Cebu Convention Center', 7, 2, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NULL, 250),
+(8, 'IT Park Jam 2025', 'public/images/img18.jpg', 'Live performances by top bands and artists.', '2025-07-05', '19:00:00', 'Cebu IT Park Amphitheater', 2, 3, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NULL, 1000);
 
 LOCK TABLES `event` WRITE;
-/*!40000 ALTER TABLE `event` DISABLE KEYS */;
-/*!40000 ALTER TABLE `event` ENABLE KEYS */;
+
 UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
-
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2024-12-01 14:18:20
