@@ -12,10 +12,6 @@ import {
 } from "@/components/ui/pagination";
 import { useEffect, useState } from "react";
 import axios from "axios";
-// const events = new Array(150).fill(null).map((_, index) => ({
-//   id: index,
-//   name: `Event ${index + 1}`,
-// })); // Sample events data (150 events)
 
 export default function AllEventsPage() {
   const [currentPage, setCurrentPage] = useState(1);
