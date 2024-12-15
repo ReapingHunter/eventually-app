@@ -87,6 +87,22 @@ const Event = {
         }
       );
     });
+  },
+  
+  deleteById: (id) => {
+    return new Promise((resolve, reject) => {
+      const query = "DELETE FROM event WHERE event_id = ?";
+      dbConn.query(query, [id], (err, res) => {
+        if (err) {
+          console.error("Error deleting event:", err);
+          return reject(err);
+        }
+        if (res.affectedRows === 0) {
+          return reject(new Error("Event not found"));
+        }
+        resolve({ message: "Event deleted successfully" });
+      });
+    });
   }  
 };
 
