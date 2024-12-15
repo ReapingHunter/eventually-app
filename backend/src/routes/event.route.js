@@ -1,5 +1,12 @@
 import express from 'express';
-import { createEvent, getAllEvents, getEventById, getEventByFilter, getEventByUser, updateEvent } from '../controllers/event.controller.js';
+import { 
+    createEvent, 
+    getAllEvents, 
+    getEventById, 
+    getEventByFilter, 
+    updateEvent, 
+    deleteEvent 
+} from '../controllers/event.controller.js';
 
 const router = express.Router();
 
@@ -9,5 +16,6 @@ router.get('/:id', getEventById); // Get a specific event by ID
 router.get('/filter-event', getEventByFilter);
 router.get('/user-event', getEventByUser);
 router.get('/update-event', updateEvent);
+router.get('/delete-event', deleteEvent);
 
 export default router;
