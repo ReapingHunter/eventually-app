@@ -3,10 +3,10 @@ import dbConn from '../../config/db.config.js';
 const Event = {
   create: (eventData) => {
     return new Promise((resolve, reject) => {
-      const query = "INSERT INTO event (title, description, date, location, photo) VALUES (?, ?, ?, ?, ?)";
+      const query = "INSERT INTO event (title, description, event_datetime, location, photo) VALUES (?, ?, ?, ?, ?)";
       dbConn.query(
         query,
-        [eventData.title, eventData.description, eventData.date, eventData.location, eventData.photo],
+        [eventData.title, eventData.description, eventData.event_datetime, eventData.location, eventData.photo],
         (err, res) => {
           if (err) {
             console.error("Error creating event:", err);

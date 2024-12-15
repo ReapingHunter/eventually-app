@@ -2,8 +2,8 @@ import Event from '../models/event.model.js';
 
 export const createEvent = async (req, res) => {
   try {
-    const { title, description, date, location, photo } = req.body; // Include photo field if it's part of the request
-    const newEvent = await Event.create({ title, description, date, location, photo });
+    const { title, description, event_datetime, location, photo } = req.body; // Updated to include event_datetime
+    const newEvent = await Event.create({ title, description, event_datetime, location, photo });
     res.status(201).send({ message: "Event created successfully", event: newEvent });
   } catch (err) {
     console.error("Error creating event:", err);
@@ -14,7 +14,7 @@ export const createEvent = async (req, res) => {
 export const getAllEvents = async (req, res) => {
   try {
     const events = await Event.findAll();
-    // Ensure that the image paths are absolute URLs
+    // Ensure the image paths are absolute URLs
     const eventsWithFullImagePaths = events.map(event => ({
       ...event,
       photo: `http://localhost:3000/public/images/${event.photo}`,
