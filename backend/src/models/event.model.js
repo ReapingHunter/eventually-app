@@ -20,7 +20,7 @@ const Event = {
 
   findAll: () => {
     return new Promise((resolve, reject) => {
-      const query = "SELECT * FROM event";
+      const query = "SELECT * FROM event WHERE deleted_at IS NULL";
       dbConn.query(query, (err, res) => {
         if (err) {
           console.error("Error fetching events:", err);
@@ -29,11 +29,11 @@ const Event = {
         resolve(res);
       });
     });
-  },
+  },  
 
   findById: (id) => {
     return new Promise((resolve, reject) => {
-      const query = "SELECT * FROM event WHERE event_id = ?";
+      const query = "SELECT * FROM event WHERE event_id = ? AND deleted_at IS NULL";
       dbConn.query(query, [id], (err, res) => {
         if (err) {
           console.error("Error fetching event:", err);
@@ -42,7 +42,7 @@ const Event = {
         resolve(res[0]);
       });
     });
-  },
+  },  
 
   findByFilter: async (eventName="", dateFrom="", dateTo="", category="", location="") => {
     try {
