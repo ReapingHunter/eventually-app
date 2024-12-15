@@ -161,7 +161,7 @@ export default function CreateEventPage() {
                 <div className="flex flex-col sm:flex-row gap-4 mt-2">
                   <div className="flex-1">
                     <Label htmlFor="eventFrom" className="block text-sm font-medium text-gray-700">
-                      Event Date and Time
+                      Event Date and Time <span className="font-normal">(Event date must be at least one week from now.)</span>
                     </Label>
                     <DateTimePicker hourCycle={12} value={dateTime} onChange={setDateTime} />
                   </div>
