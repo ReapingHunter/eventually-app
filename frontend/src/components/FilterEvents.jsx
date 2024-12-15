@@ -19,17 +19,6 @@ import { Calendar } from "@/components/ui/calendar";
 import { useState } from "react";
 import { addDays, format } from "date-fns";
 
-const locations = [
-  {
-    value: "cebu",
-    label: "Cebu",
-  },
-  {
-    value: "bohol",
-    label: "Bohol",
-  },
-];
-
 const categories = [
   {
     value: "networking",
@@ -42,8 +31,6 @@ const categories = [
 ];
 
 export default function FilterEvents() {
-  const [isLocationOpen, setLocationOpen] = useState(false);
-  const [locationValue, setLocationValue] = useState("");
 
   const [isCategoryOpen, setCategoryOpen] = useState(false);
   const [categoryValue, setCategoryValue] = useState("");
@@ -60,6 +47,12 @@ export default function FilterEvents() {
         <Input
           className="bg-[#f7f7f7] border-0 rounded-md shadow-inner w-full mb-0"
           placeholder="Search Event name"
+        />
+
+        {/* Event Location Filter */}
+        <Input
+          className="bg-[#f7f7f7] border-0 rounded-md shadow-inner w-full mb-0"
+          placeholder="Search Event location"
         />
 
         {/* Date Range Picker */}
@@ -101,51 +94,6 @@ export default function FilterEvents() {
                 day_range_middle: "bg-[#f3e2ff] text-[#000000]"
               }}
             />
-          </PopoverContent>
-        </Popover>
-
-        {/* Event Location Filter */}
-        <Popover open={isLocationOpen} onOpenChange={setLocationOpen}>
-          <PopoverTrigger asChild>
-            <Button
-              variant="outline"
-              role="combobox"
-              aria-expanded={isLocationOpen}
-              className="bg-[#f7f7f7] rounded-md border w-full lg:w-1/2 justify-between"
-            >
-              {locationValue
-                ? locations.find((location) => location.value === locationValue)?.label
-                : "Select Location..."}
-              <ChevronDown className="text-[#7b00d4]" />
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-[200px] p-0">
-            <Command>
-              <CommandInput placeholder="Search Location..." />
-              <CommandList>
-                <CommandEmpty>No locations found...</CommandEmpty>
-                <CommandGroup>
-                  {locations.map((location) => (
-                    <CommandItem
-                      key={location.value}
-                      value={location.value}
-                      onSelect={(currentVal) => {
-                        setLocationValue(currentVal === locationValue ? "" : currentVal);
-                        setLocationOpen(false);
-                      }}
-                    >
-                      {location.label}
-                      <Check
-                        className={cn(
-                          "ml-auto",
-                          locationValue === location.value ? "opacity-100" : "opacity-0"
-                        )}
-                      />
-                    </CommandItem>
-                  ))}
-                </CommandGroup>
-              </CommandList>
-            </Command>
           </PopoverContent>
         </Popover>
 

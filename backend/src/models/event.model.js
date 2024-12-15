@@ -43,6 +43,29 @@ const Event = {
       });
     });
   },
+
+  findByFilter: async (eventName, dateFrom, dateTo, category, location) => {
+    try {
+      const query = `SELECT event_id, photo, title, event_date, event_time, address FROM event 
+                      WHERE title = ? 
+                      AND event_date BETWEEN ? AND ? 
+                      AND category_id = ? 
+                      AND address = ?`
+      
+      const result = await new Promise((resolve, reject) => {
+        dbConn.query(query, (err, res) => {
+          if(err){
+            console.error("Error fetching event:", err)
+            return reject(err)
+          }
+          resolve(res)
+        })
+      })
+      return result
+    } catch (error) {
+      console.error(error.message)
+    }
+  },
 };
 
 export default Event;

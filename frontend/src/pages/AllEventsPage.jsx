@@ -10,17 +10,31 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { useState } from "react";
-
-const events = new Array(150).fill(null).map((_, index) => ({
-  id: index,
-  name: `Event ${index + 1}`,
-})); // Sample events data (150 events)
+import { useEffect, useState } from "react";
+import axios from "axios";
+// const events = new Array(150).fill(null).map((_, index) => ({
+//   id: index,
+//   name: `Event ${index + 1}`,
+// })); // Sample events data (150 events)
 
 export default function AllEventsPage() {
   const [currentPage, setCurrentPage] = useState(1);
+  const [events, setEvents] = useState([]);
   const eventsPerPage = 28;
 
+  useEffect(() => {
+
+    // Fetch events from backend
+    const fetchAllEvents = async() => {
+      try {
+        const response = await axios.get("http://localhost:3000/api/events/all-events")
+        setEvents(response.data);
+      } catch (error) {
+        console.error("Error fetching events:", error.message)
+      }
+    }
+    fetchAllEvents()
+  }, [])
   // Total pages calculation
   const totalPages = Math.ceil(events.length / eventsPerPage);
 
