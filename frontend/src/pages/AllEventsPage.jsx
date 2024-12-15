@@ -18,6 +18,11 @@ export default function AllEventsPage() {
   const [events, setEvents] = useState([]);
   const eventsPerPage = 28;
 
+  // Calculate current events for display
+  const indexOfLastEvent = currentPage * eventsPerPage;
+  const indexOfFirstEvent = indexOfLastEvent - eventsPerPage;
+  const currentEvents = events.slice(indexOfFirstEvent, indexOfLastEvent)
+  
   useEffect(() => {
 
     // Fetch events from backend
@@ -101,7 +106,7 @@ export default function AllEventsPage() {
 
         {/* Event Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-6">
-          {events.map((event) => (
+          {currentEvents.map((event) => (
             <EventCard key={event.id} event={event} />
           ))}
         </div>
