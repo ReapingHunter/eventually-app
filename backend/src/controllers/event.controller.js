@@ -60,4 +60,30 @@ export const getEventByFilter = async (req, res) => {
     console.error("Error fetching event by filter:", err);
     res.status(500).send({ message: "Error fetching event", error: err })
   }
-}
+};
+
+export const updateEvent = async (req, res) => {
+  try {
+    const { id } = req.params; // Get the event ID from the URL params
+    const { title, description, date, location, photo } = req.body; // Get updated fields from the request body
+
+    // Check if the required fields are provided
+    if (!title || !description || !date || !location) {
+      return res.status(400).send({ message: "Missing required fields" });
+    }
+
+    // Update the event
+    const updatedEvent = await Event.updateById(id, { title, description, date, location, photo });
+
+    res.status(200).send({ message: "Event updated successfully", event: updatedEvent });
+  } catch (err) {
+    console.error("Error updating event:", err);
+
+    // Handle case where event ID is invalid or not found
+    if (err.message === "Event not found or no changes made") {
+      return res.status(404).send({ message: "Event not found or no changes made" });
+    }
+
+    res.status(500).send({ message: "Error updating event", error: err.message });
+  }
+};
