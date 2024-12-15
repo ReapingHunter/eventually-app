@@ -92,18 +92,18 @@ export const deleteEvent = async (req, res) => {
   try {
     const { id } = req.params; // Get the event ID from the URL params
 
-    // Call the deleteById method to remove the event
+    // Call the deleteById method to soft delete the event
     const result = await Event.deleteById(id);
 
     res.status(200).send({ message: result.message });
   } catch (err) {
-    console.error("Error deleting event:", err);
+    console.error("Error soft deleting event:", err);
 
-    // Handle event not found error
-    if (err.message === "Event not found") {
-      return res.status(404).send({ message: "Event not found" });
+    // Handle event not found or already deleted error
+    if (err.message === "Event not found or already deleted") {
+      return res.status(404).send({ message: "Event not found or already deleted" });
     }
 
-    res.status(500).send({ message: "Error deleting event", error: err.message });
+    res.status(500).send({ message: "Error soft deleting event", error: err.message });
   }
 };
