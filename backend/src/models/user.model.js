@@ -35,6 +35,22 @@ const User = {
     });
   },
 
+  findById: (userId) => {
+    return new Promise((resolve, reject) => {
+      const query = "SELECT * FROM user WHERE user_id = ?";
+      dbConn.query(query, [userId], (err, res) => {
+        if (err) {
+          console.error("Error fetching user by ID:", err);
+          return reject(err);
+        }
+        if (res.length === 0) {
+          return resolve(null); // User not found
+        }
+        resolve(res[0]);
+      });
+    });
+  },
+
   updatePassword: (email, newPasswordHash) => {
     return new Promise((resolve, reject) => {
       const query = "UPDATE user SET password_hash = ? WHERE email = ?";

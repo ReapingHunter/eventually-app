@@ -1,24 +1,58 @@
 import { WrenchIcon, UserIcon } from "@heroicons/react/24/solid";
 import { MenuIcon } from "lucide-react";
 import { Button } from "@/components/ui/button"; 
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { Card } from "./ui/card";
 import { X } from "lucide-react";
 import Notifications from "./Notifications";
 import { Separator } from "./ui/separator";
 import { useState, useEffect } from "react"
+import { isAuthenticated, logout } from "@/utils/auth";
+import axios from "axios";
 
 export default function NavBar() {
   const [isMobile, setIsMobile] = useState(false)
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [username, setUsername] = useState(null)
+
+  const fetchUserProfile = async() => {
+    try {
+      const authData = await isAuthenticated()
+      if(!authData || !authData.userId){
+        return;
+      }
+      const response = await axios.get("http://localhost:3000/api/users/getuser", {
+        params: { user_id: authData.userId },
+      })
+      return response.data; // Return user data for use in NavBar
+    } catch (err) {
+      console.error("Error fetching user profile:", err.message);
+    }
+  }
+
   useEffect(() => {
+    const initializeUser = async () => {
+      const authData = await isAuthenticated();
+      if (authData) {
+        setIsLoggedIn(true);
+        const userData = await fetchUserProfile();
+        if (userData) {
+          setUsername(userData.username); // Update username in the state
+        }
+      }
+    };
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768); // Adjust the breakpoint (e.g., 768px for mobile)
     };
 
     handleResize(); // Initial check
     window.addEventListener("resize", handleResize);
+    initializeUser()
 
     return () => window.removeEventListener("resize", handleResize);
   }, [])
+
   return (
       <>
         {!isMobile && 
@@ -45,7 +79,7 @@ export default function NavBar() {
                 </button>
               </a>
               <div className="border-l-2 border-[#9b9b9b] h-14"></div>
-              <a href="/manageevent">
+              <a href={isLoggedIn ? "/manageevent" : "/login"}>
                 <button className="bg-[#7b00d4] text-white font-bold py-2 px-4 rounded-lg shadow-md flex items-center gap-2 hover:brightness-110 transition">
                   <WrenchIcon className="w-5 h-5" />
                   <span>Manage Events</span>
@@ -56,11 +90,34 @@ export default function NavBar() {
               <Notifications />
 
               {/* User Button */}
-              <a href="/login">
-                <button className="bg-[#7b00d4] text-white font-sm rounded-full hover:brightness-110 p-3 transition shadow-sm">
-                  <UserIcon className="w-5 h-5" />
-                </button>
-              </a>
+              {isLoggedIn ? 
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button className="bg-[#7b00d4] text-white font-sm rounded-full hover:brightness-110 p-3 w-11 h-11 transition shadow-sm">
+                      <UserIcon className="w-5 h-5" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-full max-w-xs sm:max-w-md p-0">
+                    <Card className="rounded-lg overflow-hidden">
+                      <div className="p-4">
+                        <p className="text-sm mb-4">Welcome, {username}</p>
+                        <Button 
+                          className="bg-[#7b00d4] text-white w-full py-2 rounded-md hover:brightness-110 transition" 
+                          onClick={logout}
+                        >
+                          Logout
+                        </Button>
+                      </div>
+                    </Card>
+                  </PopoverContent>
+                </Popover>
+                : 
+                <a href="/login">
+                  <Button className="bg-[#7b00d4] text-white font-sm rounded-full hover:brightness-110 p-3 w-11 h-11 transition shadow-sm">
+                    <UserIcon className="w-5 h-5" />
+                  </Button>
+                </a>
+              }
             </div>
           </nav>
         }
@@ -106,32 +163,36 @@ export default function NavBar() {
             {/* Sidebar Content */}
             <div className="flex-grow">
               <ul className="space-y-8">
-                <li className="hover:bg-[#adadad] p-4 font-medium transition">
-                  <a href="/">
+                <a href="/">
+                  <li className="hover:bg-[#adadad] p-4 font-medium transition">
                     HOME
-                  </a>
-                </li>
-                <li className="hover:bg-[#adadad] p-4 font-medium transition">
-                  <a href="/events">
+                  </li>
+                </a>
+                <a href="/events">
+                  <li className="hover:bg-[#adadad] p-4 font-medium transition">
                     EVENTS
-                  </a>
-                </li>
+                  </li>
+                </a>
                 <Separator />
-                <li className="hover:bg-[#adadad] p-4 font-medium transition">
-                  <a href="/manageevent">
+                <a href={isLoggedIn ? "/manageevent" : "/login"}>
+                  <li className="hover:bg-[#adadad] p-4 font-medium transition">
                     MANAGE EVENTS
-                  </a>
-                </li>
+                  </li>
+                </a>
               </ul>
             </div>
 
             {/* Sidebar Footer */}
             <div className="p-4 border-t border-gray-200">
-              <button
-                className="w-full bg-[#7b00d4] text-white py-2 rounded-md hover:brightness-110 transition"
-              >
-                Login / Log out
-              </button>
+              {isLoggedIn && <h1>Welcome, {username}</h1>}
+              <a href={!isLoggedIn && "/login"}>
+                <button
+                  className="w-full bg-[#7b00d4] text-white py-2 rounded-md hover:brightness-110 transition"
+                  onClick={isLoggedIn && logout}
+                >
+                  {isLoggedIn ? "Logout" : "Login"}
+                </button>
+              </a>
             </div>
           </div>
         </aside>

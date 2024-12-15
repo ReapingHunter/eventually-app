@@ -103,3 +103,17 @@ export const checkLoggedIn = async (req, res) => {
     res.status(500).send({ message: "Error checking login status", error: err });
   }
 };
+
+export const getUser = async (req, res) => {
+  try {
+    const userId = req.query.user_id;
+    const user = await User.findById(userId);
+    if(!user){
+      return res.status(404).send({ message: "User not found" });
+    }
+    res.status(200).send(user)
+  } catch (error){
+    console.error("Error getting user:", error);
+    res.status(500).send({ message: "Error getting user", error: error });
+  }
+}
