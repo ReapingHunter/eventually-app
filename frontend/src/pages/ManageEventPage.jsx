@@ -37,9 +37,11 @@ export default function MyEventsPage() {
         if(!userSession || !userSession.userId){
           return;
         }
+        
         const response = await axios.get("http://localhost:3000/api/events/user-event", {
           params: { user_id: userSession.userId },
         })
+        
         setEvents(response.data)
       } catch (error) {
         console.error("Error fetching events:", error.message)

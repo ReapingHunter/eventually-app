@@ -64,7 +64,7 @@ export const getEventByFilter = async (req, res) => {
 
 export const getEventByUser = async (req,res) => {
   try {
-    const userId = req.query
+    const userId = req.query.user_id
     const events = await Event.findByUser(userId)
     if(events.length === 0){
       return res.status(404).send({ message: "User has not created any events." })
