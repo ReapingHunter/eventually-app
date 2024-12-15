@@ -27,7 +27,7 @@ export default function EventCard({event}){
             <div className="text-md my-2">
               <div className="flex gap-2 my-3">
                 <CalendarIcon className="w-6 h-6 text-[#7b00d4]" />
-                {event.event_date}
+                {event.event_date.split('T')[0]}
               </div>
               <div className="flex gap-2 my-3">
                 <ClockIcon className="w-6 h-6 text-[#7b00d4]" />
