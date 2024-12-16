@@ -12,7 +12,8 @@ import { useParams } from "react-router-dom";
 import { isAuthenticated } from "@/utils/auth";
 import axios from "axios";
 import { Command, CommandEmpty, CommandGroup, CommandItem, CommandList } from "@/components/ui/command";
-
+import { Check } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const rsvpStatus = [
   {
@@ -33,6 +34,7 @@ export default function RSVPPage() {
   const [ event, setEvent ] = useState(null)
   const [ loading, setLoading ] = useState(true)
   const [ isPopoverOpen, setIsPopoverOpen] = useState(false)
+  const [ currentStatus, setCurrentStatus ] = useState(null)
   const [rsvpMessage, setRsvpMessage] = useState("")
 
   useEffect(() => {
@@ -51,6 +53,26 @@ export default function RSVPPage() {
     }
   }, [id])
 
+  useEffect(() => {
+    const checkRSVPStatus = async () => {
+      try {
+        const authData = await isAuthenticated();
+        if (authData && authData.userId) {
+          const userId = authData.userId;
+          const response = await axios.get(
+            `http://localhost:3000/api/rsvp/rsvp-exists/${id}/${userId}`
+          );
+          if (response.data.length > 0) {
+            setCurrentStatus(response.data[0].status);  // Set the current status to the response status
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching RSVP status:", error.message);
+      }
+    };
+  
+    checkRSVPStatus();
+  }, [id]);  // Only run once when the component mounts (or when `id` changes)
   const handleRSVP = async (status) => {
     try {
       const authData = await isAuthenticated()
@@ -68,6 +90,7 @@ export default function RSVPPage() {
         const updateResponse = await axios.put(`http://localhost:3000/api/rsvp/update/${rsvpId}`, { status: status })
         if (updateResponse.status === 200) {
           setRsvpMessage("RSVP status updated successfully!");
+          setCurrentStatus(status)
         } else {
           setRsvpMessage("Failed to update RSVP. Please try again.");
         }
@@ -80,6 +103,7 @@ export default function RSVPPage() {
         const response = await axios.post("http://localhost:3000/api/rsvp/create-rsvp", rsvpData)
         if (response.status === 201) {
           setRsvpMessage("RSVP status created successfully!");
+          setCurrentStatus(status)
         } else {
           setRsvpMessage("Failed to update RSVP. Please try again.");
         }
@@ -175,6 +199,12 @@ export default function RSVPPage() {
                         }}
                       >
                         {status.label}
+                        <Check
+                          className={cn(
+                            "ml-auto",
+                            currentStatus === status.label ? "opacity-100" : "opacity-0"
+                          )}
+                        />
                       </CommandItem>
                       ))}
                     </CommandGroup>
