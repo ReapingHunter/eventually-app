@@ -111,7 +111,7 @@ export default function MyEventsPage() {
       <div className="container mx-auto px-4 py-8">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-5xl font-bold">Your Events</h1>
-          <a href="/createevent">
+          <Link to="/create-event">
             <button
                 className={`bg-gradient-to-r from-[#7b00d4] via-[#A255DA] to-[#F03CF9] rounded-full p-3 flex items-center gap-2 text-white font-semibold transition-all duration-300 ease-in-out
                         ${isHovered ? "px-6" : "px-3 justify-center"}`}
@@ -125,7 +125,7 @@ export default function MyEventsPage() {
                   </span>
                 )}
             </button>
-          </a>
+          </Link>
         </div>
         <FilterEvents />
         {/* Display message if no events */}
@@ -138,7 +138,7 @@ export default function MyEventsPage() {
             {/* Event Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-6">
               {currentEvents.map((event) => (
-                <Link key={event.event_id} to={`/rsvp/${event.event_id}`}>
+                <Link key={event.event_id} to={`/modify-event/${event.event_id}`}>
                   <EventCard event={event} />
                 </Link>
               ))}

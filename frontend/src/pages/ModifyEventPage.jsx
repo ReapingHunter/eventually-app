@@ -3,6 +3,7 @@ import { CalendarDateRangeIcon, MapPinIcon, ClockIcon, WrenchIcon, TrashIcon, Us
 import { Button } from "@/components/ui/button"
 import { useState, useEffect } from "react"
 import PropTypes from "prop-types"
+import { Link } from "react-router-dom"
 export default function ModifyEventPage({id, event}){
   const [showDeletePopup, setShowDeletePopup] = useState(false)
 
@@ -99,12 +100,12 @@ export default function ModifyEventPage({id, event}){
             </div>
 
             <div className="flex justify-between items-center space-x-2 max-md:pt-8">
-              <a href="/updateevent">
+              <Link to="/update-event">
                 <Button className=" flex bg-yellow-600 hover:brightness-110 transition text-white font-semibold py-2 px-6 rounded-lg shadow-md gap-2">
                   <WrenchIcon className="w-5 h-5"/>
                   Update
                 </Button>
-              </a>
+              </Link>
               <Button className=" flex bg-red-500 hover:brightness-110 transition text-white font-semibold py-2 px-6 rounded-lg shadow-md gap-2" onClick={setShowDeletePopup(true)}>
                 <TrashIcon className="w-5 h-5"/>
                 Delete

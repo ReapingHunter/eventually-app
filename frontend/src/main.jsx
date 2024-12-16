@@ -24,7 +24,7 @@ createRoot(document.getElementById('root')).render(
         <Route path='/rsvp/:id' element={<RSVPPage />} />
         <Route path='/create-event' element={<CreateEventPage />} />
         <Route path='/manage-event' element={<ManageEventPage />} />
-        <Route path='/modify-event' element={<ModifyEventPage />} />
+        <Route path='/modify-event/:id' element={<ModifyEventPage />} />
         <Route path='/events' element={<AllEventsPage />} />
         <Route path='/update-event' element={<UpdateEventPage />} />
       </Routes>
