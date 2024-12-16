@@ -29,10 +29,8 @@ CREATE TABLE `rsvp` (
   `status` enum('Going','Maybe','Not Going') DEFAULT 'Maybe',
   `rsvp_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`rsvp_id`),
-  KEY `user_id` (`user_id`),
-  KEY `event_id` (`event_id`),
-  CONSTRAINT `rsvp_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
-  CONSTRAINT `rsvp_ibfk_2` FOREIGN KEY (`event_id`) REFERENCES `event` (`event_id`)
+  KEY `rsvp_id` (`rsvp_id`),
+  CONSTRAINT `notification_ibfk_1` FOREIGN KEY (`rsvp_id`) REFERENCES `rsvp` (`rsvp_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
