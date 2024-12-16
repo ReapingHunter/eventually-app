@@ -23,8 +23,8 @@ export const isAuthenticated = async() => {
 }
 
 export const logout = () => {
-    localStorage.removeItem("token")
-    window.location.reload()
-  }
+  localStorage.removeItem("token")
+  window.location.href = "/"
+}
 
   
