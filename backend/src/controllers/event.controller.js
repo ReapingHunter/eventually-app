@@ -1,9 +1,26 @@
 import Event from '../models/event.model.js';
+import Category from '../models/category.model.js';
 
 export const createEvent = async (req, res) => {
   try {
-    const { title, description, date, location, photo } = req.body;
-    const newEvent = await Event.create({ title, description, date, location, photo });
+    const { title, description, event_datetime, address, photo, category } = req.body;
+
+    // Fetch the category_id based on the category name
+    const categoryId = await Category.getCategoryIdByName(category);
+    if (!categoryId) {
+      return res.status(400).send({ message: "Invalid category selected." });
+    }
+
+    // Insert the event into the database
+    const newEvent = await Event.create({
+      title,
+      description,
+      event_datetime,
+      address,
+      photo,
+      category_id: categoryId,
+    });
+
     res.status(201).send({ message: "Event created successfully", event: newEvent });
   } catch (err) {
     console.error("Error creating event:", err);
