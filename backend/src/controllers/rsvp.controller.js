@@ -78,7 +78,7 @@ export const updateRSVPStatus = async (req, res) => {
     const { status } = req.body;
 
     // Validate status
-    if (![1, 2, 3].includes(status)) {
+    if (!["Going", "Maybe", "Not Going"].includes(status)) {
       return res.status(400).send({ message: "Invalid RSVP status." });
     }
 

@@ -122,7 +122,7 @@ export default function RSVPPage() {
   if (!event) {
     return <div className="text-center mt-16 text-red-500">Event not found.</div>;
   }
-
+  console.log(currentStatus)
   return (
     <>
       <div className="bg-[#fbf3ff] min-h-screen">
@@ -181,7 +181,7 @@ export default function RSVPPage() {
               <PopoverTrigger asChild>
               <button className="mt-4 sm:mt-0 flex bg-gradient-to-r from-[#7b00d4] via-[#A255DA] to-[#F03CF9] hover:brightness-110 transition text-white font-semibold py-2 px-6 rounded-lg shadow-md gap-2">
                 <SparklesIcon className="w-5 h-5" />
-                RSVP Now
+                {currentStatus ? "Update RSVP" : "RSVP Now"}
               </button>
               </PopoverTrigger>
               <PopoverContent>
@@ -194,7 +194,7 @@ export default function RSVPPage() {
                         key={status.value}
                         value={status.value}
                         onSelect={() => {
-                          handleRSVP(status.value);
+                          handleRSVP(status.label);
                           setIsPopoverOpen(false);
                         }}
                       >
