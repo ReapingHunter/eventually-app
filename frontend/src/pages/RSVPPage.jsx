@@ -6,15 +6,36 @@ import {
   SparklesIcon,
   UserIcon,
 } from "@heroicons/react/24/solid";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { isAuthenticated } from "@/utils/auth";
 import axios from "axios";
+import { Command, CommandEmpty, CommandGroup, CommandItem, CommandList } from "@/components/ui/command";
 
+
+const rsvpStatus = [
+  {
+    label: "Going",
+    value: 1
+  },
+  {
+    label: "Maybe",
+    value: 2
+  },
+  {
+    label: "Not Going",
+    value: 3
+  },
+]
 export default function RSVPPage() {
   const { id } = useParams()
 
   const [ event, setEvent ] = useState(null)
+  const [selectedStatus, setSelectedStatus] = useState(null)
   const [ loading, setLoading ] = useState(true)
+  const [ isPopoverOpen, setIsPopoverOpen] = useState(false)
+  const [rsvpMessage, setRsvpMessage] = useState("")
 
   useEffect(() => {
     if(id){
@@ -31,6 +52,30 @@ export default function RSVPPage() {
       fetchEvent()
     }
   }, [id])
+
+  const handleRSVP = async (status) => {
+    try {
+      const authData = await isAuthenticated()
+      if(!authData || !authData.userId) {
+        setRsvpMessage("You must be logged in to RSVP.")
+        return
+      }
+
+      const rsvpData = {
+        event_id: Number(id),
+        user_id: authData.userId,
+        status: status,
+      }
+      console.log(rsvpData)
+      const response = await axios.post("http://localhost:3000/api/rsvp/create-rsvp", rsvpData)
+      if (response.status === 200) {
+        setRsvpMessage("RSVP status updated successfully!");
+      }
+    } catch (error) {
+      console.error("Error RSVPing:", error.message)
+      setRsvpMessage("Failed to update RSVP. Please try again.")
+    }
+  }
 
   // Loading or error states
   if (loading) {
@@ -84,34 +129,6 @@ export default function RSVPPage() {
             </p>
           </div>
 
-          {/* Agenda Section */}
-          <div className="bg-white rounded-xl shadow-md p-6 mt-6">
-            <div className="flex items-center text-sm">
-              <ClockIcon className="w-5 h-5 text-[#7b00d4] mr-2" />
-              <h3 className="text-lg md:text-xl font-semibold text-[#46007a]">Agenda</h3>
-            </div>
-            <ul className="mt-4 text-sm text-gray-700 list-disc list-inside space-y-2">
-              <li>
-                <span className="font-bold">10:00 AM:</span> Registration and Welcome Speech
-              </li>
-              <li>
-                <span className="font-bold">11:00 AM:</span> Keynote Presentation: *Future of Automotive Design*
-              </li>
-              <li>
-                <span className="font-bold">12:30 PM:</span> Networking Lunch
-              </li>
-              <li>
-                <span className="font-bold">2:00 PM:</span> Panel Discussion: *Sustainability in the Automotive Industry*
-              </li>
-              <li>
-                <span className="font-bold">4:00 PM:</span> Workshop: *Hands-on with Luxury Vehicles*
-              </li>
-              <li>
-                <span className="font-bold">5:30 PM:</span> Closing Remarks and Thank You
-              </li>
-            </ul>
-          </div>
-
           {/* RSVP Section */}
           <div className="bg-white rounded-xl shadow-md p-6 mt-6 flex flex-col sm:flex-row justify-between items-center">
             {/* RSVP Count */}
@@ -123,27 +140,45 @@ export default function RSVPPage() {
             </div>
 
             {/* RSVP Button */}
-            <button className="mt-4 sm:mt-0 flex bg-gradient-to-r from-[#7b00d4] via-[#A255DA] to-[#F03CF9] hover:brightness-110 transition text-white font-semibold py-2 px-6 rounded-lg shadow-md gap-2">
-              <SparklesIcon className="w-5 h-5" />
-              RSVP Now
-            </button>
+            <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
+              <PopoverTrigger asChild>
+              <button className="mt-4 sm:mt-0 flex bg-gradient-to-r from-[#7b00d4] via-[#A255DA] to-[#F03CF9] hover:brightness-110 transition text-white font-semibold py-2 px-6 rounded-lg shadow-md gap-2">
+                <SparklesIcon className="w-5 h-5" />
+                RSVP Now
+              </button>
+              </PopoverTrigger>
+              <PopoverContent>
+                <Command>
+                  <CommandList>
+                    <CommandEmpty>No RSVP status found...</CommandEmpty>
+                    <CommandGroup>
+                      {rsvpStatus.map((status) => (
+                        <CommandItem
+                        key={status.value}
+                        value={status.value}
+                        onSelect={() => {
+                          setSelectedStatus(status.label);
+                          handleRSVP(status.value);
+                          setIsPopoverOpen(false);
+                        }}
+                      >
+                        {status.label}
+                      </CommandItem>
+                      ))}
+                    </CommandGroup>
+                  </CommandList>
+                </Command>
+              </PopoverContent>
+            </Popover>
           </div>
-
+          {rsvpMessage && <p className="text-center mt-4 text-sm text-green-600">{rsvpMessage}</p>}
           {/* Organizer Section */}
           <div className="bg-white rounded-xl shadow-md p-6 mt-6">
             <h3 className="text-lg md:text-xl font-semibold text-[#46007a]">Organizer</h3>
             <div className="mt-4 flex flex-wrap gap-6">
               {/* Organizer 1 */}
               <div className="flex items-center gap-4">
-                <img
-                  src="https://via.placeholder.com/50" // Replace with organizer image
-                  alt="Organizer 1"
-                  className="w-12 h-12 object-cover rounded-full"
-                />
-                <div>
-                  <p className="font-medium">Organizer Name 1</p>
-                  <p className="text-sm text-gray-600">Position/Role</p>
-                </div>
+                <p className="font-medium">Organizer Name 1</p>
               </div>
             </div>
           </div>

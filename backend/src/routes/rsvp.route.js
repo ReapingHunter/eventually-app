@@ -8,7 +8,7 @@ import {
 
   const router = express.Router();
 
-  router.post("/rsvp", createRSVP);                     // Create RSVP
+  router.post("/create-rsvp", createRSVP);                     // Create RSVP
   router.get("/rsvp/event/:event_id", getRSVPsByEvent); // Get RSVPs by event
   router.get("/rsvp/user/:user_id", getRSVPsByUser);    // Get RSVPs by user
   router.put("/rsvp/:rsvp_id", updateRSVPStatus);       // Update RSVP status
