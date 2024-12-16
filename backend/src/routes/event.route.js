@@ -19,6 +19,6 @@ router.get('/top-events', getTopEvents)
 router.get('/event/filter', getEventByFilter);
 router.get('/user/:id', getEventByUser);
 router.put('/update-event', updateEvent);
-router.delete('/delete-event', deleteEvent);
+router.put('/delete-event/:id', deleteEvent);
 
 export default router;
