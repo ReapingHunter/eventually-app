@@ -14,8 +14,8 @@ const router = express.Router();
 router.post('/create-event', createEvent); // Create an event
 router.get('/all-event', getAllEvents); // Get all events
 router.get('/:id', getEventById); // Get a specific event by ID
-router.get('/filter-event', getEventByFilter);
-router.get('/user-event', getEventByUser);
+router.get('/event/filter', getEventByFilter);
+router.get('/user', getEventByUser);
 router.put('/update-event', updateEvent);
 router.delete('/delete-event', deleteEvent);
 

@@ -38,7 +38,7 @@ export default function MyEventsPage() {
           return;
         }
         
-        const response = await axios.get("http://localhost:3000/api/events/user-event", {
+        const response = await axios.get("http://localhost:3000/api/events/user", {
           params: { user_id: userSession.userId },
         })
         
