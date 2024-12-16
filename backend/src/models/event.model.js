@@ -20,7 +20,7 @@ const Event = {
 
   findAll: () => {
     return new Promise((resolve, reject) => {
-      const query = "SELECT * FROM event WHERE deleted_at IS NULL";
+      const query = "SELECT * FROM event WHERE deleted_at IS NULL ORDER BY event.title DESC";
       dbConn.query(query, (err, res) => {
         if (err) {
           console.error("Error fetching events:", err);
@@ -47,7 +47,8 @@ const Event = {
   findByFilter: async (eventName="", dateFrom="", dateTo="", category="", location="") => {
     try {
       const query = `SELECT event_id, photo, title, event_date, event_time, address FROM event 
-                      WHERE title = ? 
+                      WHERE deleted_at IS NULL
+                      AND title = ? 
                       AND event_date BETWEEN ? AND ? 
                       AND category_id = ? 
                       AND address = ?`
@@ -70,17 +71,39 @@ const Event = {
   findByUser: (userId) => {
     return new Promise((resolve, reject) => {
       const query = `SELECT event_id, photo, title, event_date, event_time, address FROM event 
-                     WHERE user_id = ?`;
+                     WHERE user_id = ?
+                     AND deleted_at IS NULL`;
       dbConn.query(query, [userId], (err, res) => {
         if(err){
           console.error("Error fetching event:", err)
           return reject(err)
         }
-        resolve(res[0])
+        resolve(res)
       });
     });
   },
   
+  findTopEvents: (limit=8) => {
+    return new Promise ((resolve, reject) => {
+      const query = `
+        SELECT e.event_id, e.title, e.description, e.event_date, e.event_time, e.photo, 
+               COUNT(r.rsvp_id) AS rsvp_count
+        FROM event e
+        LEFT JOIN rsvp r ON e.event_id = r.event_id
+        WHERE e.deleted_at IS NULL
+        GROUP BY e.event_id, e.title, e.description, e.event_date, e.event_time, e.photo
+        ORDER BY rsvp_count DESC
+        LIMIT ?
+      `
+      dbConn.query(query, [limit], (err, res) => {
+        if(err){
+          console.error("Error fetching top events:", err);
+          return reject(err);
+        }
+        resolve(res)
+      })
+    })
+  },
   updateById: (id, eventData) => {
     return new Promise((resolve, reject) => {
       const query = `

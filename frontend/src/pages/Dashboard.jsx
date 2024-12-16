@@ -10,8 +10,12 @@ import {
 } from "@/components/ui/carousel";
 import { Button } from "@/components/ui/button";
 import { SparklesIcon, FireIcon } from "@heroicons/react/24/solid";
+import { useState } from "react";
 
 export default function Dashboard() {
+  const [events, setEvents] = useState([])
+
+  
   return (
     <>
       <div className="min-h-screen flex flex-col bg-[#efefef]">

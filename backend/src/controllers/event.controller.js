@@ -26,6 +26,19 @@ export const getAllEvents = async (req, res) => {
   }
 };
 
+export const getTopEvents = async (req, res) => {
+  try {
+    const topEvents = await Event.findTopEvents()
+    const eventsWithFullImagePaths = events.map(event => ({
+      ...event,
+      photo: `http://localhost:3000/public/images/${event.photo}`,
+    }));
+    res.status(200).send(eventsWithFullImagePaths);
+  } catch (error) {
+    console.error("Error fetching events:", err);
+    res.status(500).send({ message: "Error fetching events", error: err })
+  }
+}
 export const getEventById = async (req, res) => {
   try {
     const { id } = req.params;
