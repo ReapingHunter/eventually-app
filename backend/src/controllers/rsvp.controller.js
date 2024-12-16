@@ -55,6 +55,22 @@ export const getRSVPsByUser = async (req, res) => {
   }
 };
 
+// Find an existing rsvp
+export const getExistingRSVP = async (req, res) => {
+  try {
+    const { event_id, user_id } = req.params
+    const rsvp = await RSVP.findOne(event_id, user_id)
+    if (!rsvp) {
+      return null;
+    }
+
+    // Return the single RSVP object
+    return res.status(200).send(rsvp);
+  } catch (error) {
+    console.error("Error finding existing RSVP", error);
+    res.status(500).send({ message: "Error finding RSVPs", error })
+  }
+}
 // Update RSVP Status
 export const updateRSVPStatus = async (req, res) => {
   try {
@@ -62,7 +78,7 @@ export const updateRSVPStatus = async (req, res) => {
     const { status } = req.body;
 
     // Validate status
-    if (!["Going", "Maybe", "Not Going"].includes(status)) {
+    if (![1, 2, 3].includes(status)) {
       return res.status(400).send({ message: "Invalid RSVP status." });
     }
 

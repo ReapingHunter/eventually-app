@@ -23,6 +23,19 @@ const RSVP = {
     });
   },
 
+  findOne: (event_id, user_id) => {
+    return new Promise((resolve, reject) => {
+      const query = "SELECT * FROM rsvp WHERE event_id = ? AND user_id = ?"
+      dbConn.query(query, [event_id, user_id], (err, res) => {
+        if(err){
+          console.error("Error finding RSVP:", err);
+          return reject(err)
+        }
+        resolve(res)
+      })
+    })
+  },
+
   // Fetch RSVPs for a specific event
   findByEventId: (event_id) => {
     return new Promise((resolve, reject) => {

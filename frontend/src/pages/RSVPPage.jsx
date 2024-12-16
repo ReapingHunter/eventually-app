@@ -30,9 +30,7 @@ const rsvpStatus = [
 ]
 export default function RSVPPage() {
   const { id } = useParams()
-
   const [ event, setEvent ] = useState(null)
-  const [selectedStatus, setSelectedStatus] = useState(null)
   const [ loading, setLoading ] = useState(true)
   const [ isPopoverOpen, setIsPopoverOpen] = useState(false)
   const [rsvpMessage, setRsvpMessage] = useState("")
@@ -60,20 +58,35 @@ export default function RSVPPage() {
         setRsvpMessage("You must be logged in to RSVP.")
         return
       }
+      const userId = authData.userId
 
-      const rsvpData = {
-        event_id: Number(id),
-        user_id: authData.userId,
-        status: status,
+      const checkResponse = await axios.get(
+        `http://localhost:3000/api/rsvp/rsvp-exists/${id}/${userId}`
+      )
+      if(checkResponse.data.length !== 0){
+        const rsvpId = checkResponse.data[0].rsvp_id;
+        const updateResponse = await axios.put(`http://localhost:3000/api/rsvp/update/${rsvpId}`, { status: status })
+        if (updateResponse.status === 200) {
+          setRsvpMessage("RSVP status updated successfully!");
+        } else {
+          setRsvpMessage("Failed to update RSVP. Please try again.");
+        }
+      } else {
+        const rsvpData = {
+          event_id: Number(id),
+          user_id: authData.userId,
+          status: status,
+        }
+        const response = await axios.post("http://localhost:3000/api/rsvp/create-rsvp", rsvpData)
+        if (response.status === 201) {
+          setRsvpMessage("RSVP status created successfully!");
+        } else {
+          setRsvpMessage("Failed to update RSVP. Please try again.");
+        }
       }
-      console.log(rsvpData)
-      const response = await axios.post("http://localhost:3000/api/rsvp/create-rsvp", rsvpData)
-      if (response.status === 200) {
-        setRsvpMessage("RSVP status updated successfully!");
-      }
+      
     } catch (error) {
       console.error("Error RSVPing:", error.message)
-      setRsvpMessage("Failed to update RSVP. Please try again.")
     }
   }
 
@@ -157,7 +170,6 @@ export default function RSVPPage() {
                         key={status.value}
                         value={status.value}
                         onSelect={() => {
-                          setSelectedStatus(status.label);
                           handleRSVP(status.value);
                           setIsPopoverOpen(false);
                         }}
