@@ -9,6 +9,7 @@ import { Separator } from "./ui/separator";
 import { useState, useEffect } from "react"
 import { isAuthenticated, logout } from "@/utils/auth";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 export default function NavBar() {
   const [isMobile, setIsMobile] = useState(false)
@@ -58,33 +59,33 @@ export default function NavBar() {
         {!isMobile && 
           <nav className="px-6 flex justify-between items-center bg-[#ffffff] shadow-lg z-10">
             {/* Dashboard Logo */}
-            <a href="/" className="flex items-center">
+            <Link to="/" className="flex items-center">
               <img
                 src="/images/dashboard-logo-2.png"
                 className="w-32 h-auto"
                 alt="Dashboard Logo"
               />
-            </a>
+            </Link>
 
             {/* Action Buttons */}
             <div className="flex items-center gap-4 lg:gap-8">
-              <a href="/">
+              <Link to="/">
                 <button className="bg-white hover:bg-[#7b00d4] hover:text-white text-black font-medium transition px-6 py-6 text-center">
                   HOME
                 </button>
-              </a>
-              <a href="/events">
+              </Link>
+              <Link to="/events">
                 <button className="bg-white hover:bg-[#7b00d4] hover:text-white text-black font-medium transition px-6 py-6 text-center">
                   EVENTS
                 </button>
-              </a>
+              </Link>
               <div className="border-l-2 border-[#9b9b9b] h-14"></div>
-              <a href={isLoggedIn ? "/manageevent" : "/login"}>
+              <Link to={isLoggedIn ? "/manage-event" : "/login"}>
                 <button className="bg-[#7b00d4] text-white font-bold py-2 px-4 rounded-lg shadow-md flex items-center gap-2 hover:brightness-110 transition">
                   <WrenchIcon className="w-5 h-5" />
                   <span>Manage Events</span>
                 </button>
-              </a>
+              </Link>
 
               {/* Notifications Button */}
               <Notifications />
@@ -112,11 +113,11 @@ export default function NavBar() {
                   </PopoverContent>
                 </Popover>
                 : 
-                <a href="/login">
+                <Link to="/login">
                   <Button className="bg-[#7b00d4] text-white font-sm rounded-full hover:brightness-110 p-3 w-11 h-11 transition shadow-sm">
                     <UserIcon className="w-5 h-5" />
                   </Button>
-                </a>
+                </Link>
               }
             </div>
           </nav>
@@ -130,13 +131,13 @@ export default function NavBar() {
               >
                 <MenuIcon className="w-6 h-6" />
               </Button>
-                <a href="/" className="flex items-center">
+                <Link to="/" className="flex items-center">
                   <img
                     src="/images/dashboard-logo-2.png"
                     className="w-32 h-auto"
                     alt="Dashboard Logo"
                   />
-              </a>
+              </Link>
             </div>
             
             <Notifications />
@@ -163,36 +164,36 @@ export default function NavBar() {
             {/* Sidebar Content */}
             <div className="flex-grow">
               <ul className="space-y-8">
-                <a href="/">
+                <Link to="/">
                   <li className="hover:bg-[#adadad] p-4 font-medium transition">
                     HOME
                   </li>
-                </a>
-                <a href="/events">
+                </Link>
+                <Link to="/events">
                   <li className="hover:bg-[#adadad] p-4 font-medium transition">
                     EVENTS
                   </li>
-                </a>
+                </Link>
                 <Separator />
-                <a href={isLoggedIn ? "/manageevent" : "/login"}>
+                <Link to={isLoggedIn ? "/manage-event" : "/login"}>
                   <li className="hover:bg-[#adadad] p-4 font-medium transition">
                     MANAGE EVENTS
                   </li>
-                </a>
+                </Link>
               </ul>
             </div>
 
             {/* Sidebar Footer */}
             <div className="p-4 border-t border-gray-200">
               {isLoggedIn && <h1>Welcome, {username}</h1>}
-              <a href={!isLoggedIn && "/login"}>
+              <Link to={!isLoggedIn && "/login"}>
                 <button
                   className="w-full bg-[#7b00d4] text-white py-2 rounded-md hover:brightness-110 transition"
                   onClick={isLoggedIn && logout}
                 >
                   {isLoggedIn ? "Logout" : "Login"}
                 </button>
-              </a>
+              </Link>
             </div>
           </div>
         </aside>
