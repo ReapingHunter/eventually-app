@@ -21,7 +21,7 @@ export default function Dashboard() {
     // Fetch top events
     const fetchTopEvents = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/events/top-events")
+        const response = await axios.get("http://localhost:3000/api/events/dashboard")
         setEvents(response.data)
       } catch (error) {
         console.error("Error fetching top events:", error.message)
@@ -88,7 +88,9 @@ export default function Dashboard() {
                 {events.map((event) => (
                   <CarouselItem key={event.event_id} className="basis-full sm:basis-1/2 lg:basis-1/3">
                     <div className="p-2">
-                      <EventCard event={event} /> 
+                      <Link key={event.event_id} to={`/rsvp/${event.event_id}`}>
+                        <EventCard event={event} /> 
+                      </Link>
                     </div>
                   </CarouselItem>
                 ))}

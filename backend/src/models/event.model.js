@@ -98,19 +98,19 @@ const Event = {
     });
   },
   
-  findTopEvents: (limit=8) => {
+  findTopEvents: () => {
     return new Promise ((resolve, reject) => {
       const query = `
-        SELECT e.event_id, e.title, e.description, e.event_date, e.event_time, e.photo, 
+        SELECT e.*, 
                COUNT(r.rsvp_id) AS rsvp_count
         FROM event e
         LEFT JOIN rsvp r ON e.event_id = r.event_id
         WHERE e.deleted_at IS NULL
         GROUP BY e.event_id, e.title, e.description, e.event_date, e.event_time, e.photo
         ORDER BY rsvp_count DESC
-        LIMIT ?
+        LIMIT 8
       `
-      dbConn.query(query, [limit], (err, res) => {
+      dbConn.query(query, (err, res) => {
         if(err){
           console.error("Error fetching top events:", err);
           return reject(err);
