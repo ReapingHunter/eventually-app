@@ -22,7 +22,7 @@ import { Button } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
 import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
-
+import axios from "axios";
 const categories = [
   {
     value: "networking",
@@ -44,6 +44,16 @@ export default function CreateEventPage() {
 
   const [dateTime, setDateTime] = useState("");
 
+  const [eventData, setEventData] = useState({
+    title: "",
+    category: "",
+    photo: "",
+    date: "",
+    time: "",
+    location: "",
+    description: "",
+  })
+
   const handleAddAgenda = () => setAgendas([...agendas, ""]);
   const handleRemoveAgenda = (index) =>
     setAgendas(agendas.filter((_, i) => i !== index));
@@ -55,6 +65,17 @@ export default function CreateEventPage() {
     }
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    try {
+      const response = await axios.post("http://localhost:3000/api/events/create-event", {
+        method: "POST",
+
+      })
+    } catch (error) {
+      setError("Cannot create event:", error.message);
+    }
+  }
   return (
     <>
       <div className="min-h-screen flex flex-col bg-[#fbf3ff]">
@@ -65,7 +86,7 @@ export default function CreateEventPage() {
               Create New Event
             </h1>
 
-            <form className="space-y-6">
+            <form className="space-y-6" onSubmit={handleSubmit}>
               {/* Event Name and Category */}
               <div className="flex flex-col sm:flex-row gap-4 w-full">
                 {/* Event Name */}
@@ -195,7 +216,7 @@ export default function CreateEventPage() {
                 />
               </div>
 
-              {/* Agendas */}
+              {/* Agendas
               <div>
                 <label className="block text-sm font-medium text-gray-700">Agendas</label>
                 {agendas.map((agenda, index) => (
@@ -227,7 +248,7 @@ export default function CreateEventPage() {
                 >
                   <PlusIcon className="w-5 h-5 mr-1" /> Add Agenda
                 </button>
-              </div>
+              </div> */}
 
               {/* Submit Button */}
               <div className="flex justify-end pt-12">
