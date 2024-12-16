@@ -48,33 +48,33 @@ export default function RSVPPage() {
         <div className="px-4 sm:px-8 md:px-16 lg:px-32 xl:px-64 py-8">
           {/* Event Banner */}
           <img
-            src={event.image || "https://via.placeholder.com/400x200"}
-            alt={event.name || "Event"}
+            src={event.photo || "https://via.placeholder.com/400x200"}
+            alt={event.title || "Event"}
             className="w-full h-64 sm:h-72 md:h-96 object-cover rounded-xl mb-4"
           />
 
           {/* Event Details */}
           <div className="bg-white rounded-xl shadow-md p-6 flex flex-col gap-6">
             <h2 className="text-2xl md:text-3xl font-bold text-[#46007a]">
-              {event.name}
+              {event.title}
             </h2>
 
             {/* Event Date */}
             <div className="flex items-center text-sm text-gray-700">
               <CalendarDateRangeIcon className="w-5 h-5 text-[#7b00d4] mr-2" />
-              <p>{event.date}</p>
+              <p>{event.event_date.split("T")[0]}</p>
             </div>
 
             {/* Event Time */}
             <div className="flex items-center text-sm text-gray-700">
               <ClockIcon className="w-5 h-5 text-[#7b00d4] mr-2" />
-              <p>{event.time}</p>
+              <p>{event.event_time}</p>
             </div>
 
             {/* Event Location */}
             <div className="flex items-center text-sm text-gray-700">
               <MapPinIcon className="w-5 h-5 text-[#7b00d4] mr-2" />
-              <p>{event.location}</p>
+              <p>{event.address}</p>
             </div>
 
             {/* About the Event */}

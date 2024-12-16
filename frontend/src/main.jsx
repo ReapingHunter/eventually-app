@@ -21,7 +21,7 @@ createRoot(document.getElementById('root')).render(
         <Route path='/login' element={<LoginPage />} />
         <Route path='/signup' element={<SignupPage />} />
         <Route path='/resetpassword' element={<ResetPasswordPage />} />
-        <Route path='/rsvp' element={<RSVPPage />} />
+        <Route path='/rsvp/:id' element={<RSVPPage />} />
         <Route path='/createevent' element={<CreateEventPage />} />
         <Route path='/manageevent' element={<ManageEventPage />} />
         <Route path='/modifyevent' element={<ModifyEventPage />} />

@@ -108,7 +108,7 @@ export default function AllEventsPage() {
         {/* Event Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-6">
           {currentEvents.map((event) => (
-            <Link key={event.id} href={`/rsvp/${event.id}`}>
+            <Link key={event.event_id} to={`/rsvp/${event.event_id}`}>
               <EventCard event={event} />
             </Link>
           ))}
