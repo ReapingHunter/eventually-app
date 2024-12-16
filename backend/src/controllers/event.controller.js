@@ -56,19 +56,15 @@ export const getEventById = async (req, res) => {
 
 export const getEventByFilter = async (req, res) => {
   try {
-    const { eventName, dateFrom, dateTo, category, location } = req.query;
-    const filteredEvents = await Event.findByFilter(eventName, dateFrom, dateTo, category, location);
+    const { category_id, title, address, date } = req.params;
+    const filteredEvents = await Event.findByFilter(title, date, category_id, address);
     if (filteredEvents.length === 0) {
-      return res.status(404).send({ message: "No events found matching the criteria." });
+      return res.status(404).json({ message: 'No events found' });
     }
-    const eventsWithFullImagePaths = filteredEvents.map(event => ({
-      ...event,
-      photo: `http://localhost:3000/images/${event.photo}`,
-    }));
-    res.status(200).send(eventsWithFullImagePaths);
-  } catch (err) {
-    console.error("Error fetching event by filter:", err);
-    res.status(500).send({ message: "Error fetching event", error: err });
+    res.json(filteredEvents);
+  } catch (error) {
+    console.error('Error fetching filtered events:', error);
+    res.status(500).json({ message: 'Internal server error' });
   }
 };
 

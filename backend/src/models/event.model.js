@@ -44,30 +44,37 @@ const Event = {
     });
   },  
 
-  findByFilter: async (eventName="", dateFrom="", dateTo="", category="", location="") => {
+  findByFilter: async (title = "", date = "", category = "", location = "") => {
     try {
-      const query = `SELECT event_id, photo, title, event_date, event_time, address FROM event 
-                      WHERE deleted_at IS NULL
-                      AND title = ? 
-                      AND event_date BETWEEN ? AND ? 
-                      AND category_id = ? 
-                      AND address = ?`
-      
+      let query = `SELECT event_id, photo, title, event_datetime, address, category_id 
+                   FROM event 
+                   WHERE deleted_at IS NULL`;
+  
+      const queryParams = [];
+  
+      // Only filter by category_id in this case
+      if (category) {
+        query += ` AND category_id = ?`;
+        queryParams.push(category);
+      }
+  
       const result = await new Promise((resolve, reject) => {
-        dbConn.query(query, (err, res) => {
-          if(err){
-            console.error("Error fetching event:", err)
-            return reject(err)
+        dbConn.query(query, queryParams, (err, res) => {
+          if (err) {
+            console.error("Error fetching events:", err);
+            return reject(err);
           }
-          resolve(res)
-        })
-      })
-      return result
+          resolve(res);
+        });
+      });
+  
+      return result;
     } catch (error) {
-      console.error(error.message)
+      console.error("Error in filter query:", error);
+      throw error;
     }
   },
-
+   
   findByUser: (userId) => {
     return new Promise((resolve, reject) => {
       const query = `SELECT * FROM event 
@@ -104,6 +111,7 @@ const Event = {
       })
     })
   },
+
   updateById: (id, eventData) => {
     return new Promise((resolve, reject) => {
       const query = `
