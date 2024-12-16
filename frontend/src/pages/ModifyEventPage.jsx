@@ -2,7 +2,6 @@ import NavBar from "../components/NavBar"
 import { CalendarDateRangeIcon, MapPinIcon, ClockIcon, WrenchIcon, TrashIcon, UserIcon } from "@heroicons/react/24/solid"
 import { Button } from "@/components/ui/button"
 import { useState, useEffect } from "react"
-import PropTypes from "prop-types"
 import { Link, useParams, useNavigate } from "react-router-dom"
 import axios from "axios"
 
