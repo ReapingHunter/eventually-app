@@ -1,7 +1,22 @@
 import NavBar from "../components/NavBar"
 import { CalendarDateRangeIcon, MapPinIcon, ClockIcon, WrenchIcon, TrashIcon, UserIcon } from "@heroicons/react/24/solid"
 import { Button } from "@/components/ui/button"
-export default function ModifyEventPage(){
+import { useState, useEffect } from "react"
+import PropTypes from "prop-types"
+export default function ModifyEventPage({id, event}){
+  const [showDeletePopup, setShowDeletePopup] = useState(false)
+
+  useEffect(() => {
+    const deleteEvent = async () => {
+
+    }
+
+    deleteEvent()
+  }, [])
+
+  const handleDelete = () => {
+    setShowDeletePopup(false)
+  }
   return(
     <>
       <div className="bg-[#fbf3ff] min-h-screen">
@@ -9,7 +24,7 @@ export default function ModifyEventPage(){
         <div className="px-4 sm:px-8 md:px-16 lg:px-32 xl:px-64 py-8">
           {/* Event Banner */}
           <img
-            src="https://via.placeholder.com/400x200" // Replace with actual image
+            src={event.photo} // Replace with actual image
             alt="Event"
             className="w-full h-64 sm:h-72 md:h-96 object-cover rounded-xl mb-4"
           />
@@ -17,33 +32,31 @@ export default function ModifyEventPage(){
           {/* Event Details */}
           <div className="bg-white rounded-xl shadow-md p-6 flex flex-col gap-6">
             <h2 className="text-2xl md:text-3xl font-bold text-[#46007a]">
-              Insert Event Name Here
+              {event.title}
             </h2>
 
             {/* Event Date */}
             <div className="flex items-center text-sm text-gray-700">
               <CalendarDateRangeIcon className="w-5 h-5 text-[#7b00d4] mr-2" />
-              <p>Mar 21 2025</p>
+              <p>{event.event_date}</p>
             </div>
 
             {/* Event Time */}
             <div className="flex items-center text-sm text-gray-700">
               <ClockIcon className="w-5 h-5 text-[#7b00d4] mr-2" />
-              <p>10:00 AM - 5:00 PM IST</p>
+              <p>{event.event_time}</p>
             </div>
 
             {/* Event Location */}
             <div className="flex items-center text-sm text-gray-700">
               <MapPinIcon className="w-5 h-5 text-[#7b00d4] mr-2" />
-              <p>Replace it with the event location from the backend. May integrate it with Google Maps.</p>
+              <p>{event.address}</p>
             </div>
 
             {/* About the Event */}
             <h3 className="text-lg md:text-2xl font-semibold text-[#46007a]">About this Event</h3>
             <p className="text-sm text-gray-700 leading-relaxed">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-              et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-              aliquip ex ea commodo consequat.
+              {event.description}
             </p>
           </div>
 
@@ -86,18 +99,65 @@ export default function ModifyEventPage(){
             </div>
 
             <div className="flex justify-between items-center space-x-2 max-md:pt-8">
-              <Button className=" flex bg-yellow-600 hover:brightness-110 transition text-white font-semibold py-2 px-6 rounded-lg shadow-md gap-2">
-                <WrenchIcon className="w-5 h-5"/>
-                Update
-              </Button>
-              <Button className=" flex bg-red-500 hover:brightness-110 transition text-white font-semibold py-2 px-6 rounded-lg shadow-md gap-2">
+              <a href="/updateevent">
+                <Button className=" flex bg-yellow-600 hover:brightness-110 transition text-white font-semibold py-2 px-6 rounded-lg shadow-md gap-2">
+                  <WrenchIcon className="w-5 h-5"/>
+                  Update
+                </Button>
+              </a>
+              <Button className=" flex bg-red-500 hover:brightness-110 transition text-white font-semibold py-2 px-6 rounded-lg shadow-md gap-2" onClick={setShowDeletePopup(true)}>
                 <TrashIcon className="w-5 h-5"/>
                 Delete
               </Button>
             </div>
           </div>
         </div>
+        {/* Popup Overlay */}
+        {showDeletePopup && (
+          <>
+            {/* Dimmed Background */}
+            <div className="fixed top-0 left-0 w-full h-full bg-black opacity-50 z-10"></div>
+
+            {/* Popup */}
+            <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg shadow-lg z-20 p-6 w-11/12 max-w-sm">
+              <h3 className="text-xl font-semibold text-gray-800 mb-4">
+                Confirm Deletion
+              </h3>
+              <p className="text-sm text-gray-600 mb-6">
+                Are you sure you want to delete this event? This action cannot be
+                undone.
+              </p>
+              <div className="flex justify-end gap-4">
+                <Button
+                  onClick={() => setShowDeletePopup(false)}
+                  className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold px-4 py-2 rounded-md"
+                >
+                  Cancel
+                </Button>
+                <Button
+                  onClick={handleDelete}
+                  className="bg-red-500 hover:bg-red-600 text-white font-semibold px-4 py-2 rounded-md"
+                >
+                  Confirm
+                </Button>
+              </div>
+            </div>
+          </>
+        )}
       </div>
     </>
   )
+}
+
+ModifyEventPage.propTypes = {
+  id: PropTypes.number.isRequired,
+  event: PropTypes.shape({
+    photo: PropTypes.string,
+    title: PropTypes.string.isRequired,
+    event_date: PropTypes.string.isRequired,
+    event_time: PropTypes.string.isRequired,
+    address: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired
+
+  }).isRequired,
 }
