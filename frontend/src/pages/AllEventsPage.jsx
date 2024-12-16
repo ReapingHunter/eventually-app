@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/pagination";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 export default function AllEventsPage() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -107,7 +108,9 @@ export default function AllEventsPage() {
         {/* Event Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-6">
           {currentEvents.map((event) => (
-            <EventCard key={event.id} event={event} />
+            <Link key={event.id} href={`/rsvp/${event.id}`}>
+              <EventCard event={event} />
+            </Link>
           ))}
         </div>
 
