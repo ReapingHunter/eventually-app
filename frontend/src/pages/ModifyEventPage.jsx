@@ -29,28 +29,18 @@ export default function ModifyEventPage() {
     }
   }, [id]);
 
-  useEffect(() => {
-    const deleteEvent = async () => {
-      if (!showDeletePopup) return;
-
-      try {
-        const response = await axios.put(`http://localhost:3000/api/events/delete-event/${id}`);
-        if (response.status === 200) {
-          console.log("Event deleted successfully");
-          navigate("/manage-event");  // Redirect to events page after deletion
-        }
-      } catch (error) {
-        console.error("Error deleting event:", error.message);
-      } finally {
-        setShowDeletePopup(false);  // Close the popup after delete attempt
+  const handleDelete = async () => {
+    try {
+      const response = await axios.put(`http://localhost:3000/api/events/delete-event/${id}`);
+      if (response.status === 200) {
+        console.log("Event deleted successfully");
+        navigate("/manage-event"); // Redirect to events page after deletion
       }
-    };
-
-    deleteEvent();
-  }, [showDeletePopup, id, navigate]);
-
-  const handleDelete = () => {
-    setShowDeletePopup(true);
+    } catch (error) {
+      console.error("Error deleting event:", error.message);
+    } finally {
+      setShowDeletePopup(false); // Close the popup after deletion attempt
+    }
   };
 
   // Loading or error states
@@ -122,7 +112,7 @@ export default function ModifyEventPage() {
                   Update
                 </Button>
               </Link>
-              <Button className="flex bg-red-500 hover:brightness-110 transition text-white font-semibold py-2 px-6 rounded-lg shadow-md gap-2" onClick={handleDelete}>
+              <Button className="flex bg-red-500 hover:brightness-110 transition text-white font-semibold py-2 px-6 rounded-lg shadow-md gap-2" onClick={() => setShowDeletePopup(true)}>
                 <TrashIcon className="w-5 h-5"/>
                 Delete
               </Button>
@@ -153,7 +143,7 @@ export default function ModifyEventPage() {
                   Cancel
                 </Button>
                 <Button
-                  onClick={handleDelete}
+                  onClick={handleDelete}  // Move the delete action here
                   className="bg-red-500 hover:bg-red-600 text-white font-semibold px-4 py-2 rounded-md"
                 >
                   Confirm
@@ -166,15 +156,3 @@ export default function ModifyEventPage() {
     </>
   );
 }
-
-ModifyEventPage.propTypes = {
-  id: PropTypes.number.isRequired,
-  event: PropTypes.shape({
-    photo: PropTypes.string,
-    title: PropTypes.string.isRequired,
-    event_date: PropTypes.string.isRequired,
-    event_time: PropTypes.string.isRequired,
-    address: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired
-  }).isRequired,
-};
