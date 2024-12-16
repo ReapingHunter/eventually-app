@@ -13,6 +13,18 @@ const Category = {
         });
       });
     },
+    getAllCategory: () => {
+      return new Promise((resolve, reject) => {
+        const query = "SELECT * FROM category";
+        dbConn.query(query, (err, results) => {
+          if (err) {
+            console.error("Error fetching categories:", err);
+            return reject(err);
+          }
+          resolve(results);
+        });
+      });
+    },
   };
   
 export default Category;

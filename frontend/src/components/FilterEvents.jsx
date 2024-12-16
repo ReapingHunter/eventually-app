@@ -16,30 +16,32 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import { addDays, format } from "date-fns";
 
-const categories = [
-  {
-    value: "networking",
-    label: "Networking",
-  },
-  {
-    value: "wedding",
-    label: "Wedding",
-  },
-];
 
 export default function FilterEvents() {
 
   const [isCategoryOpen, setCategoryOpen] = useState(false);
+  const [categories, setCategories] = useState([])
   const [categoryValue, setCategoryValue] = useState("");
 
   const [dateRange, setDateRange] = useState({
     from: new Date(),
     to: addDays(new Date(), 7),
   });
-
+  useEffect(() => {
+    const fetchAllCategories = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/api/categories/all-categories")
+        setCategories(response.data)
+      } catch (error) {
+        console.error("Error fetching categories:", error.message);
+      }
+    }
+    fetchAllCategories()
+  }, [])
   return (
     <>
       <div className="flex flex-col lg:flex-row bg-[#fdfdfd] border-2 px-4 sm:px-5 py-5 items-center justify-center drop-shadow-xl w-full rounded-lg mb-4 gap-4">
@@ -107,7 +109,7 @@ export default function FilterEvents() {
               className="bg-[#f7f7f7] rounded-md border w-full lg:w-1/2 justify-between"
             >
               {categoryValue
-                ? categories.find((category) => category.value === categoryValue)?.label
+                ? categories.find((category) => category.category_name === categoryValue)?.category_name
                 : "Select Category..."}
               <ChevronDown className="text-[#7b00d4]" />
             </Button>
@@ -120,18 +122,18 @@ export default function FilterEvents() {
                 <CommandGroup>
                   {categories.map((category) => (
                     <CommandItem
-                      key={category.value}
-                      value={category.value}
+                      key={category.category_id}
+                      value={category.category_id}
                       onSelect={(currentVal) => {
                         setCategoryValue(currentVal === categoryValue ? "" : currentVal);
                         setCategoryOpen(false);
                       }}
                     >
-                      {category.label}
+                      {category.category_name}
                       <Check
                         className={cn(
                           "ml-auto",
-                          categoryValue === category.value ? "opacity-100" : "opacity-0"
+                          categoryValue === category.category_name ? "opacity-100" : "opacity-0"
                         )}
                       />
                     </CommandItem>

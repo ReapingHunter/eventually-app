@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import userRoutes from './src/routes/user.route.js';
 import eventRoutes from './src/routes/event.route.js';
 import rsvpRoutes from './src/routes/rsvp.route.js'
+import categoryRoutes from './src/routes/category.route.js'
 import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -33,7 +34,7 @@ app.get('/', (req, res) => {
 app.use('/api/users', userRoutes);
 app.use('/api/events', eventRoutes);
 app.use('/api/rsvp', rsvpRoutes);
-
+app.use('/api/categories', categoryRoutes)
 // Start server
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
