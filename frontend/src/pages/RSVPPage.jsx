@@ -6,8 +6,41 @@ import {
   SparklesIcon,
   UserIcon,
 } from "@heroicons/react/24/solid";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 export default function RSVPPage() {
+  const { id } = useParams()
+
+  const [ event, setEvent ] = useState(null)
+  const [ loading, setLoading ] = useState(true)
+
+  useEffect(() => {
+    if(id){
+      const fetchEvent = async () => {
+        try {
+          const response = await axios.get(`http://localhost:3000/api/events/${id}`);
+          setEvent(response.data)
+        } catch (error) {
+          console.error("Error fetching event:", error.message)
+        } finally {
+          setLoading(false)
+        }
+      }
+      fetchEvent()
+    }
+  }, [id])
+
+  // Loading or error states
+  if (loading) {
+    return <div className="text-center mt-16">Loading event details...</div>;
+  }
+
+  if (!event) {
+    return <div className="text-center mt-16 text-red-500">Event not found.</div>;
+  }
+
   return (
     <>
       <div className="bg-[#fbf3ff] min-h-screen">
@@ -15,41 +48,39 @@ export default function RSVPPage() {
         <div className="px-4 sm:px-8 md:px-16 lg:px-32 xl:px-64 py-8">
           {/* Event Banner */}
           <img
-            src="https://via.placeholder.com/400x200" // Replace with actual image
-            alt="Event"
+            src={event.image || "https://via.placeholder.com/400x200"}
+            alt={event.name || "Event"}
             className="w-full h-64 sm:h-72 md:h-96 object-cover rounded-xl mb-4"
           />
 
           {/* Event Details */}
           <div className="bg-white rounded-xl shadow-md p-6 flex flex-col gap-6">
             <h2 className="text-2xl md:text-3xl font-bold text-[#46007a]">
-              Insert Event Name Here
+              {event.name}
             </h2>
 
             {/* Event Date */}
             <div className="flex items-center text-sm text-gray-700">
               <CalendarDateRangeIcon className="w-5 h-5 text-[#7b00d4] mr-2" />
-              <p>Mar 21 2025</p>
+              <p>{event.date}</p>
             </div>
 
             {/* Event Time */}
             <div className="flex items-center text-sm text-gray-700">
               <ClockIcon className="w-5 h-5 text-[#7b00d4] mr-2" />
-              <p>10:00 AM - 5:00 PM IST</p>
+              <p>{event.time}</p>
             </div>
 
             {/* Event Location */}
             <div className="flex items-center text-sm text-gray-700">
               <MapPinIcon className="w-5 h-5 text-[#7b00d4] mr-2" />
-              <p>Replace it with the event location from the backend. May integrate it with Google Maps.</p>
+              <p>{event.location}</p>
             </div>
 
             {/* About the Event */}
             <h3 className="text-lg md:text-2xl font-semibold text-[#46007a]">About this Event</h3>
             <p className="text-sm text-gray-700 leading-relaxed">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-              et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-              aliquip ex ea commodo consequat.
+              {event.description}
             </p>
           </div>
 
