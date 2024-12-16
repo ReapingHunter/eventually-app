@@ -89,7 +89,7 @@ export default function FilterEvents() {
               defaultMonth={dateRange?.from}
               selected={dateRange}
               onSelect={setDateRange}
-              numberOfMonths={2}
+              numberOfMonths={1}
               classNames={{
                 day_selected: "bg-[#7b00d4] text-white hover:bg-[#8800f0] hover:text-white focus:bg-[#7b00d4] focus:text-white",
                 day_today: "bg-accent text-[#000000]",
