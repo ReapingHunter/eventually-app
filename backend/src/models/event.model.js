@@ -20,7 +20,7 @@ const Event = {
 
   findAll: () => {
     return new Promise((resolve, reject) => {
-      const query = "SELECT * FROM event WHERE deleted_at IS NULL ORDER BY event.title DESC";
+      const query = "SELECT * FROM event WHERE deleted_at IS NULL ORDER BY event.title ASC";
       dbConn.query(query, (err, res) => {
         if (err) {
           console.error("Error fetching events:", err);

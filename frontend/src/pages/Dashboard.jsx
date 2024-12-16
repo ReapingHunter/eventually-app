@@ -10,12 +10,25 @@ import {
 } from "@/components/ui/carousel";
 import { Button } from "@/components/ui/button";
 import { SparklesIcon, FireIcon } from "@heroicons/react/24/solid";
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
+import axios from "axios";
 export default function Dashboard() {
   const [events, setEvents] = useState([])
 
-  
+  useEffect(() => {
+
+    // Fetch top events
+    const fetchTopEvents = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/api/events/top-events")
+        setEvents(response.data)
+      } catch (error) {
+        console.error("Error fetching top events:", error.message)
+      }
+    }
+
+    fetchTopEvents()
+  })
   return (
     <>
       <div className="min-h-screen flex flex-col bg-[#efefef]">
@@ -71,10 +84,10 @@ export default function Dashboard() {
               className="w-full"
             >
               <CarouselContent>
-                {Array.from({ length: 8 }).map((_, index) => (
-                  <CarouselItem key={index} className="basis-full sm:basis-1/2 lg:basis-1/3">
+                {events.map((event) => (
+                  <CarouselItem key={event.event_id} className="basis-full sm:basis-1/2 lg:basis-1/3">
                     <div className="p-2">
-                      {/* <EventCard /> */}
+                      <EventCard event={event} /> 
                     </div>
                   </CarouselItem>
                 ))}
