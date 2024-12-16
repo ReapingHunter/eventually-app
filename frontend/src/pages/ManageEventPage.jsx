@@ -10,8 +10,10 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import FilterEvents from "@/components/FilterEvents";
+import { isAuthenticated } from "@/utils/auth";
 import { PlusIcon } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 export default function MyEventsPage() {
   const [isHovered, setIsHovered] = useState(false)
@@ -27,6 +29,26 @@ export default function MyEventsPage() {
   const indexOfFirstEvent = indexOfLastEvent - eventsPerPage;
   const currentEvents = events.slice(indexOfFirstEvent, indexOfLastEvent);
 
+  useEffect(() => {
+    // Fetch events according to user
+    const fetchEventsByUser = async () => {
+      try {
+        const userSession = await isAuthenticated()
+        if(!userSession || !userSession.userId){
+          return;
+        }
+        
+        const response = await axios.get("http://localhost:3000/api/events/user", {
+          params: { user_id: userSession.userId },
+        })
+        
+        setEvents(response.data)
+      } catch (error) {
+        console.error("Error fetching events:", error.message)
+      }
+    }
+    fetchEventsByUser()
+  }, [])
   // Pagination function
   const paginate = (pageNumber) => {
     if (pageNumber >= 1 && pageNumber <= totalPages) {

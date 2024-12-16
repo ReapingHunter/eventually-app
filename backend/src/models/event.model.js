@@ -3,10 +3,10 @@ import dbConn from '../../config/db.config.js';
 const Event = {
   create: (eventData) => {
     return new Promise((resolve, reject) => {
-      const query = "INSERT INTO event (title, description, event_datetime, location, photo) VALUES (?, ?, ?, ?, ?)";
+      const query = "INSERT INTO event (title, description, date, location, photo) VALUES (?, ?, ?, ?, ?)";
       dbConn.query(
         query,
-        [eventData.title, eventData.description, eventData.event_datetime, eventData.location, eventData.photo],
+        [eventData.title, eventData.description, eventData.date, eventData.location, eventData.photo],
         (err, res) => {
           if (err) {
             console.error("Error creating event:", err);
@@ -20,7 +20,7 @@ const Event = {
 
   findAll: () => {
     return new Promise((resolve, reject) => {
-      const query = "SELECT * FROM event";
+      const query = "SELECT * FROM event WHERE deleted_at IS NULL ORDER BY event.title DESC";
       dbConn.query(query, (err, res) => {
         if (err) {
           console.error("Error fetching events:", err);
@@ -29,11 +29,11 @@ const Event = {
         resolve(res);
       });
     });
-  },
+  },  
 
   findById: (id) => {
     return new Promise((resolve, reject) => {
-      const query = "SELECT * FROM event WHERE event_id = ?";
+      const query = "SELECT * FROM event WHERE event_id = ? AND deleted_at IS NULL";
       dbConn.query(query, [id], (err, res) => {
         if (err) {
           console.error("Error fetching event:", err);
@@ -42,12 +42,13 @@ const Event = {
         resolve(res[0]);
       });
     });
-  },
+  },  
 
   findByFilter: async (eventName="", dateFrom="", dateTo="", category="", location="") => {
     try {
       const query = `SELECT event_id, photo, title, event_date, event_time, address FROM event 
-                      WHERE title = ? 
+                      WHERE deleted_at IS NULL
+                      AND title = ? 
                       AND event_date BETWEEN ? AND ? 
                       AND category_id = ? 
                       AND address = ?`
@@ -67,38 +68,67 @@ const Event = {
     }
   },
 
-  findByUser: async (userId) => {
-    try {
-      const query = `SELECT event_id, photo, title, event_date, event_time, address WHERE user_id = ?`
-      const result = await new Promise((resolve, reject) => {
-        dbConn.query(query, (err, res) => {
-          if(err){
-            console.error("Error fetching event:", err)
-            return reject(err)
-          }
-          resolve(res)
-        })
+  findByUser: (userId) => {
+    return new Promise((resolve, reject) => {
+      const query = `SELECT event_id, photo, title, event_date, event_time, address FROM event 
+                     WHERE user_id = ?
+                     AND deleted_at IS NULL`;
+      dbConn.query(query, [userId], (err, res) => {
+        if(err){
+          console.error("Error fetching event:", err)
+          return reject(err)
+        }
+        resolve(res)
+      });
+    });
+  },
+  
+  findTopEvents: (limit=8) => {
+    return new Promise ((resolve, reject) => {
+      const query = `
+        SELECT e.event_id, e.title, e.description, e.event_date, e.event_time, e.photo, 
+               COUNT(r.rsvp_id) AS rsvp_count
+        FROM event e
+        LEFT JOIN rsvp r ON e.event_id = r.event_id
+        WHERE e.deleted_at IS NULL
+        GROUP BY e.event_id, e.title, e.description, e.event_date, e.event_time, e.photo
+        ORDER BY rsvp_count DESC
+        LIMIT ?
+      `
+      dbConn.query(query, [limit], (err, res) => {
+        if(err){
+          console.error("Error fetching top events:", err);
+          return reject(err);
+        }
+        resolve(res)
       })
-      return result
-    } catch (error) {
-      console.error(error.message)
-    }
+    })
   },
   updateById: (id, eventData) => {
     return new Promise((resolve, reject) => {
-      const query = `UPDATE event 
-                     SET title = ?, description = ?, date = ?, location = ?, photo = ?
-                     WHERE event_id = ?`;
+      const query = `
+        UPDATE event 
+        SET title = ?, description = ?, event_date = ?, event_time = ?, address = ?, photo = ?, updated_at = NOW() 
+        WHERE event_id = ? AND deleted_at IS NULL
+      `;
       dbConn.query(
         query,
-        [eventData.title, eventData.description, eventData.date, eventData.location, eventData.photo, id],
+        [
+          eventData.title,
+          eventData.description,
+          eventData.date,
+          eventData.time,
+          eventData.location,
+          eventData.photo,
+          id
+        ],
         (err, res) => {
           if (err) {
             console.error("Error updating event:", err);
             return reject(err);
           }
           if (res.affectedRows === 0) {
-            return reject(new Error("Event not found or no changes made"));
+            return reject(new Error("Event not found or has been deleted"));
           }
           resolve({ id, ...eventData });
         }
@@ -108,16 +138,16 @@ const Event = {
   
   deleteById: (id) => {
     return new Promise((resolve, reject) => {
-      const query = "DELETE FROM event WHERE event_id = ?";
+      const query = "UPDATE event SET deleted_at = NOW() WHERE event_id = ? AND deleted_at IS NULL";
       dbConn.query(query, [id], (err, res) => {
         if (err) {
-          console.error("Error deleting event:", err);
+          console.error("Error soft deleting event:", err);
           return reject(err);
         }
         if (res.affectedRows === 0) {
-          return reject(new Error("Event not found"));
+          return reject(new Error("Event not found or already deleted"));
         }
-        resolve({ message: "Event deleted successfully" });
+        resolve({ message: "Event soft deleted successfully" });
       });
     });
   }  

@@ -3,20 +3,22 @@ import {
     createEvent, 
     getAllEvents, 
     getEventById, 
-    getEventByFilter,
-    getEventByUser, 
+    getEventByFilter, 
+    getEventByUser,
     updateEvent, 
-    deleteEvent 
+    deleteEvent, 
+    getTopEvents
 } from '../controllers/event.controller.js';
 
 const router = express.Router();
 
 router.post('/create-event', createEvent); // Create an event
-router.get('/all-events', getAllEvents); // Get all events
+router.get('/all-event', getAllEvents); // Get all events
 router.get('/:id', getEventById); // Get a specific event by ID
-router.get('/filter-event', getEventByFilter);
-router.get('/user-event', getEventByUser);
-router.get('/update-event', updateEvent);
-router.get('/delete-event', deleteEvent);
+router.get('/top-events', getTopEvents)
+router.get('/event/filter', getEventByFilter);
+router.get('/user', getEventByUser);
+router.put('/update-event', updateEvent);
+router.delete('/delete-event', deleteEvent);
 
 export default router;

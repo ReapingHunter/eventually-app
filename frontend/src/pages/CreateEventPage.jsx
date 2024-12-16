@@ -22,39 +22,47 @@ import { Button } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
 import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
-
-const categories = [
-  {
-    value: "networking",
-    label: "Networking",
-  },
-  {
-    value: "wedding",
-    label: "Wedding",
-  },
-];
+import axios from "axios";
 
 export default function CreateEventPage() {
   const [error, setError] = useState("");
-  const [agendas, setAgendas] = useState([""]);
-  const [eventPhoto, setEventPhoto] = useState(null);
-
-  const [eventCategory, setEventCategory] = useState("");
+  const [categories, setCategories] = useState([])
   const [isCategoryOpen, setCategoryOpen] = useState(false);
+  const [formData, setFormData] = useState({
+    title: "",
+    category: "",
+    photo: "",
+    dateTime: new Date(),
+    location: "",
+    description: "",
+  })
 
-  const [dateTime, setDateTime] = useState("");
+  // const handleAddAgenda = () => setAgendas([...agendas, ""]);
+  // const handleRemoveAgenda = (index) =>
+  //   setAgendas(agendas.filter((_, i) => i !== index));
 
-  const handleAddAgenda = () => setAgendas([...agendas, ""]);
-  const handleRemoveAgenda = (index) =>
-    setAgendas(agendas.filter((_, i) => i !== index));
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setFormData({ ...formData, [id]: value });
+  }
 
-  const handlePhotoUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setEventPhoto(URL.createObjectURL(file));
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    try {
+      const response = await axios.post("http://localhost:3000/api/events/create-event", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title: formData.title,
+          category: formData.category,
+          photo: formData.photo,
+        }),
+
+      })
+    } catch (error) {
+      setError("Cannot create event:", error.message);
     }
-  };
-
+  }
   return (
     <>
       <div className="min-h-screen flex flex-col bg-[#fbf3ff]">
@@ -65,7 +73,7 @@ export default function CreateEventPage() {
               Create New Event
             </h1>
 
-            <form className="space-y-6">
+            <form className="space-y-6" onSubmit={handleSubmit}>
               {/* Event Name and Category */}
               <div className="flex flex-col sm:flex-row gap-4 w-full">
                 {/* Event Name */}
@@ -78,6 +86,8 @@ export default function CreateEventPage() {
                     type="text"
                     placeholder="Enter event name"
                     className="mt-1 block rounded-md border-gray-300 shadow-inner w-full"
+                    value={formData.title}
+                    onChange={handleChange}
                   />
                 </div>
 
@@ -86,7 +96,7 @@ export default function CreateEventPage() {
                   <Label htmlFor="eventCategory" className="text-sm font-medium text-gray-700">
                     Event Category
                   </Label>
-                  <Popover open={isCategoryOpen} onOpenChange={setCategoryOpen}>
+                  <Popover open={isCategoryOpen} onOpenChange={setCategoryOpen} onChange={handleChange}>
                     <PopoverTrigger asChild>
                       <Button
                         variant="outline"
@@ -110,16 +120,13 @@ export default function CreateEventPage() {
                               <CommandItem
                                 key={category.value}
                                 value={category.value}
-                                onSelect={(currentVal) => {
-                                  setEventCategory(currentVal === eventCategory ? "" : currentVal);
-                                  setCategoryOpen(false);
-                                }}
+                                onSelect={() => handleChange(category.value)}
                               >
                                 {category.label}
                                 <Check
                                   className={cn(
                                     "ml-auto",
-                                    eventCategory === category.value ? "opacity-100" : "opacity-0"
+                                    category === category.value ? "opacity-100" : "opacity-0"
                                   )}
                                 />
                               </CommandItem>
@@ -141,14 +148,15 @@ export default function CreateEventPage() {
                   id="eventPhoto"
                   type="file"
                   accept="image/*"
-                  onChange={handlePhotoUpload}
+                  value={formData.photo}
+                  onChange={handleChange}
                   className="mt-1 block w-auto text-sm text-gray-500"
                 />
-                {eventPhoto && (
+                {formData.photo && (
                   <div className="mt-4">
                     <p className="text-sm text-gray-500">Preview:</p>
                     <img
-                      src={eventPhoto}
+                      src={formData.photo}
                       alt="Event Preview"
                       className="rounded-md w-auto max-h-64 object-cover"
                     />
@@ -161,9 +169,9 @@ export default function CreateEventPage() {
                 <div className="flex flex-col sm:flex-row gap-4 mt-2">
                   <div className="flex-1">
                     <Label htmlFor="eventFrom" className="block text-sm font-medium text-gray-700">
-                      Event Date and Time <span className="font-normal">(Event date must be at least one week from now.)</span>
+                      Event Date and Time <span className="font-normal"></span>
                     </Label>
-                    <DateTimePicker hourCycle={12} value={dateTime} onChange={setDateTime} />
+                    <DateTimePicker hourCycle={12} value={formData.dateTime} onChange={handleChange} />
                   </div>
                 </div>
                 {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
@@ -179,6 +187,8 @@ export default function CreateEventPage() {
                   type="text"
                   placeholder="Enter location"
                   className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                  value={formData.location} 
+                  onChange={handleChange}
                 />
               </div>
 
@@ -192,10 +202,12 @@ export default function CreateEventPage() {
                   rows="4"
                   placeholder="Enter event description"
                   className="bg-transparent outline-none border-2 border-gray-300 rounded-md px-3 py-2 mb-4 w-full"
+                  value={formData.description} 
+                  onChange={handleChange}
                 />
               </div>
 
-              {/* Agendas */}
+              {/* Agendas
               <div>
                 <label className="block text-sm font-medium text-gray-700">Agendas</label>
                 {agendas.map((agenda, index) => (
@@ -227,7 +239,7 @@ export default function CreateEventPage() {
                 >
                   <PlusIcon className="w-5 h-5 mr-1" /> Add Agenda
                 </button>
-              </div>
+              </div> */}
 
               {/* Submit Button */}
               <div className="flex justify-end pt-12">
