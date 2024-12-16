@@ -52,18 +52,39 @@ const Event = {
     });
   },  
 
-  findByFilter: async (title = "", date = "", category = "", location = "") => {
+  findByFilter: async (title = "", dateFrom = "", dateTo = "", category = "", location = "") => {
     try {
-      let query = `SELECT event_id, photo, title, event_datetime, address, category_id 
-                   FROM event 
-                   WHERE deleted_at IS NULL`;
-  
+      let query = `SELECT * FROM event WHERE deleted_at IS NULL`;
       const queryParams = [];
   
-      // Only filter by category_id in this case
+      // Filter by title (partial match)
+      if (title) {
+        query += ` AND title LIKE ?`;
+        queryParams.push(`%${title}%`);
+      }
+  
+      // Filter by date range (between dateFrom and dateTo)
+      if (dateFrom && dateTo) {
+        query += ` AND DATE(event_datetime) BETWEEN ? AND ?`;
+        queryParams.push(dateFrom, dateTo);
+      } else if (dateFrom) {
+        query += ` AND DATE(event_datetime) >= ?`;
+        queryParams.push(dateFrom);
+      } else if (dateTo) {
+        query += ` AND DATE(event_datetime) <= ?`;
+        queryParams.push(dateTo);
+      }
+  
+      // Filter by category
       if (category) {
         query += ` AND category_id = ?`;
         queryParams.push(category);
+      }
+  
+      // Filter by location (partial match)
+      if (location) {
+        query += ` AND address LIKE ?`;
+        queryParams.push(`%${location}%`);
       }
   
       const result = await new Promise((resolve, reject) => {
