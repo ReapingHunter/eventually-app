@@ -70,7 +70,7 @@ const Event = {
 
   findByUser: (userId) => {
     return new Promise((resolve, reject) => {
-      const query = `SELECT event_id, photo, title, event_date, event_time, address FROM event 
+      const query = `SELECT * FROM event 
                      WHERE user_id = ?
                      AND deleted_at IS NULL`;
       dbConn.query(query, [userId], (err, res) => {
