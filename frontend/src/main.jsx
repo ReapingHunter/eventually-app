@@ -22,11 +22,11 @@ createRoot(document.getElementById('root')).render(
         <Route path='/signup' element={<SignupPage />} />
         <Route path='/resetpassword' element={<ResetPasswordPage />} />
         <Route path='/rsvp/:id' element={<RSVPPage />} />
-        <Route path='/createevent' element={<CreateEventPage />} />
-        <Route path='/manageevent' element={<ManageEventPage />} />
-        <Route path='/modifyevent' element={<ModifyEventPage />} />
+        <Route path='/create-event' element={<CreateEventPage />} />
+        <Route path='/manage-event' element={<ManageEventPage />} />
+        <Route path='/modify-event' element={<ModifyEventPage />} />
         <Route path='/events' element={<AllEventsPage />} />
-        <Route path='/updateevent' element={<UpdateEventPage />} />
+        <Route path='/update-event' element={<UpdateEventPage />} />
       </Routes>
     </Router>
   </StrictMode>,

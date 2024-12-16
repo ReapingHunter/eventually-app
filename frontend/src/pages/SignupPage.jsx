@@ -3,6 +3,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function SignupPage() {
   const [isMobile, setIsMobile] = useState(false);
@@ -82,7 +83,7 @@ export default function SignupPage() {
           <h1 className="text-2xl md:text-4xl font-bold mb-2">Create Account</h1>
           <p className="text-sm md:text-base text-gray-600 mb-4">
             Already have an account?{" "}
-            <a className="text-[#7B00D4] hover:underline font-normal" href="/login">Login</a>
+            <Link className="text-[#7B00D4] hover:underline font-normal" to="/login">Login</Link>
           </p>
           {error && <p className="text-red-500 mb-4">{error}</p>}
           <form onSubmit={handleSubmit}>

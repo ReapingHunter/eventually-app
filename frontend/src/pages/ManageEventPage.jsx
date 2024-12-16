@@ -13,6 +13,7 @@ import FilterEvents from "@/components/FilterEvents";
 import { isAuthenticated } from "@/utils/auth";
 import { PlusIcon } from "lucide-react";
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 export default function MyEventsPage() {
@@ -137,7 +138,9 @@ export default function MyEventsPage() {
             {/* Event Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-6">
               {currentEvents.map((event) => (
-                <EventCard key={event.id} event={event} />
+                <Link key={event.event_id} to={`/rsvp/${event.event_id}`}>
+                  <EventCard event={event} />
+                </Link>
               ))}
             </div>
     

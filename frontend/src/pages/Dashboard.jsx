@@ -11,6 +11,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { SparklesIcon, FireIcon } from "@heroicons/react/24/solid";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 export default function Dashboard() {
   const [events, setEvents] = useState([])
@@ -55,12 +56,12 @@ export default function Dashboard() {
               Create and join events today, celebrate tomorrow.
             </div>
             {/* Register Button */}
-            <a href="/signup">
+            <Link to="/signup">
               <Button className="flex bg-gradient-to-r from-[#7b00d4] via-[#A255DA] to-[#F03CF9] hover:brightness-110 transition text-white font-semibold py-2 px-4 sm:px-6 rounded-lg shadow-md gap-2">
                 <SparklesIcon className="w-5 h-5" />
                 Register now
               </Button>
-            </a>
+            </Link>
           </div>
         </div>
         {/* Main Content */}

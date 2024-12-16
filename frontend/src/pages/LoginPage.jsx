@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom"; // For redirecting after login
+import { Link } from "react-router-dom";
 
 export default function LoginPage() {
   const [isMobile, setIsMobile] = useState(false);
@@ -74,12 +75,12 @@ export default function LoginPage() {
             <h1 className="text-2xl md:text-4xl font-bold mb-2">Login</h1>
             <p className="text-sm md:text-base text-gray-600 mb-4">
               Don&apos;t have an account yet?{" "}
-              <a
+              <Link
                 className="text-purple-700 hover:underline font-medium"
-                href="/signup"
+                to="/signup"
               >
                 Signup
-              </a>
+              </Link>
             </p>
 
             {/* Error Message Display */}
@@ -112,12 +113,12 @@ export default function LoginPage() {
                 <Button className="font-bold w-1/2 bg-purple-700 text-white hover:bg-purple-600">
                   LOGIN
                 </Button>
-                <a
+                <Link
                   className="text-gray-600 hover:text-purple-700 hover:underline text-sm text-center"
-                  href="/resetpassword"
+                  to="/resetpassword"
                 >
                   Forgot Password?
-                </a>
+                </Link>
               </div>
             </form>
           </div>

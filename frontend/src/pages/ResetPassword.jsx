@@ -3,7 +3,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import axios from "axios"; // Import axios for API calls
-import { useNavigate } from "react-router-dom"; // Import useNavigate for redirection
+import { Link, useNavigate } from "react-router-dom"; // Import useNavigate for redirection
 
 export default function ResetPasswordPage() {
   const [isMobile, setIsMobile] = useState(false);
@@ -119,9 +119,9 @@ export default function ResetPasswordPage() {
                 <Button type="submit" className="font-bold w-full bg-purple-700 text-white hover:bg-purple-600">
                   CHANGE PASSWORD
                 </Button>
-                <a className="text-sm md:text-base text-[#737272] font-normal whitespace-nowrap hover:underline hover:text-[#7B00D4]" href="/login">
+                <Link className="text-sm md:text-base text-[#737272] font-normal whitespace-nowrap hover:underline hover:text-[#7B00D4]" to="/login">
                   Back to Login
-                </a>
+                </Link>
               </div>
             </form>
           </div>
