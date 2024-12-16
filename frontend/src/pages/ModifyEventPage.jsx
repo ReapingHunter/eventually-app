@@ -1,7 +1,7 @@
 import NavBar from "../components/NavBar"
 import { CalendarDateRangeIcon, MapPinIcon, ClockIcon, WrenchIcon, TrashIcon, UserIcon } from "@heroicons/react/24/solid"
 import { Button } from "@/components/ui/button"
-export default function RSVPPage(){
+export default function ModifyEventPage(){
   return(
     <>
       <div className="bg-[#fbf3ff] min-h-screen">
