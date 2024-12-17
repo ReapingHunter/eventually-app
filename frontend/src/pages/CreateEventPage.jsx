@@ -20,6 +20,7 @@ import { DateTimePicker } from "@/components/ui/date-time-picker/date-time-picke
 import { Button } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
 import { Check } from "lucide-react";
+import { isAuthenticated } from "@/utils/auth";
 import { cn } from "@/lib/utils";
 import axios from "axios";
 
@@ -87,6 +88,12 @@ export default function CreateEventPage() {
     setIsSubmitting(true);
     setError("");
     try {
+      const userSession = await isAuthenticated()
+      if(!userSession || !userSession.userId) {
+        setError("You must be logged in to create an event.")
+        return
+      }
+
       const formatDateTime = (date) => {
         const year = date.getFullYear();
         const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -98,17 +105,16 @@ export default function CreateEventPage() {
         return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
       }
       const formattedDateTime = formatDateTime(new Date(formData.dateTime))
-      console.log(formData)
       await axios.post("http://localhost:3000/api/events/create-event", {
         title: formData.title,
-        category: formData.category,
+        category_id: formData.category,
         photo: formData.photo,
         event_datetime: formattedDateTime,
         address: formData.location,
         description: formData.description,
+        user_id: userSession.userId,
       });
       console.log("Event created successfully!");
-      window.location.href = "/manage-event";
     } catch (error) {
       console.error("Error creating event:", error.message);
       setError("Cannot create event: " + error.message);

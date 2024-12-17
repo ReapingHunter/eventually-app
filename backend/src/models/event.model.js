@@ -3,8 +3,8 @@ import dbConn from '../../config/db.config.js';
 const Event = {
   create: (eventData) => {
     return new Promise((resolve, reject) => {
-      const query = `INSERT INTO event (title, description, event_datetime, address, photo, category_id) 
-                     VALUES (?, ?, ?, ?, ?, ?)`;
+      const query = `INSERT INTO event (title, description, event_datetime, address, photo, category_id, user_id) 
+                     VALUES (?, ?, ?, ?, ?, ?, ?)`;
       dbConn.query(
         query,
         [
@@ -14,6 +14,7 @@ const Event = {
           eventData.address,          // Changed from 'location' to 'address' for consistency
           eventData.photo,
           eventData.category_id,
+          eventData.user_id,
         ],
         (err, res) => {
           if (err) {

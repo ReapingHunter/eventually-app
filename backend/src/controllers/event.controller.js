@@ -26,14 +26,12 @@ export const uploadEventPhoto = (req, res) => {
 
 export const createEvent = async (req, res) => {
   try {
-    const { title, description, event_datetime, address, category } = req.body;
+    const { title, description, event_datetime, address, photo, category_id, user_id } = req.body;
 
     // Check if a file is uploaded
-    if (!req.file) {
+    if (!photo) {
       return res.status(400).send({ message: "No file uploaded" });
     }
-
-    const photo = req.file.filename;
 
     // Insert the event into the database
     const newEvent = await Event.create({
@@ -42,7 +40,8 @@ export const createEvent = async (req, res) => {
       event_datetime,
       address,
       photo,
-      category,
+      category_id,
+      user_id,
     });
 
     res.status(201).send({ message: "Event created successfully", event: newEvent });
@@ -55,11 +54,7 @@ export const createEvent = async (req, res) => {
 export const getAllEvents = async (req, res) => {
   try {
     const events = await Event.findAll();
-    const eventsWithFullImagePaths = events.map(event => ({
-      ...event,
-      photo: `http://localhost:3000/images/${event.photo}`,
-    }));
-    res.status(200).send(eventsWithFullImagePaths);
+    res.status(200).send(events);
   } catch (err) {
     console.error("Error fetching events:", err);
     res.status(500).send({ message: "Error fetching events", error: err });
@@ -69,11 +64,7 @@ export const getAllEvents = async (req, res) => {
 export const getTopEvents = async (req, res) => {
   try {
     const topEvents = await Event.findTopEvents();
-    const eventsWithFullImagePaths = topEvents.map(event => ({
-      ...event,
-      photo: `http://localhost:3000/images/${event.photo}`,
-    }));
-    res.status(200).send(eventsWithFullImagePaths);
+    res.status(200).send(topEvents);
   } catch (err) {
     console.error("Error fetching events:", err);
     res.status(500).send({ message: "Error fetching events", error: err });
@@ -87,7 +78,6 @@ export const getEventById = async (req, res) => {
     if (!event) {
       return res.status(404).send({ message: "Event not found" });
     }
-    event.photo = `http://localhost:3000/images/${event.photo}`;
     res.status(200).send(event);
   } catch (err) {
     console.error("Error fetching event by ID:", err);
@@ -99,11 +89,7 @@ export const getEventByFilter = async (req, res) => {
   try {
     const { title, address, from_date, to_date, category_id } = req.query;
     const filteredEvents = await Event.findByFilter(title, address, from_date, to_date, category_id);
-    const eventsWithFullImagePaths = filteredEvents.map(event => ({
-      ...event,
-      photo: `http://localhost:3000/images/${event.photo}`,
-    }));
-    res.status(200).send(eventsWithFullImagePaths || []);
+    res.status(200).send(filteredEvents || []);
   } catch (error) {
     console.error('Error fetching filtered events:', error);
     res.status(500).json({ message: 'Internal server error' });
@@ -117,11 +103,7 @@ export const getEventByUser = async (req, res) => {
     if (events.length === 0) {
       return res.status(404).send({ message: "User has not created any events." });
     }
-    const eventsWithFullImagePaths = events.map(event => ({
-      ...event,
-      photo: `http://localhost:3000/images/${event.photo}`,
-    }));
-    res.status(200).send(eventsWithFullImagePaths);
+    res.status(200).send(events);
   } catch (err) {
     console.error("Error fetching event by user:", err);
     res.status(500).send({ message: "Error fetching event", error: err });
