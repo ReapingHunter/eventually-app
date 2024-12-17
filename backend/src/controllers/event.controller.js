@@ -1,6 +1,4 @@
 import Event from '../models/event.model.js';
-import RSVP from '../models/rsvp.model.js';
-import Notification from '../models/notification.model.js';
 import Category from '../models/category.model.js';
 import multer from 'multer';
 
@@ -100,17 +98,17 @@ export const getEventByFilter = async (req, res) => {
 
 export const getOrganizer = async (req, res) => {
   try {
-    const { event_id } = req.query; // Extract query parameter
+    const { event_id } = req.query;
     const organizer = await Event.findOrganizer(event_id);
     if (!organizer) {
       return res.status(404).send({ message: "Organizer not found" });
     }
-    res.status(200).send({ username: organizer }); // Send the organizer's username
+    res.status(200).send(organizer);
   } catch (error) {
-    console.error("Error fetching organizer:", error);
-    res.status(500).json({ message: "Internal server error" });
+    console.error('Error fetching filtered events:', error);
+    res.status(500).json({ message: 'Internal server error' })
   }
-};
+}
 export const getEventByUser = async (req, res) => {
   try {
     const userId = req.params.id;
@@ -127,37 +125,19 @@ export const getEventByUser = async (req, res) => {
 
 export const updateEvent = async (req, res) => {
   try {
-    const { eventId } = req.params;
-    const { title, description, date, location, photo } = req.body;
-
-    const updatedEvent = await Event.updateById(eventId, { 
-      title, description, date, location, photo 
-    });
-
-    if (!updatedEvent) {
-      return res.status(404).send({ message: "Event not found" });
+    const { id } = req.params;
+    const { title, description, event_datetime, address, photo, category_id } = req.body;
+    if (!title || !description || !event_datetime || !address || !category_id) {
+      return res.status(400).send({ message: "Missing required fields" });
     }
-
-    // Notify all RSVPed users
-    const rsvpList = await RSVP.findByEventId(eventId);
-    const message = `The event "${title}" has been updated. Check the details.`;
-
-    await Promise.all(
-      rsvpList.map(async (rsvp) => {
-        await Notification.create({
-          rsvp_id: rsvp.rsvp_id,
-          message,
-        });
-      })
-    );
-
-    res.status(200).send({
-      message: "Event updated and notifications sent",
-      event: updatedEvent,
-    });
+    const updatedEvent = await Event.updateById(id, { title, description, event_datetime, address, photo, category_id });
+    res.status(200).send({ message: "Event updated successfully", event: updatedEvent });
   } catch (err) {
     console.error("Error updating event:", err);
-    res.status(500).send({ message: "Error updating event", error: err });
+    if (err.message === "Event not found or no changes made") {
+      return res.status(404).send({ message: "Event not found or no changes made" });
+    }
+    res.status(500).send({ message: "Error updating event", error: err.message });
   }
 };
 
