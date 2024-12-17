@@ -24,15 +24,13 @@ DROP TABLE IF EXISTS `notification`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `notification` (
   `notification_id` int NOT NULL AUTO_INCREMENT,
-  `user_id` int NOT NULL,
-  `event_id` int NOT NULL,
+  `rsvp_id` int NOT NULL,
   `message` text NOT NULL,
   `status` enum('Unread','Read') DEFAULT 'Unread',
   PRIMARY KEY (`notification_id`),
   KEY `user_id` (`user_id`),
   KEY `event_id` (`event_id`),
-  CONSTRAINT `notification_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
-  CONSTRAINT `notification_ibfk_2` FOREIGN KEY (`event_id`) REFERENCES `event` (`event_id`)
+  CONSTRAINT `notification_ibfk_1` FOREIGN KEY (`rsvp_id`) REFERENCES `rsvp` (`rsvp_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

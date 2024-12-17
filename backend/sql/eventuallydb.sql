@@ -11,6 +11,7 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
+DROP Database IF EXISTS eventuallydb;
 CREATE Database eventuallydb;
 USE eventuallydb;
 
@@ -98,9 +99,8 @@ INSERT INTO `event` (`event_id`, `title`, `photo`, `description`, `event_datetim
 --
 
 CREATE TABLE `notification` (
-  `notification_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `event_id` int(11) NOT NULL,
+  `notification_id` int NOT NULL,
+  `rsvp_id` int NOT NULL,
   `message` text NOT NULL,
   `status` enum('Unread','Read') DEFAULT 'Unread'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -167,8 +167,7 @@ ALTER TABLE `event`
 --
 ALTER TABLE `notification`
   ADD PRIMARY KEY (`notification_id`),
-  ADD KEY `user_id` (`user_id`),
-  ADD KEY `event_id` (`event_id`);
+  ADD KEY `rsvp_id` (`rsvp_id`);
 
 --
 -- Indexes for table `rsvp`
@@ -235,8 +234,7 @@ ALTER TABLE `event`
 -- Constraints for table `notification`
 --
 ALTER TABLE `notification`
-  ADD CONSTRAINT `notification_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
-  ADD CONSTRAINT `notification_ibfk_2` FOREIGN KEY (`event_id`) REFERENCES `event` (`event_id`);
+  ADD CONSTRAINT `notification_ibfk_1` FOREIGN KEY (`rsvp_id`) REFERENCES `rsvp` (`rsvp_id`);
 
 --
 -- Constraints for table `rsvp`
