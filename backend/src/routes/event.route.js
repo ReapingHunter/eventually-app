@@ -8,6 +8,7 @@ import {
     updateEvent, 
     deleteEvent,
     getTopEvents,
+    uploadEventPhoto
 } from '../controllers/event.controller.js';
 import multer from 'multer';
 
@@ -26,7 +27,8 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-router.post('/create-event', upload.single('photo'), createEvent); // Handle file upload for event creation
+router.post('/create-event', createEvent); // Handle file upload for event creation
+router.post("/upload-photo", upload.single("photo"), uploadEventPhoto);
 router.get("/dashboard", getTopEvents);
 router.get("/filter", getEventByFilter);
 router.get('/all-event', getAllEvents); // Get all events

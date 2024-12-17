@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { PlusIcon, TrashIcon } from "@heroicons/react/24/solid";
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
 import { Input } from "@/components/ui/input";
@@ -66,13 +65,13 @@ export default function CreateEventPage() {
     if (file) {
       const uploadData = new FormData();
       uploadData.append("photo", file);
-
+  
       axios
-        .post("http://localhost:3000/api/upload", uploadData)
+        .post("http://localhost:3000/api/events/upload-photo", uploadData) // Dedicated route
         .then((response) => {
-          const uploadedPhotoUrl = response.data.filename; // Ensure this is a full URL
-          setFormData({ ...formData, photo: uploadedPhotoUrl });
-          setError("");
+          const uploadedPhotoUrl = `http://localhost:3000${response.data.photoUrl}`;
+          setFormData({ ...formData, photo: uploadedPhotoUrl }); // Update photo URL in form data
+          setError(""); // Clear errors
         })
         .catch((error) => {
           console.error("Error uploading file:", error.message);
@@ -88,12 +87,13 @@ export default function CreateEventPage() {
     setError("");
 
     try {
+      console.log(formData)
       await axios.post("http://localhost:3000/api/events/create-event", {
         title: formData.title,
         category: formData.category,
         photo: formData.photo,
-        dateTime: formData.dateTime,
-        location: formData.location,
+        event_datetime: formData.dateTime,
+        address: formData.location,
         description: formData.description,
       });
       console.log("Event created successfully!");
@@ -207,7 +207,7 @@ export default function CreateEventPage() {
                   <Label htmlFor="dateTime" className="block text-sm font-medium text-gray-700">
                     Event Date and Time
                   </Label>
-                  <DateTimePicker value={formData.dateTime} onChange={(value) => setFormData({ ...formData, dateTime: value })} />
+                  <DateTimePicker selected={formData.dateTime} onSelect={(value) => setFormData({ ...formData, dateTime: value })} />
                 </div>
               </div>
             </div>
@@ -244,7 +244,6 @@ export default function CreateEventPage() {
               <button
                 type="submit"
                 className="bg-gradient-to-r from-[#7b00d4] via-[#A255DA] to-[#F03CF9] px-6 py-3 text-white font-semibold rounded-lg shadow-md hover:brightness-110 transition"
-                disabled={isSubmitting || !!error}
               >
                 {isSubmitting ? "Creating..." : "Create Event"}
               </button>

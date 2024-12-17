@@ -15,6 +15,15 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
+export const uploadEventPhoto = (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ message: "No file uploaded" });
+  }
+
+  const photoUrl = `/images/${req.file.filename}`; // Path where the file is stored
+  res.status(200).json({ photoUrl });
+}
+
 export const createEvent = async (req, res) => {
   try {
     const { title, description, event_datetime, address, category } = req.body;
