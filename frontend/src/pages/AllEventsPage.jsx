@@ -41,7 +41,7 @@ export default function AllEventsPage() {
 
   useEffect(() => {
       // Fetch events according to user
-      const fetchEventsByUser = async () => {
+      const fetchUserId = async () => {
         try {
           const userSession = await isAuthenticated()
           if(!userSession || !userSession.userId){
@@ -53,7 +53,7 @@ export default function AllEventsPage() {
           console.error("Error fetching events:", error.message)
         }
       }
-      fetchEventsByUser()
+      fetchUserId()
     }, [])
   // Total pages calculation
   const totalPages = Math.ceil(events.length / eventsPerPage);
