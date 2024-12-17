@@ -28,6 +28,8 @@ export default function CreateEventPage() {
   const [error, setError] = useState("");
   const [categories, setCategories] = useState([]);
   const [isCategoryOpen, setCategoryOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const [formData, setFormData] = useState({
     title: "",
     category: "",
@@ -37,18 +39,19 @@ export default function CreateEventPage() {
     description: "",
   });
 
-  // Fetch categories on component mount
+  // Fetch categories on mount
   useEffect(() => {
-    const fetchCategories = async () => {
+    const fetchAllCategories = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/categories/all-categories");
+        const response = await axios.get(
+          "http://localhost:3000/api/categories/all-categories"
+        );
         setCategories(response.data);
       } catch (error) {
-        setError("Unable to fetch categories.");
+        console.error("Error fetching categories:", error.message);
       }
     };
-
-    fetchCategories();
+    fetchAllCategories();
   }, []);
 
   // Handle form data change
@@ -57,31 +60,35 @@ export default function CreateEventPage() {
     setFormData({ ...formData, [id]: value });
   };
 
-  // Handle file input change (for event photo upload)
+  // Handle file upload and preview
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const formData = new FormData();
-      formData.append("photo", file);
+      const uploadData = new FormData();
+      uploadData.append("photo", file);
 
-      axios.post("http://localhost:3000/api/upload", formData)
-        .then(response => {
-          setFormData({ ...formData, photo: response.data.filename });
+      axios
+        .post("http://localhost:3000/api/upload", uploadData)
+        .then((response) => {
+          const uploadedPhotoUrl = response.data.filename; // Ensure this is a full URL
+          setFormData({ ...formData, photo: uploadedPhotoUrl });
+          setError("");
         })
-        .catch(error => {
-          setError("Failed to upload photo.");
+        .catch((error) => {
+          console.error("Error uploading file:", error.message);
+          setError("Failed to upload photo. Please try again.");
         });
     }
   };
 
   // Handle form submission
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setError("");
+
     try {
-      const response = await axios.post("http://localhost:3000/api/events/create-event", {
+      await axios.post("http://localhost:3000/api/events/create-event", {
         title: formData.title,
         category: formData.category,
         photo: formData.photo,
@@ -89,14 +96,15 @@ export default function CreateEventPage() {
         location: formData.location,
         description: formData.description,
       });
-      console.log("Event created successfully", response.data);
-      // Optionally, reset form or redirect
+      console.log("Event created successfully!");
+      window.location.href = "/manage-event";
     } catch (error) {
+      console.error("Error creating event:", error.message);
       setError("Cannot create event: " + error.message);
     } finally {
       setIsSubmitting(false);
     }
-};
+  };
 
   return (
     <div className="min-h-screen flex flex-col bg-[#fbf3ff]">
@@ -106,7 +114,7 @@ export default function CreateEventPage() {
           <h1 className="text-xl sm:text-2xl font-bold text-gray-800 mb-4 sm:mb-6">
             Create New Event
           </h1>
-
+          {error && <p className="text-red-500 mb-4">{error}</p>}
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div className="flex flex-col sm:flex-row gap-4 w-full">
               <div className="flex-1">
@@ -136,7 +144,7 @@ export default function CreateEventPage() {
                       className="bg-[#f7f7f7] mb-4 mt-1 py-5 w-full rounded-md border flex items-center justify-between"
                     >
                       {formData.category
-                        ? categories.find((category) => category.value === formData.category)?.label
+                        ? categories.find((category) => category.category_id === formData.category)?.category_name
                         : "Select Category..."}
                       <ChevronDown className="text-[#7b00d4]" />
                     </Button>
@@ -149,15 +157,15 @@ export default function CreateEventPage() {
                         <CommandGroup>
                           {categories.map((category) => (
                             <CommandItem
-                              key={category.value}
-                              value={category.value}
-                              onSelect={() => setFormData({ ...formData, category: category.value })}
+                              key={category.category_id}
+                              value={category.category_id}
+                              onSelect={() => setFormData({ ...formData, category: category.category_id })}
                             >
-                              {category.label}
+                              {category.category_name}
                               <Check
                                 className={cn(
                                   "ml-auto",
-                                  category.value === formData.category ? "opacity-100" : "opacity-0"
+                                  category.category_id === formData.category ? "opacity-100" : "opacity-0"
                                 )}
                               />
                             </CommandItem>
@@ -238,7 +246,7 @@ export default function CreateEventPage() {
                 className="bg-gradient-to-r from-[#7b00d4] via-[#A255DA] to-[#F03CF9] px-6 py-3 text-white font-semibold rounded-lg shadow-md hover:brightness-110 transition"
                 disabled={isSubmitting || !!error}
               >
-                Create Event
+                {isSubmitting ? "Creating..." : "Create Event"}
               </button>
             </div>
           </form>
