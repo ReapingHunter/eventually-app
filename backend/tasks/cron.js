@@ -1,7 +1,7 @@
 import cron from 'node-cron';
-import Event from './models/event.model.js';
-import RSVP from './models/rsvp.model.js';
-import Notification from './models/notification.model.js';
+import Event from '../src/models/event.model.js';
+import RSVP from '../src/models/rsvp.model.js';
+import Notification from '../src/models/notification.model.js';
 
 cron.schedule('0 9 * * *', async () => {
   try {
