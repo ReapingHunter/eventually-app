@@ -198,7 +198,24 @@ const Event = {
         resolve({ message: "Event soft deleted successfully" });
       });
     });
-  }  
+  },
+  
+  findUpcoming: () => {
+    return new Promise((resolve, reject) => {
+      const query = `
+        SELECT * FROM event 
+        WHERE event_date BETWEEN NOW() AND DATE_ADD(NOW(), INTERVAL 1 DAY)
+          AND deleted_at IS NULL
+      `;
+      dbConn.query(query, (err, res) => {
+        if (err) {
+          console.error("Error fetching upcoming events:", err);
+          return reject(err);
+        }
+        resolve(res);
+      });
+    });
+  }
 };
 
 export default Event;

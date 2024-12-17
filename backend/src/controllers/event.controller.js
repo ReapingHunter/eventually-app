@@ -1,4 +1,6 @@
 import Event from '../models/event.model.js';
+import RSVP from '../models/rsvp.model.js';
+import Notification from '../models/notification.model.js';
 import Category from '../models/category.model.js';
 import multer from 'multer';
 
@@ -125,19 +127,37 @@ export const getEventByUser = async (req, res) => {
 
 export const updateEvent = async (req, res) => {
   try {
-    const { id } = req.params;
-    const { title, description, event_datetime, address, photo, category_id } = req.body;
-    if (!title || !description || !event_datetime || !address || !category_id) {
-      return res.status(400).send({ message: "Missing required fields" });
+    const { eventId } = req.params;
+    const { title, description, date, location, photo } = req.body;
+
+    const updatedEvent = await Event.updateById(eventId, { 
+      title, description, date, location, photo 
+    });
+
+    if (!updatedEvent) {
+      return res.status(404).send({ message: "Event not found" });
     }
-    const updatedEvent = await Event.updateById(id, { title, description, event_datetime, address, photo, category_id });
-    res.status(200).send({ message: "Event updated successfully", event: updatedEvent });
+
+    // Notify all RSVPed users
+    const rsvpList = await RSVP.findByEventId(eventId);
+    const message = `The event "${title}" has been updated. Check the details.`;
+
+    await Promise.all(
+      rsvpList.map(async (rsvp) => {
+        await Notification.create({
+          rsvp_id: rsvp.rsvp_id,
+          message,
+        });
+      })
+    );
+
+    res.status(200).send({
+      message: "Event updated and notifications sent",
+      event: updatedEvent,
+    });
   } catch (err) {
     console.error("Error updating event:", err);
-    if (err.message === "Event not found or no changes made") {
-      return res.status(404).send({ message: "Event not found or no changes made" });
-    }
-    res.status(500).send({ message: "Error updating event", error: err.message });
+    res.status(500).send({ message: "Error updating event", error: err });
   }
 };
 
