@@ -68,11 +68,10 @@ export default function Dashboard() {
             <div className="text-sm sm:text-xl lg:text-2xl font-normal mb-6">
               Create and join events today, celebrate tomorrow.
             </div>
-            {/* Register Button */}
-            <Link to="/signup">
+            <Link to={userId ? "/create-event" : "/signup"}>
               <Button className="flex bg-gradient-to-r from-[#7b00d4] via-[#A255DA] to-[#F03CF9] hover:brightness-110 transition text-white font-semibold py-2 px-4 sm:px-6 rounded-lg shadow-md gap-2">
                 <SparklesIcon className="w-5 h-5" />
-                Register now
+                {userId ? "Create Event" : "Register now"}
               </Button>
             </Link>
           </div>
