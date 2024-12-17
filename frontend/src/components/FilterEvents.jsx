@@ -16,12 +16,15 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { Link } from "react-router-dom";
 import { Calendar } from "@/components/ui/calendar";
 import axios from "axios";
 import { addDays, format } from "date-fns";
-
+import { isAuthenticated } from "@/utils/auth";
+import EventCard from "./EventCard";
 export default function FilterEvents() {
   const [events, setEvents] = useState([]);
+  const [userId, setUserId] = useState(null)
   const [isCategoryOpen, setCategoryOpen] = useState(false);
   const [categories, setCategories] = useState([]);
   const [filters, setFilters] = useState({
@@ -48,6 +51,23 @@ export default function FilterEvents() {
     };
     fetchAllCategories();
   }, []);
+
+  useEffect(() => {
+    // Fetch events according to user
+    const fetchEventsByUser = async () => {
+      try {
+        const userSession = await isAuthenticated()
+        if(!userSession || !userSession.userId){
+          return;
+        }
+        
+        setUserId(userSession.userId)
+      } catch (error) {
+        console.error("Error fetching events:", error.message)
+      }
+    }
+    fetchEventsByUser()
+  }, [])
 
   // Fetch events when filters change
   useEffect(() => {
@@ -202,14 +222,12 @@ export default function FilterEvents() {
       </div>
 
       {/* Event List */}
-      <div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-6">
         {events.length > 0 ? (
           events.map((event) => (
-            <div key={event.event_id} className="border p-4 rounded mb-4">
-              <h3 className="font-bold text-lg">{event.title}</h3>
-              <p>{event.address}</p>
-              <p>{format(new Date(event.event_datetime), "PPP")}</p>
-            </div>
+            <Link key={event.event_id} to={userId === event.user_id ? `/rsvp/${event.event_id}` : `/modify-event/${event.event_id}`}>
+              <EventCard event={event} />
+            </Link>
           ))
         ) : (
           <p>No events found</p>

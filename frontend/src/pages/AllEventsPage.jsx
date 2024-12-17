@@ -13,9 +13,10 @@ import {
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-
+import { isAuthenticated } from "@/utils/auth";
 export default function AllEventsPage() {
   const [currentPage, setCurrentPage] = useState(1);
+  const [userId, setUserId] = useState(null)
   const [events, setEvents] = useState([]);
   const eventsPerPage = 28;
 
@@ -37,6 +38,23 @@ export default function AllEventsPage() {
     }
     fetchAllEvents()
   }, [])
+
+  useEffect(() => {
+      // Fetch events according to user
+      const fetchEventsByUser = async () => {
+        try {
+          const userSession = await isAuthenticated()
+          if(!userSession || !userSession.userId){
+            return;
+          }
+          
+          setUserId(userSession.userId)
+        } catch (error) {
+          console.error("Error fetching events:", error.message)
+        }
+      }
+      fetchEventsByUser()
+    }, [])
   // Total pages calculation
   const totalPages = Math.ceil(events.length / eventsPerPage);
 
@@ -108,7 +126,7 @@ export default function AllEventsPage() {
         {/* Event Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-6">
           {currentEvents.map((event) => (
-            <Link key={event.event_id} to={`/rsvp/${event.event_id}`}>
+            <Link key={event.event_id} to={userId !== event.user_id ? `/rsvp/${event.event_id}` : `/modify-event/${event.event_id}`}>
               <EventCard event={event} />
             </Link>
           ))}
