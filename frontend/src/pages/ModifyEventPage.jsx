@@ -2,7 +2,7 @@ import NavBar from "../components/NavBar"
 import { CalendarDateRangeIcon, MapPinIcon, ClockIcon, WrenchIcon, TrashIcon, UserIcon } from "@heroicons/react/24/solid"
 import { Button } from "@/components/ui/button"
 import { useState, useEffect } from "react"
-import { Link, useParams, useNavigate } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom"
 import axios from "axios"
 
 export default function ModifyEventPage() {
@@ -12,6 +12,7 @@ export default function ModifyEventPage() {
   const [loading, setLoading] = useState(true);
   const [showDeletePopup, setShowDeletePopup] = useState(false);
 
+  
   useEffect(() => {
     if (id) {
       const fetchEvent = async () => {
@@ -27,6 +28,12 @@ export default function ModifyEventPage() {
       fetchEvent();
     }
   }, [id]);
+
+  const handleUpdate = () => {
+    navigate("/update-event", {
+      state: { event }  // Pass the entire event object, including the dateTime
+    });
+  }
 
   const handleDelete = async () => {
     try {
@@ -105,12 +112,12 @@ export default function ModifyEventPage() {
             </div>
 
             <div className="flex justify-between items-center space-x-2 max-md:pt-8">
-              <Link to="/update-event">
-                <Button className="flex bg-yellow-600 hover:brightness-110 transition text-white font-semibold py-2 px-6 rounded-lg shadow-md gap-2">
-                  <WrenchIcon className="w-5 h-5"/>
-                  Update
-                </Button>
-              </Link>
+              <Button className="flex bg-yellow-600 hover:brightness-110 transition text-white font-semibold py-2 px-6 rounded-lg shadow-md gap-2"
+                      onClick={handleUpdate}
+              >
+                <WrenchIcon className="w-5 h-5"/>
+                Update
+              </Button>
               <Button className="flex bg-red-500 hover:brightness-110 transition text-white font-semibold py-2 px-6 rounded-lg shadow-md gap-2" onClick={() => setShowDeletePopup(true)}>
                 <TrashIcon className="w-5 h-5"/>
                 Delete

@@ -12,10 +12,23 @@ import { Button } from "@/components/ui/button";
 import { SparklesIcon, FireIcon } from "@heroicons/react/24/solid";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { isAuthenticated } from "@/utils/auth";
 import axios from "axios";
 export default function Dashboard() {
   const [events, setEvents] = useState([])
-
+  const [userId, setUserId] = useState(null)
+  // Fetch user ID
+  useEffect(() => {
+    const fetchUserId = async () => {
+      try {
+        const userSession = await isAuthenticated();
+        setUserId(userSession.userId);
+      } catch (error) {
+        console.error("Error fetching user ID:", error.message);
+      }
+    };
+    fetchUserId();
+  }, []);
   useEffect(() => {
 
     // Fetch top events
@@ -88,7 +101,7 @@ export default function Dashboard() {
                 {events.map((event) => (
                   <CarouselItem key={event.event_id} className="basis-full sm:basis-1/2 lg:basis-1/3">
                     <div className="p-2">
-                      <Link key={event.event_id} to={`/rsvp/${event.event_id}`}>
+                    <Link key={event.event_id} to={userId === event.user_id ? `/modify-event/${event.event_id}` : `/rsvp/${event.event_id}`}>
                         <EventCard event={event} /> 
                       </Link>
                     </div>

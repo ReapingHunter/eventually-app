@@ -23,22 +23,24 @@ import { Check } from "lucide-react";
 import { isAuthenticated } from "@/utils/auth";
 import { cn } from "@/lib/utils";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
 
-export default function CreateEventPage() {
+export default function UpdateEventPage() {
   const [error, setError] = useState("");
   const [categories, setCategories] = useState([]);
   const [isCategoryOpen, setCategoryOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-
+  const location = useLocation();
+  const { event } = location.state || {}; // Retrieve the event data from state
   const [formData, setFormData] = useState({
-    title: "",
-    category: "",
-    photo: "",
-    dateTime: new Date(),
-    location: "",
-    description: "",
+    title: event.title,
+    category: event.category,
+    photo: event.photo,
+    dateTime: event.dateTime,
+    location: event.location,
+    description: event.description,
   });
-
+  
   // Fetch categories on mount
   useEffect(() => {
     const fetchAllCategories = async () => {
@@ -90,7 +92,7 @@ export default function CreateEventPage() {
     try {
       const userSession = await isAuthenticated()
       if(!userSession || !userSession.userId) {
-        setError("You must be logged in to create an event.")
+        setError("You must be logged in to update an event.")
         return
       }
 
@@ -105,7 +107,7 @@ export default function CreateEventPage() {
         return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
       }
       const formattedDateTime = formatDateTime(new Date(formData.dateTime))
-      await axios.post("http://localhost:3000/api/events/create-event", {
+      await axios.post("http://localhost:3000/api/events/update-event", {
         title: formData.title,
         category_id: formData.category,
         photo: formData.photo,
@@ -114,10 +116,11 @@ export default function CreateEventPage() {
         description: formData.description,
         user_id: userSession.userId,
       });
-      console.log("Event created successfully!");
+      console.log("Event updated successfully!");
+      window.location.href = "/manage-event"
     } catch (error) {
-      console.error("Error creating event:", error.message);
-      setError("Cannot create event: " + error.message);
+      console.error("Error updating event:", error.message);
+      setError("Cannot update event: " + error.message);
     } finally {
       setIsSubmitting(false);
     }
@@ -129,7 +132,7 @@ export default function CreateEventPage() {
       <div className="flex-grow p-4 sm:p-8 flex flex-col items-center">
         <div className="bg-white shadow-lg rounded-lg w-full max-w-4xl p-4 sm:p-8">
           <h1 className="text-xl sm:text-2xl font-bold text-gray-800 mb-4 sm:mb-6">
-            Create New Event
+            Update Event
           </h1>
           {error && <p className="text-red-500 mb-4">{error}</p>}
           <form className="space-y-6" onSubmit={handleSubmit}>
@@ -262,7 +265,7 @@ export default function CreateEventPage() {
                 type="submit"
                 className="bg-gradient-to-r from-[#7b00d4] via-[#A255DA] to-[#F03CF9] px-6 py-3 text-white font-semibold rounded-lg shadow-md hover:brightness-110 transition"
               >
-                {isSubmitting ? "Creating..." : "Create Event"}
+                {isSubmitting ? "Updating..." : "Update Event"}
               </button>
             </div>
           </form>
@@ -272,3 +275,4 @@ export default function CreateEventPage() {
     </div>
   );
 }
+
