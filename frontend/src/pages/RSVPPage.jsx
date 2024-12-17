@@ -37,7 +37,6 @@ export default function RSVPPage() {
   const [ isPopoverOpen, setIsPopoverOpen] = useState(false)
   const [ currentStatus, setCurrentStatus ] = useState(null)
   const [rsvpMessage, setRsvpMessage] = useState("")
-  const [ organizer, setOrganizer ] = useState()
 
   useEffect(() => {
     if(id){
@@ -71,21 +70,6 @@ export default function RSVPPage() {
     fetchCategoryName();
   }, [event]);
 
-  useEffect(() => {
-    const fetchOrganizer = async () => {
-      if (event && event.event_id) {
-        try {
-          const response = await axios.get("http://localhost:3000/api/events/owner", {
-            params: { event_id: event.event_id },
-          });
-          setOrganizer(response.data.username); // Assuming response.data.username contains the organizer's username
-        } catch (error) {
-          console.error("Error fetching organizer:", error.message);
-        }
-      }
-    };
-    fetchOrganizer();
-  }, [event]);
   useEffect(() => {
     const checkRSVPStatus = async () => {
       try {
@@ -243,16 +227,6 @@ export default function RSVPPage() {
             </Popover>
           </div>
           {rsvpMessage && <p className="text-center mt-4 text-sm text-green-600">{rsvpMessage}</p>}
-          {/* Organizer Section */}
-          <div className="bg-white rounded-xl shadow-md p-6 mt-6">
-            <h3 className="text-lg md:text-xl font-semibold text-[#46007a]">Organizer</h3>
-            <div className="mt-4 flex flex-wrap gap-6">
-              {/* Organizer 1 */}
-              <div className="flex items-center gap-4">
-                <p className="font-medium">{organizer}</p>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </>
