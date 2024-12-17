@@ -96,7 +96,11 @@ export const getEventByFilter = async (req, res) => {
   try {
     const { title, address, from_date, to_date, category_id } = req.query;
     const filteredEvents = await Event.findByFilter(title, address, from_date, to_date, category_id);
-    res.status(200).send(filteredEvents || []);
+    const eventsWithFullImagePaths = filteredEvents.map(event => ({
+      ...event,
+      photo: `http://localhost:3000/images/${event.photo}`,
+    }));
+    res.status(200).send(eventsWithFullImagePaths || []);
   } catch (error) {
     console.error('Error fetching filtered events:', error);
     res.status(500).json({ message: 'Internal server error' });
