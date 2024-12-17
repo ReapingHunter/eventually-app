@@ -7,6 +7,7 @@ import categoryRoutes from './src/routes/category.route.js'
 import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import './tasks/cron.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
