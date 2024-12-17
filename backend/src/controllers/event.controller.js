@@ -127,11 +127,32 @@ export const updateEvent = async (req, res) => {
   try {
     const { id } = req.params;
     const { title, description, event_datetime, address, photo, category_id } = req.body;
+
     if (!title || !description || !event_datetime || !address || !category_id) {
       return res.status(400).send({ message: "Missing required fields" });
     }
+
+    // Notify all RSVPed users
+    const rsvpList = await RSVP.findByEventId(eventId);
+    const message = `The event "${title}" has been updated. Check the details.`;
+
+    await Promise.all(
+      rsvpList.map(async (rsvp) => {
+        await Notification.create({
+          rsvp_id: rsvp.rsvp_id,
+          message,
+        });
+      })
+    );
+
+    res.status(200).send({
+      message: "Event updated and notifications sent",
+      event: updatedEvent,
+    });
+
     const updatedEvent = await Event.updateById(id, { title, description, event_datetime, address, photo, category_id });
     res.status(200).send({ message: "Event updated successfully", event: updatedEvent });
+
   } catch (err) {
     console.error("Error updating event:", err);
     if (err.message === "Event not found or no changes made") {
