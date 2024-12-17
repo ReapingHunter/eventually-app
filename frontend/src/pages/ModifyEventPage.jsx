@@ -72,13 +72,13 @@ export default function ModifyEventPage() {
             {/* Event Date */}
             <div className="flex items-center text-sm text-gray-700">
               <CalendarDateRangeIcon className="w-5 h-5 text-[#7b00d4] mr-2" />
-              <p>{event.event_date}</p>
+              <p>{event.event_datetime.split('T')[0]}</p>
             </div>
 
             {/* Event Time */}
             <div className="flex items-center text-sm text-gray-700">
               <ClockIcon className="w-5 h-5 text-[#7b00d4] mr-2" />
-              <p>{event.event_time}</p>
+              <p>{event.event_datetime.split('T')[1].split('.')[0]}</p>
             </div>
 
             {/* Event Location */}
