@@ -63,8 +63,9 @@ export default function FilterEvents() {
           category_id: category || undefined,
         };
 
+        console.log(params)
         const response = await axios.get(
-          "http://localhost:3000/api/events/event-filter",
+          "http://localhost:3000/api/events/filter",
           { params }
         );
 

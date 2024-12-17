@@ -73,7 +73,7 @@ export const getEventById = async (req, res) => {
 
 export const getEventByFilter = async (req, res) => {
   try {
-    const { category_id, title, address, date } = req.params;
+    const { category_id, title, address, date } = req.query;
     const filteredEvents = await Event.findByFilter(title, date, category_id, address);
     if (filteredEvents.length === 0) {
       return res.status(404).json({ message: 'No events found' });
