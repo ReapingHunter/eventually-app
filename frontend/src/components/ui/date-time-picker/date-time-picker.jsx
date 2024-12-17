@@ -14,23 +14,22 @@ import {
 } from "@/components/ui/popover";
 import { TimePickerDemo } from "./time-picker-demo";
 
-export function DateTimePicker() {
-  const [date, setDate] = React.useState();
+export function DateTimePicker({ value, onChange }) {
+  const [date, setDate] = React.useState(value);
 
-  /**
-   * carry over the current time when a user clicks a new day
-   * instead of resetting to 00:00
-   */
+  // Handle date selection and pass the updated date to the parent component
   const handleSelect = (newDay) => {
     if (!newDay) return;
     if (!date) {
       setDate(newDay);
+      onChange(newDay);  // Notify parent of the change
       return;
     }
     const diff = newDay.getTime() - date.getTime();
     const diffInDays = diff / (1000 * 60 * 60 * 24);
     const newDateFull = add(date, { days: Math.ceil(diffInDays) });
     setDate(newDateFull);
+    onChange(newDateFull);  // Notify parent of the change
   };
 
   return (

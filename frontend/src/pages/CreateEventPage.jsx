@@ -61,6 +61,7 @@ export default function CreateEventPage() {
 
   // Handle file upload and preview
   const handleFileChange = (e) => {
+    setError("")
     const file = e.target.files[0];
     if (file) {
       const uploadData = new FormData();
@@ -85,14 +86,24 @@ export default function CreateEventPage() {
     e.preventDefault();
     setIsSubmitting(true);
     setError("");
-
     try {
+      const formatDateTime = (date) => {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const day = String(date.getDate()).padStart(2, "0");
+        const hours = String(date.getHours()).padStart(2, "0");
+        const minutes = String(date.getMinutes()).padStart(2, "0");
+        const seconds = String(date.getSeconds()).padStart(2, "0");
+      
+        return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+      }
+      const formattedDateTime = formatDateTime(new Date(formData.dateTime))
       console.log(formData)
       await axios.post("http://localhost:3000/api/events/create-event", {
         title: formData.title,
         category: formData.category,
         photo: formData.photo,
-        event_datetime: formData.dateTime,
+        event_datetime: formattedDateTime,
         address: formData.location,
         description: formData.description,
       });
@@ -207,7 +218,7 @@ export default function CreateEventPage() {
                   <Label htmlFor="dateTime" className="block text-sm font-medium text-gray-700">
                     Event Date and Time
                   </Label>
-                  <DateTimePicker selected={formData.dateTime} onSelect={(value) => setFormData({ ...formData, dateTime: value })} />
+                  <DateTimePicker value={formData.dateTime} onChange={(value) => setFormData({ ...formData, dateTime: value })} />
                 </div>
               </div>
             </div>

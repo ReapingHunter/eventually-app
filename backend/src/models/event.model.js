@@ -1,7 +1,7 @@
 import dbConn from '../../config/db.config.js';
 
 const Event = {
-  create: ({eventData}) => {
+  create: (eventData) => {
     return new Promise((resolve, reject) => {
       const query = `INSERT INTO event (title, description, event_datetime, address, photo, category_id) 
                      VALUES (?, ?, ?, ?, ?, ?)`;

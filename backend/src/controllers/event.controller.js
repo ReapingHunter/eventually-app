@@ -35,12 +35,6 @@ export const createEvent = async (req, res) => {
 
     const photo = req.file.filename;
 
-    // Fetch the category_id based on the category name
-    const categoryId = await Category.getCategoryIdByName(category);
-    if (!categoryId) {
-      return res.status(400).send({ message: "Invalid category selected." });
-    }
-
     // Insert the event into the database
     const newEvent = await Event.create({
       title,
@@ -48,7 +42,7 @@ export const createEvent = async (req, res) => {
       event_datetime,
       address,
       photo,
-      category_id: categoryId,
+      category,
     });
 
     res.status(201).send({ message: "Event created successfully", event: newEvent });
