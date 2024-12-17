@@ -114,15 +114,11 @@ export const getEventByUser = async (req, res) => {
 
 export const updateEvent = async (req, res) => {
   try {
-    const { eventId } = req.params;
-    const { title, description, date, location, photo } = req.body;
+    const { id } = req.params;
+    const { title, description, event_datetime, address, photo, category_id } = req.body;
 
-    const updatedEvent = await Event.updateById(eventId, { 
-      title, description, date, location, photo 
-    });
-
-    if (!updatedEvent) {
-      return res.status(404).send({ message: "Event not found" });
+    if (!title || !description || !event_datetime || !address || !category_id) {
+      return res.status(400).send({ message: "Missing required fields" });
     }
 
     // Notify all RSVPed users
@@ -142,9 +138,16 @@ export const updateEvent = async (req, res) => {
       message: "Event updated and notifications sent",
       event: updatedEvent,
     });
+
+    const updatedEvent = await Event.updateById(id, { title, description, event_datetime, address, photo, category_id });
+    res.status(200).send({ message: "Event updated successfully", event: updatedEvent });
+
   } catch (err) {
     console.error("Error updating event:", err);
-    res.status(500).send({ message: "Error updating event", error: err });
+    if (err.message === "Event not found or no changes made") {
+      return res.status(404).send({ message: "Event not found or no changes made" });
+    }
+    res.status(500).send({ message: "Error updating event", error: err.message });
   }
 };
 
