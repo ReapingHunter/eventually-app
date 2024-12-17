@@ -94,12 +94,9 @@ export const getEventById = async (req, res) => {
 
 export const getEventByFilter = async (req, res) => {
   try {
-    const { category_id, title, address, date } = req.query;
-    const filteredEvents = await Event.findByFilter(title, date, category_id, address);
-    if (filteredEvents.length === 0) {
-      return res.status(404).json({ message: 'No events found' });
-    }
-    res.json(filteredEvents);
+    const { title, address, from_date, to_date, category_id } = req.query;
+    const filteredEvents = await Event.findByFilter(title, address, from_date, to_date, category_id);
+    res.status(200).send(filteredEvents || []);
   } catch (error) {
     console.error('Error fetching filtered events:', error);
     res.status(500).json({ message: 'Internal server error' });

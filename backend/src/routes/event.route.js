@@ -28,6 +28,7 @@ const upload = multer({ storage: storage });
 
 router.post('/create-event', upload.single('photo'), createEvent); // Handle file upload for event creation
 router.get("/dashboard", getTopEvents);
+router.get("/filter", getEventByFilter);
 router.get('/all-event', getAllEvents); // Get all events
 router.get('/:id', getEventById); // Get a specific event by ID
 router.get('/user/:id', getEventByUser);
@@ -35,6 +36,5 @@ router.get('/user/:id', getEventByUser);
 router.put('/update-event', updateEvent);
 router.put('/delete-event/:id', deleteEvent);
 
-router.get('/filter', getEventByFilter);
 
 export default router;

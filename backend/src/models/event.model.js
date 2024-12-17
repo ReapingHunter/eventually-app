@@ -52,45 +52,35 @@ const Event = {
     });
   },  
 
-  findByFilter: async (title = "", dateFrom = "", dateTo = "", category = "", location = "") => {
+  findByFilter: async (title = "", location = "", dateFrom = "", dateTo = "", category = "") => {
     try {
-      let query = `SELECT * FROM event WHERE deleted_at IS NULL`;
-      const queryParams = [];
-  
-      // Filter by title (partial match)
-      if (title) {
-        query += ` AND title LIKE ?`;
-        queryParams.push(`%${title}%`);
-      }
-  
-      // Filter by date range (between dateFrom and dateTo)
-      if (dateFrom && dateTo) {
-        query += ` AND DATE(event_datetime) BETWEEN ? AND ?`;
-        queryParams.push(dateFrom, dateTo);
-      } else if (dateFrom) {
-        query += ` AND DATE(event_datetime) >= ?`;
-        queryParams.push(dateFrom);
-      } else if (dateTo) {
-        query += ` AND DATE(event_datetime) <= ?`;
-        queryParams.push(dateTo);
-      }
-  
-      // Filter by category
-      if (category) {
-        query += ` AND category_id = ?`;
-        queryParams.push(category);
-      }
-  
-      // Filter by location (partial match)
-      if (location) {
-        query += ` AND address LIKE ?`;
-        queryParams.push(`%${location}%`);
-      }
-  
+      const query = `
+      SELECT * 
+      FROM event
+      WHERE deleted_at IS NULL
+      AND (
+        (title LIKE ? OR ? = '') 
+        AND (
+          (DATE(event_datetime) BETWEEN ? AND ?) 
+          OR (? = '' AND ? = '')
+        )
+        AND (category_id = ? OR ? = '')
+        AND (address LIKE ? OR ? = '')
+      )
+      ORDER BY title ASC
+    `;
+
+      const queryParams = [
+        `%${title}%`, title, // Title filter (partial match)
+        dateFrom, dateTo, dateFrom, dateTo, // Date range filter
+        category, category, // Category filter
+        `%${location}%`, location // Location filter (partial match)
+      ]
+      // Execute query with parameters
       const result = await new Promise((resolve, reject) => {
         dbConn.query(query, queryParams, (err, res) => {
           if (err) {
-            console.error("Error fetching events:", err);
+            console.error("Error fetching events:", err.message);
             return reject(err);
           }
           resolve(res);
@@ -99,7 +89,7 @@ const Event = {
   
       return result;
     } catch (error) {
-      console.error("Error in filter query:", error);
+      console.error("Error in filter query:", error.message);
       throw error;
     }
   },
