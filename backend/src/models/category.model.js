@@ -13,6 +13,18 @@ const Category = {
         });
       });
     },
+    getCategoryNameById: (id) => {
+      return new Promise((resolve, reject) => {
+        const query = "SELECT category_name FROM category WHERE category_id = ?";
+        dbConn.query(query, [id], (err, results) => {
+          if(err){
+            console.error("Error fetching category name:", err);
+            return reject(err);
+          }
+          resolve(results.length > 0 ? results[0].category_name : null);
+        });
+      });
+    },
     getAllCategory: () => {
       return new Promise((resolve, reject) => {
         const query = "SELECT * FROM category";

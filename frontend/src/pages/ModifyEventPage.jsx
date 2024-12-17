@@ -4,11 +4,13 @@ import { Button } from "@/components/ui/button"
 import { useState, useEffect } from "react"
 import { useParams, useNavigate } from "react-router-dom"
 import axios from "axios"
+import { Layers } from "lucide-react"
 
 export default function ModifyEventPage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [event, setEvent] = useState(null);
+  const [category, setCategory] = useState()
   const [loading, setLoading] = useState(true);
   const [showDeletePopup, setShowDeletePopup] = useState(false);
 
@@ -29,6 +31,21 @@ export default function ModifyEventPage() {
     }
   }, [id]);
 
+  useEffect(() => {
+    const fetchCategoryName = async () => {
+      if (event && event.category_id) { // Ensure event and category_id exist
+        try {
+          const response = await axios.get("http://localhost:3000/api/categories/category-name", {
+            params: { category_id: event.category_id }, // Pass category_id properly
+          });
+          setCategory(response.data);
+        } catch (error) {
+          console.error("Error fetching category name:", error.message);
+        }
+      }
+    };
+    fetchCategoryName();
+  }, [event]);
   const handleUpdate = () => {
     navigate("/update-event", {
       state: { event }  // Pass the entire event object, including the dateTime
@@ -76,6 +93,11 @@ export default function ModifyEventPage() {
               {event.title}
             </h2>
 
+            {/* Event Category */}
+            <div className="flex items-center text-sm text-gray-700">
+              <Layers className="w-5 h-5 text-[#7b00d4] mr-2" />
+              <p>{category}</p>
+            </div>
             {/* Event Date */}
             <div className="flex items-center text-sm text-gray-700">
               <CalendarDateRangeIcon className="w-5 h-5 text-[#7b00d4] mr-2" />

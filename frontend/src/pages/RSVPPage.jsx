@@ -6,13 +6,14 @@ import {
   SparklesIcon,
   UserIcon,
 } from "@heroicons/react/24/solid";
+
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { isAuthenticated } from "@/utils/auth";
 import axios from "axios";
 import { Command, CommandEmpty, CommandGroup, CommandItem, CommandList } from "@/components/ui/command";
-import { Check } from "lucide-react";
+import { Check, Layers } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const rsvpStatus = [
@@ -32,6 +33,7 @@ const rsvpStatus = [
 export default function RSVPPage() {
   const { id } = useParams()
   const [ event, setEvent ] = useState(null)
+  const [ category, setCategory ] = useState()
   const [ loading, setLoading ] = useState(true)
   const [ isPopoverOpen, setIsPopoverOpen] = useState(false)
   const [ currentStatus, setCurrentStatus ] = useState(null)
@@ -53,6 +55,21 @@ export default function RSVPPage() {
     }
   }, [id])
 
+  useEffect(() => {
+    const fetchCategoryName = async () => {
+      if (event && event.category_id) { // Ensure event and category_id exist
+        try {
+          const response = await axios.get("http://localhost:3000/api/categories/category-name", {
+            params: { category_id: event.category_id }, // Pass category_id properly
+          });
+          setCategory(response.data);
+        } catch (error) {
+          console.error("Error fetching category name:", error.message);
+        }
+      }
+    };
+    fetchCategoryName();
+  }, [event]);
   useEffect(() => {
     const checkRSVPStatus = async () => {
       try {
@@ -140,6 +157,11 @@ export default function RSVPPage() {
               {event.title}
             </h2>
 
+            {/* Event Category */ }
+            <div className="flex items-center text-sm text-gray-700">
+              <Layers className="w-5 h-5 text-[#7b00d4] mr-2" />
+              <p>{category}</p>
+            </div>
             {/* Event Date */}
             <div className="flex items-center text-sm text-gray-700">
               <CalendarDateRangeIcon className="w-5 h-5 text-[#7b00d4] mr-2" />
