@@ -5,31 +5,46 @@ import { Separator } from "./ui/separator";
 import { Card } from "./ui/card";
 import { Button } from "./ui/button";
 import { BellIcon, X } from "lucide-react";
+import { isAuthenticated } from "@/utils/auth";
 
 export default function Notifications() {
-  const [notifications, setNotifications] = useState([]);
-  const [userId, setUserId] = useState(null)
-  
+  const [notifications, setNotifications] = useState([]);  // Default as empty array
+  const [userId, setUserId] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
   // Fetch user ID
-    useEffect(() => {
-      const fetchUserId = async () => {
+  useEffect(() => {
+    const fetchUserId = async () => {
+      try {
+        const userSession = await isAuthenticated();
+        setUserId(userSession.userId);
+      } catch (error) {
+        console.error("Error fetching user ID:", error.message);
+        setError("Failed to fetch user ID");
+      }
+    };
+    fetchUserId();
+  }, []);
+
+  // Fetch notifications when userId is set
+  useEffect(() => {
+    if (userId) {
+      const fetchNotifications = async () => {
         try {
-          const userSession = await isAuthenticated();
-          setUserId(userSession.userId);
-        } catch (error) {
-          console.error("Error fetching user ID:", error.message);
+          setLoading(true);
+          const response = await axios.get(`/notification/${userId}`);
+          // Ensure response is an array
+          setNotifications(Array.isArray(response.data) ? response.data : []);
+        } catch (err) {
+          console.error("Error fetching notifications:", err);
+          setError("Failed to fetch notifications");
+        } finally {
+          setLoading(false);
         }
       };
-      fetchUserId();
-    }, []);
-
-  // Fetch notifications
-  useEffect(() => {
-    axios.get(`/notification/${userId}`)
-      .then((res) => {
-        setNotifications(res.data);
-      })
-      .catch((err) => console.error("Error fetching notifications:", err));
+      fetchNotifications();
+    }
   }, [userId]);
 
   // Mark as read
@@ -57,7 +72,15 @@ export default function Notifications() {
       </PopoverTrigger>
       <PopoverContent className="w-full max-w-xs sm:max-w-md p-0">
         <Card className="rounded-lg overflow-hidden">
-          {notifications.length > 0 ? (
+          {loading ? (
+            <div className="px-4 py-6 text-center text-sm text-gray-500">
+              Loading notifications...
+            </div>
+          ) : error ? (
+            <div className="px-4 py-6 text-center text-sm text-red-500">
+              {error}
+            </div>
+          ) : notifications.length > 0 ? (
             notifications.map((notification) => (
               <div key={notification.notification_id} className="flex items-center justify-between px-4 py-3">
                 <p className="text-sm text-gray-700 flex-1">{notification.message}</p>
