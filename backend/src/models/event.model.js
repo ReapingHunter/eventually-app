@@ -127,7 +127,7 @@ const Event = {
         FROM event e
         LEFT JOIN rsvp r ON e.event_id = r.event_id
         WHERE e.deleted_at IS NULL
-        GROUP BY e.event_id, e.title, e.description, e.event_date, e.event_time, e.photo
+        GROUP BY e.event_id, e.title, e.description, e.event_datetime, e.photo
         ORDER BY rsvp_count DESC
         LIMIT 8
       `

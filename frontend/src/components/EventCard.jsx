@@ -26,11 +26,11 @@ export default function EventCard({event}){
           <div className="text-md my-2">
             <div className="flex gap-2 my-3">
               <CalendarIcon className="w-6 h-6 text-[#7b00d4]" />
-              {event.event_date.split('T')[0]}
+              {event.event_datetime.split("T")[0]}
             </div>
             <div className="flex gap-2 my-3">
               <ClockIcon className="w-6 h-6 text-[#7b00d4]" />
-              {event.event_time}
+              {event.event_datetime.split("T")[1].split('.')[0]}
             </div>
             <div className="flex gap-2 my-3">
               <MapPinIcon className="w-6 h-6 text-[#7b00d4]" />
@@ -51,8 +51,7 @@ EventCard.propTypes = {
   event: PropTypes.shape({
     photo: PropTypes.string,
     title: PropTypes.string.isRequired,
-    event_date: PropTypes.string.isRequired,
-    event_time: PropTypes.string.isRequired,
+    event_datetime: PropTypes.string.isRequired,
     address: PropTypes.string.isRequired,
   }).isRequired,
 }
