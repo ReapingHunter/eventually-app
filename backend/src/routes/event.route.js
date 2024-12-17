@@ -8,7 +8,8 @@ import {
     updateEvent, 
     deleteEvent,
     getTopEvents,
-    uploadEventPhoto
+    uploadEventPhoto,
+    getOrganizer,
 } from '../controllers/event.controller.js';
 import multer from 'multer';
 
@@ -34,6 +35,7 @@ router.get("/filter", getEventByFilter);
 router.get('/all-event', getAllEvents); // Get all events
 router.get('/:id', getEventById); // Get a specific event by ID
 router.get('/user/:id', getEventByUser);
+router.get('/owner', getOrganizer);
 
 router.put('/update-event/:id', updateEvent);
 router.put('/delete-event/:id', deleteEvent);

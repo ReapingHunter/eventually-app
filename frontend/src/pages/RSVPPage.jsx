@@ -4,7 +4,6 @@ import {
   MapPinIcon,
   ClockIcon,
   SparklesIcon,
-  UserIcon,
 } from "@heroicons/react/24/solid";
 
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
@@ -38,6 +37,7 @@ export default function RSVPPage() {
   const [ isPopoverOpen, setIsPopoverOpen] = useState(false)
   const [ currentStatus, setCurrentStatus ] = useState(null)
   const [rsvpMessage, setRsvpMessage] = useState("")
+  const [ organizer, setOrganizer ] = useState()
 
   useEffect(() => {
     if(id){
@@ -69,6 +69,22 @@ export default function RSVPPage() {
       }
     };
     fetchCategoryName();
+  }, [event]);
+
+  useEffect(() => {
+    const fetchOrganizer = async () => {
+      if (event && event.event_id) {
+        try {
+          const response = await axios.get("http://localhost:3000/api/events/owner", {
+            params: { event_id: event.event_id },
+          });
+          setOrganizer(response.data.username); // Assuming response.data.username contains the organizer's username
+        } catch (error) {
+          console.error("Error fetching organizer:", error.message);
+        }
+      }
+    };
+    fetchOrganizer();
   }, [event]);
   useEffect(() => {
     const checkRSVPStatus = async () => {
@@ -188,15 +204,7 @@ export default function RSVPPage() {
           </div>
 
           {/* RSVP Section */}
-          <div className="bg-white rounded-xl shadow-md p-6 mt-6 flex flex-col sm:flex-row justify-between items-center">
-            {/* RSVP Count */}
-            <div className="flex items-center text-sm text-gray-700">
-              <UserIcon className="w-5 h-5 text-[#7b00d4] mr-2" />
-              <p>
-                <span className="font-bold">150</span> people have RSVP&apos;d for this event {/* Replace the number from backend */}
-              </p>
-            </div>
-
+          <div className="bg-white rounded-xl shadow-md p-6 mt-6 flex flex-col sm:flex-row justify-end items-center">
             {/* RSVP Button */}
             <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
               <PopoverTrigger asChild>
@@ -241,7 +249,7 @@ export default function RSVPPage() {
             <div className="mt-4 flex flex-wrap gap-6">
               {/* Organizer 1 */}
               <div className="flex items-center gap-4">
-                <p className="font-medium">Organizer Name 1</p>
+                <p className="font-medium">{organizer}</p>
               </div>
             </div>
           </div>

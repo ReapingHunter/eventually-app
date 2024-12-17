@@ -96,6 +96,19 @@ export const getEventByFilter = async (req, res) => {
   }
 };
 
+export const getOrganizer = async (req, res) => {
+  try {
+    const { event_id } = req.query; // Extract query parameter
+    const organizer = await Event.findOrganizer(event_id);
+    if (!organizer) {
+      return res.status(404).send({ message: "Organizer not found" });
+    }
+    res.status(200).send({ username: organizer }); // Send the organizer's username
+  } catch (error) {
+    console.error("Error fetching organizer:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
 export const getEventByUser = async (req, res) => {
   try {
     const userId = req.params.id;

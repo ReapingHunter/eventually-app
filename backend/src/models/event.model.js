@@ -109,7 +109,27 @@ const Event = {
       });
     });
   },
-  
+  findOrganizer: (event_id) => {
+    return new Promise((resolve, reject) => {
+      const query = `
+        SELECT u.username
+        FROM events e
+        JOIN users u ON e.user_id = u.id
+        WHERE e.event_id = ?;
+      `;
+      dbConn.query(query, [event_id], (err, results) => {
+        if (err) {
+          console.error("Error fetching organizer username:", err);
+          return reject(err);
+        }
+        if (results.length === 0) {
+          resolve(null); // No organizer found
+        } else {
+          resolve(results[0].username); // Return the username of the organizer
+        }
+      });
+    });
+  },
   findTopEvents: () => {
     return new Promise ((resolve, reject) => {
       const query = `
