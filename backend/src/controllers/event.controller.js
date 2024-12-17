@@ -1,4 +1,6 @@
 import Event from '../models/event.model.js';
+import RSVP from '../models/rsvp.model.js';
+import Notification from '../models/notification.model.js';
 import Category from '../models/category.model.js';
 import multer from 'multer';
 
@@ -98,17 +100,17 @@ export const getEventByFilter = async (req, res) => {
 
 export const getOrganizer = async (req, res) => {
   try {
-    const { event_id } = req.query;
+    const { event_id } = req.query; // Extract query parameter
     const organizer = await Event.findOrganizer(event_id);
     if (!organizer) {
       return res.status(404).send({ message: "Organizer not found" });
     }
-    res.status(200).send(organizer);
+    res.status(200).send({ username: organizer }); // Send the organizer's username
   } catch (error) {
-    console.error('Error fetching filtered events:', error);
-    res.status(500).json({ message: 'Internal server error' })
+    console.error("Error fetching organizer:", error);
+    res.status(500).json({ message: "Internal server error" });
   }
-}
+};
 export const getEventByUser = async (req, res) => {
   try {
     const userId = req.params.id;
@@ -131,9 +133,9 @@ export const updateEvent = async (req, res) => {
     if (!title || !description || !event_datetime || !address || !category_id) {
       return res.status(400).send({ message: "Missing required fields" });
     }
-
+    const updatedEvent = await Event.updateById(id, { title, description, event_datetime, address, photo, category_id });
     // Notify all RSVPed users
-    const rsvpList = await RSVP.findByEventId(eventId);
+    const rsvpList = await RSVP.findByEventId(id);
     const message = `The event "${title}" has been updated. Check the details.`;
 
     await Promise.all(
@@ -144,13 +146,6 @@ export const updateEvent = async (req, res) => {
         });
       })
     );
-
-    res.status(200).send({
-      message: "Event updated and notifications sent",
-      event: updatedEvent,
-    });
-
-    const updatedEvent = await Event.updateById(id, { title, description, event_datetime, address, photo, category_id });
     res.status(200).send({ message: "Event updated successfully", event: updatedEvent });
 
   } catch (err) {
