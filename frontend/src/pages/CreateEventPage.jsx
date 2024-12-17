@@ -115,6 +115,7 @@ export default function CreateEventPage() {
         user_id: userSession.userId,
       });
       console.log("Event created successfully!");
+      window.location.href = "/manage-event"
     } catch (error) {
       console.error("Error creating event:", error.message);
       setError("Cannot create event: " + error.message);
