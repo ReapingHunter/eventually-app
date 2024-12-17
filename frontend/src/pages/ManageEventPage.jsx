@@ -9,7 +9,6 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import FilterEvents from "@/components/FilterEvents";
 import { isAuthenticated } from "@/utils/auth";
 import { PlusIcon } from "lucide-react";
 import { useState, useEffect } from "react";
@@ -127,7 +126,6 @@ export default function MyEventsPage() {
             </button>
           </Link>
         </div>
-        <FilterEvents />
         {/* Display message if no events */}
         {events.length === 0 ? (
           <p className="text-gray-500 text-center">
