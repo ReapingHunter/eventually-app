@@ -95,7 +95,6 @@ export default function AllEventsPage() {
           to_date: dateRange.to ? format(dateRange.to, "yyyy-MM-dd") : undefined,
           category_id: category || undefined,
         };
-        console.log(params)
         const response = await axios.get(
           "http://localhost:3000/api/events/filter",
           { params }
