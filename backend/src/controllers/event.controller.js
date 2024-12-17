@@ -1,9 +1,30 @@
 import Event from '../models/event.model.js';
 import Category from '../models/category.model.js';
+import multer from 'multer';
+
+// Set up multer storage and filename configuration
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './images');  // Destination folder
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    cb(null, file.fieldname + '-' + uniqueSuffix + '.' + file.mimetype.split('/')[1]);
+  }
+});
+
+const upload = multer({ storage: storage });
 
 export const createEvent = async (req, res) => {
   try {
-    const { title, description, event_datetime, address, photo, category } = req.body;
+    const { title, description, event_datetime, address, category } = req.body;
+
+    // Check if a file is uploaded
+    if (!req.file) {
+      return res.status(400).send({ message: "No file uploaded" });
+    }
+
+    const photo = req.file.filename;
 
     // Fetch the category_id based on the category name
     const categoryId = await Category.getCategoryIdByName(category);
@@ -106,11 +127,11 @@ export const getEventByUser = async (req, res) => {
 export const updateEvent = async (req, res) => {
   try {
     const { id } = req.params;
-    const { title, description, date, location, photo } = req.body;
-    if (!title || !description || !date || !location) {
+    const { title, description, event_datetime, address, photo } = req.body;
+    if (!title || !description || !event_datetime || !address) {
       return res.status(400).send({ message: "Missing required fields" });
     }
-    const updatedEvent = await Event.updateById(id, { title, description, date, location, photo });
+    const updatedEvent = await Event.updateById(id, { title, description, event_datetime, address, photo });
     res.status(200).send({ message: "Event updated successfully", event: updatedEvent });
   } catch (err) {
     console.error("Error updating event:", err);
