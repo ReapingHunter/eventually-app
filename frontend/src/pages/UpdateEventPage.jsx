@@ -34,10 +34,10 @@ export default function UpdateEventPage() {
   const { event } = location.state || {}; // Retrieve the event data from state
   const [formData, setFormData] = useState({
     title: event.title,
-    category: event.category,
+    category: event.category_id,
     photo: event.photo,
-    dateTime: event.dateTime,
-    location: event.location,
+    dateTime: new Date (event.event_datetime),
+    location: event.address,
     description: event.description,
   });
   
@@ -107,14 +107,13 @@ export default function UpdateEventPage() {
         return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
       }
       const formattedDateTime = formatDateTime(new Date(formData.dateTime))
-      await axios.post("http://localhost:3000/api/events/update-event", {
+      await axios.put(`http://localhost:3000/api/events/update-event/${event.event_id}`, {
         title: formData.title,
         category_id: formData.category,
         photo: formData.photo,
         event_datetime: formattedDateTime,
         address: formData.location,
         description: formData.description,
-        user_id: userSession.userId,
       });
       console.log("Event updated successfully!");
       window.location.href = "/manage-event"

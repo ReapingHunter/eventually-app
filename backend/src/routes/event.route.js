@@ -35,7 +35,7 @@ router.get('/all-event', getAllEvents); // Get all events
 router.get('/:id', getEventById); // Get a specific event by ID
 router.get('/user/:id', getEventByUser);
 
-router.put('/update-event', updateEvent);
+router.put('/update-event/:id', updateEvent);
 router.put('/delete-event/:id', deleteEvent);
 
 

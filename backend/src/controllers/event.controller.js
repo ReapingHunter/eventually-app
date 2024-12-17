@@ -113,11 +113,11 @@ export const getEventByUser = async (req, res) => {
 export const updateEvent = async (req, res) => {
   try {
     const { id } = req.params;
-    const { title, description, event_datetime, address, photo } = req.body;
-    if (!title || !description || !event_datetime || !address) {
+    const { title, description, event_datetime, address, photo, category_id } = req.body;
+    if (!title || !description || !event_datetime || !address || !category_id) {
       return res.status(400).send({ message: "Missing required fields" });
     }
-    const updatedEvent = await Event.updateById(id, { title, description, event_datetime, address, photo });
+    const updatedEvent = await Event.updateById(id, { title, description, event_datetime, address, photo, category_id });
     res.status(200).send({ message: "Event updated successfully", event: updatedEvent });
   } catch (err) {
     console.error("Error updating event:", err);

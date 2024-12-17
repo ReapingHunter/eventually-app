@@ -136,7 +136,7 @@ const Event = {
     return new Promise((resolve, reject) => {
       const query = `
         UPDATE event 
-        SET title = ?, description = ?, event_date = ?, event_time = ?, address = ?, photo = ?, updated_at = NOW() 
+        SET title = ?, description = ?, event_datetime = ?, address = ?, photo = ?, category_id = ?, updated_at = NOW() 
         WHERE event_id = ? AND deleted_at IS NULL
       `;
       dbConn.query(
@@ -144,10 +144,10 @@ const Event = {
         [
           eventData.title,
           eventData.description,
-          eventData.date,
-          eventData.time,
-          eventData.location,
+          eventData.event_datetime,
+          eventData.address,
           eventData.photo,
+          eventData.category_id,
           id
         ],
         (err, res) => {
